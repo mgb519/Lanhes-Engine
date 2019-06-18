@@ -25,18 +25,6 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    public void StartLoadTitle() {
-        StartLoadScene("Title");
-    }
-
-    public void StartLoadWorldMap() {
-        StartLoadScene("Overworld");
-    }
-
-    public void StartLoadBattleMap() {
-        StartLoadScene("BattleScene");
-    }
-
     public void StartLoadScene(string newScene)
     {
         if (isLoading)

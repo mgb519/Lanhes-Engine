@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 
     public Vector2Int position;
     private Vector2Int target;
+    public Vector2Int facing;
 
     private Map map;
 
@@ -26,14 +27,15 @@ public class PlayerController : MonoBehaviour {
 
         if (target.x == position.x && target.y == position.y) {
             //find the tile coords we're going to and set that as target, if we're moving
-            Vector2Int motion = new Vector2Int(horizontalMove, verticalMove);
+            Vector2Int motion = new Vector2Int(horizontalMove, verticalMove);            
             if (map.InDirection(position, motion)) {
                 target = position + motion;
             }
+            facing = motion;
         }
-
+        
         //drift towards target, snap and set position to it when we're close enough
-        Tile targetTile = map.coordinates[target];
+        Waypoint targetTile = map.coordinates[target];
         float moveDistance = moveSpeed * Time.deltaTime;
         Vector3 distance = (targetTile.gameObject.transform.position - gameObject.transform.position);
         Vector3 movementThisFrame = distance.normalized * moveDistance;

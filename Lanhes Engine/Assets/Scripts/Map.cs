@@ -3,20 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Map : MonoBehaviour {
 
-    public Dictionary<Vector2Int, Waypoint> coordinates;
+    [SerializeField]
+    public coordDict coordinates;
 
 
+    //this makes the above serializable, becuase a <T> class cannot be serialized by unity, but this can
+    //for some reason
+    //idunno but that's what the internet says
+    [Serializable]
+    public class coordDict : SerializableDictionary<Vector2Int, Waypoint> { };
 
-
-    public void Start() {
-        //coordinates = new Dictionary<Vector2Int, Waypoint>();
-        //TODO: hardcoded for square tiles
-        //foreach (Waypoint child in gameObject.GetComponentsInChildren<Waypoint>()) {
-
-        //}
-    }
 
 
     public bool InDirection(Vector2Int from, Vector2Int direction) {
@@ -39,29 +38,4 @@ public class Map : MonoBehaviour {
     }
 
 
-
-    public void CreateSquareWaypointMesh(float distanceBetweenTiles, int width, int hieght) {
-        //delete existing grid
-        while (gameObject.transform.childCount > 0) {
-            GameObject.DestroyImmediate(gameObject.transform.GetChild(0).gameObject);
-        }
-        coordinates = new Dictionary<Vector2Int, Waypoint>();
-
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < hieght; j++) {
-                GameObject w = new GameObject(i + "," + j);
-                w.transform.parent = gameObject.transform;
-                Waypoint waypoint = w.AddComponent<Waypoint>();
-                waypoint.canEnterWithMovement = new Vector2Int[4] { new Vector2Int(1, 0), new Vector2Int(-1, 0), new Vector2Int(0, 1), new Vector2Int(0, -1) };
-                waypoint.canExitWithMovement = new Vector2Int[4] { new Vector2Int(1, 0), new Vector2Int(-1, 0), new Vector2Int(0, 1), new Vector2Int(0, -1) };
-                w.transform.position = new Vector3(i * distanceBetweenTiles, j * distanceBetweenTiles);
-                coordinates.Add(new Vector2Int(i, j), waypoint);
-            }
-        }
-
-
-
-
-    }
 }

@@ -41,13 +41,10 @@ public class MapEditor : Editor {
 
 
         foreach (Waypoint t in map.transform.GetComponentsInChildren<Waypoint>()) {
+            Vector2Int pos = t.position;
 
-
-            Vector2Int pos = new Vector2Int();
-            pos.x = int.Parse((t.name.Split(','))[0]);
-            pos.y = int.Parse((t.name.Split(','))[1]);
             foreach (Vector2Int dir in t.canExitWithMovement) {
-                if (map.InDirection(pos, dir)) {
+                if (map.InDirection(t, dir)) {
 
                     Gizmos.DrawLine(map.coordinates[pos].transform.position, map.coordinates[pos + dir].transform.position);
                     //Handles.ArrowHandleCap(1, t.transform.position, t.transform.rotation, 1, EventType.Repaint);
@@ -70,19 +67,16 @@ public class MapEditor : Editor {
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < hieght; j++) {
-                GameObject w = new GameObject(i + "," + j);
+                GameObject w = new GameObject("Waypoint at " + i + "," + j);
                 w.transform.parent = map.gameObject.transform;
                 Waypoint waypoint = w.AddComponent<Waypoint>();
-                waypoint.canEnterWithMovement = new Vector2Int[4] { new Vector2Int(1, 0), new Vector2Int(-1, 0), new Vector2Int(0, 1), new Vector2Int(0, -1) };
-                waypoint.canExitWithMovement = new Vector2Int[4] { new Vector2Int(1, 0), new Vector2Int(-1, 0), new Vector2Int(0, 1), new Vector2Int(0, -1) };
+                waypoint.position = new Vector2Int(i, j);
+                //waypoint.canEnterWithMovement = new Vector2Int[4] { new Vector2Int(1, 0), new Vector2Int(-1, 0), new Vector2Int(0, 1), new Vector2Int(0, -1) };
+                waypoint.canExitWithMovement = new List<Vector2Int> { new Vector2Int(1, 0), new Vector2Int(-1, 0), new Vector2Int(0, 1), new Vector2Int(0, -1) };
                 w.transform.position = new Vector3(i * distanceBetweenTiles, j * distanceBetweenTiles);
                 map.coordinates.Add(new Vector2Int(i, j), waypoint);
             }
         }
-
-
-
-
     }
 
 

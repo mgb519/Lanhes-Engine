@@ -11,17 +11,8 @@ public class Waypoint : MonoBehaviour {
     /// for clear square grids with no diagonals, this is (+1,0),(0,+1),(0,0),(0,-1),(-1,0)
     /// for clear hex grids, this is (0,-1),(+1,-1),(+1,0),(0,+1),(-1,+1),(-1,0)
     /// </summary>
-    public Vector2Int[] canExitWithMovement;
-    public Vector2Int[] canEnterWithMovement;
-    
+    /// 
+    public Vector2Int position;
+    public List<Vector2Int> canExitWithMovement = new List<Vector2Int>();
 
-    // Start is called before the first frame update
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
 }

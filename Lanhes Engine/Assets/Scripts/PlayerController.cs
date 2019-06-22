@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public Vector2Int position;
-    private Vector2Int target;
+    public Waypoint position;
+    private Waypoint target;
     public Vector2Int facing;
 
     private Map map;
@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         map = GameObject.Find("Map").GetComponent<Map>();
+
+        position = map.coordinates[new Vector2Int(0, 0)];
         target = position;
     }
 
@@ -25,17 +27,17 @@ public class PlayerController : MonoBehaviour {
         int horizontalMove = Mathf.RoundToInt(Input.GetAxis("Horizontal"));
         int verticalMove = Mathf.RoundToInt(Input.GetAxis("Vertical"));
 
-        if (target.x == position.x && target.y == position.y) {
+        if (target.position.x == position.position.x && target.position.y == position.position.y) {
             //find the tile coords we're going to and set that as target, if we're moving
             Vector2Int motion = new Vector2Int(horizontalMove, verticalMove);            
             if (map.InDirection(position, motion)) {
-                target = position + motion;
+                target = map.coordinates[position.position + motion];
             }
             facing = motion;
         }
         
         //drift towards target, snap and set position to it when we're close enough
-        Waypoint targetTile = map.coordinates[target];
+        Waypoint targetTile = map.coordinates[target.position];
         float moveDistance = moveSpeed * Time.deltaTime;
         Vector3 distance = (targetTile.gameObject.transform.position - gameObject.transform.position);
         Vector3 movementThisFrame = distance.normalized * moveDistance;

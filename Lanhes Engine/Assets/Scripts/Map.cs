@@ -18,16 +18,15 @@ public class Map : MonoBehaviour {
 
 
 
-    public bool InDirection(Vector2Int from, Vector2Int direction) {
+    public bool InDirection(Waypoint from, Vector2Int direction) {
         //look up from in the coordinates, check the direction to see if we can move out this way, and into what tile it would eneter
-        Waypoint tileFrom = coordinates[from];
-        if (Array.Find(tileFrom.canExitWithMovement, i => i.x == direction.x && i.y == direction.y) != null) {
+        if (from.canExitWithMovement.Find(i => i.x == direction.x && i.y == direction.y) != null) {
             //we can safely exit this tile
-            if (coordinates.ContainsKey(from + direction)) {
-                Waypoint tileTo = coordinates[from + direction];
-                if (Array.Find(tileTo.canExitWithMovement, i => i.x == direction.x && i.y == direction.y) != null) {
+            if (coordinates.ContainsKey(from.position + direction)) {
+                Waypoint tileTo = coordinates[from.position + direction];
+                //if (Array.Find(tileTo.canEnterWithMovement, i => i.x == direction.x && i.y == direction.y) != null) {
                     return true;
-                }
+                //}
             }
 
         }

@@ -20,7 +20,7 @@ public class Map : MonoBehaviour {
 
     public bool InDirection(Waypoint from, Vector2Int direction) {
         //look up from in the coordinates, check the direction to see if we can move out this way, and into what tile it would eneter
-        if (from.canExitWithMovement.Find(i => i.x == direction.x && i.y == direction.y) != null) {
+        if (from.canExitWithMovement.Contains(direction)) {
             //we can safely exit this tile
             if (coordinates.ContainsKey(from.position + direction)) {
                 Waypoint tileTo = coordinates[from.position + direction];

@@ -32,21 +32,26 @@ public class WaypointEditor : Editor {
                 //select other waypoint   
                 Vector2 mousePos = Event.current.mousePosition;
                 mousePos.y = Screen.height - mousePos.y;
-                Debug.Log(mousePos);
 
                 Transform newSelection = map.transform.GetChild(0);
                 Vector2 newSelectionPos = Camera.current.WorldToScreenPoint(newSelection.position);
                 if (Camera.current != null) {
                     foreach (Waypoint t in map.GetComponentsInChildren<Waypoint>()) {
                         Vector2 screenPos = Camera.current.WorldToScreenPoint(t.transform.position);
-                        Debug.Log(t.position + ":" + screenPos);
+                        //TODO: unusual behavioir; clicking a little up of a node selects the one above it, even if we are further away.
                         if ((screenPos - mousePos).sqrMagnitude < (newSelectionPos - mousePos).sqrMagnitude) {
                             newSelection = t.transform;
                             newSelectionPos = Camera.current.WorldToScreenPoint(newSelection.position);
                         }
                     }
                 }
-                Selection.activeGameObject = newSelection.gameObject;
+
+                if (Event.current.control) {
+                    waypoint.canExitWithMovement.Add(newSelection.GetComponent<Waypoint>().position - waypoint.position);
+                } else {
+
+                    Selection.activeGameObject = newSelection.gameObject;
+                }
             }
 
         }

@@ -15,7 +15,7 @@ public class MapEditor : Editor {
     [Range(0, 9999999)] private int height;
 
     [SerializeField]
-    private Dictionary<Vector2Int, Waypoint> coords;
+    private SerializableDictionary<Vector2Int, Waypoint> coords;
 
     public override void OnInspectorGUI() {
         Map myTarget = (Map)target;
@@ -35,25 +35,33 @@ public class MapEditor : Editor {
     [DrawGizmo(GizmoType.Selected | GizmoType.NonSelected)]
     static void DrawGizmosSelected(Map map, GizmoType gizmoType) {
 
-        //Map map = ((Map)target);
-
-
-
 
         foreach (Waypoint t in map.transform.GetComponentsInChildren<Waypoint>()) {
+            Handles.DrawWireDisc(t.transform.position, Vector3.forward, HandleUtility.GetHandleSize(t.transform.position) * 0.1f);
             Vector2Int pos = t.position;
-
             foreach (Vector2Int dir in t.canExitWithMovement) {
                 if (map.InDirection(t, dir)) {
 
-                    Gizmos.DrawLine(map.coordinates[pos].transform.position, map.coordinates[pos + dir].transform.position);
-                    //Handles.ArrowHandleCap(1, t.transform.position, t.transform.rotation, 1, EventType.Repaint);
+                    Gizmos.DrawLine(t.transform.position, map.coordinates[pos + dir].transform.position);
+
                 }
             }
         }
     }
 
 
+
+    void OnSceneGUI() {
+        Map map = target as Map;
+        if (Event.current.type == EventType.Repaint || Event.current.type == EventType.Layout) {
+            foreach (Waypoint t in map.GetComponentsInChildren<Waypoint>()) {
+                Handles.DrawWireDisc(t.transform.position, Vector3.forward, HandleUtility.GetHandleSize(t.transform.position)*0.1f);
+            }
+        } else if (Event.current.type == EventType.MouseDown) {
+            
+
+        }
+    }
 
     public void CreateSquareWaypointMesh(float distanceBetweenTiles, int width, int hieght) {
         //delete existing grid

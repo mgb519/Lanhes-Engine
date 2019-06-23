@@ -16,7 +16,7 @@ public class WaypointEditor : Editor {
 
                     float angle = Vector2.Angle(Vector2.down, waypoint.transform.position - pointTo.transform.position);
                     Vector2 offset = waypoint.transform.position - pointTo.transform.position;
-                    Debug.Log("drawing cap");
+
                     Handles.ArrowHandleCap(i, waypoint.transform.position, Quaternion.FromToRotation(Vector3.back, offset), offset.magnitude * 0.9f, Event.current.type);
 
                 }
@@ -25,8 +25,31 @@ public class WaypointEditor : Editor {
             if (Event.current.button == 1) {
                 //TODO: does not check if we are strictly *on* the control; i.e we want to also right lick to *create* new links
                 int clicked = HandleUtility.nearestControl;
-                waypoint.canExitWithMovement.RemoveAt(clicked);
+                if (clicked >= 0 && clicked < waypoint.canExitWithMovement.Count) {
+                    waypoint.canExitWithMovement.RemoveAt(clicked);
+                }
+            } else if (Event.current.button == 0) {
+                //select other waypoint   
+                Vector2 mousePos = Event.current.mousePosition;
+                mousePos.y = Screen.height - mousePos.y;
+                Debug.Log(mousePos);
+
+                Transform newSelection = map.transform.GetChild(0);
+                Vector2 newSelectionPos = Camera.current.WorldToScreenPoint(newSelection.position);
+                if (Camera.current != null) {
+                    foreach (Waypoint t in map.GetComponentsInChildren<Waypoint>()) {
+                        Vector2 screenPos = Camera.current.WorldToScreenPoint(t.transform.position);
+                        Debug.Log(t.position + ":" + screenPos);
+                        if ((screenPos - mousePos).sqrMagnitude < (newSelectionPos - mousePos).sqrMagnitude) {
+                            newSelection = t.transform;
+                            newSelectionPos = Camera.current.WorldToScreenPoint(newSelection.position);
+                        }
+                    }
+                }
+                Selection.activeGameObject = newSelection.gameObject;
             }
+
         }
+
     }
 }

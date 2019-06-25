@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
 
     private Map map;
 
+    public MenuWindow pauseMenu;
+
     public float moveSpeed; //how many tiles do you move in 1s?
 
 
@@ -23,19 +25,19 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        //TODO: we're assuming that we are moving on a square grid here, factor this assumption out into a different input module to allow hex movement. How do we do hex movement on a keyboard?
+        //TODO: we're assuming that we are moving on a square grid here, factor this assumption out into a different input module to allow hex movement. How do we do hex movement on a keyboard? WEADZX?
         int horizontalMove = Mathf.RoundToInt(Input.GetAxis("Horizontal"));
         int verticalMove = Mathf.RoundToInt(Input.GetAxis("Vertical"));
 
         if (target.position.x == position.position.x && target.position.y == position.position.y) {
             //find the tile coords we're going to and set that as target, if we're moving
-            Vector2Int motion = new Vector2Int(horizontalMove, verticalMove);            
+            Vector2Int motion = new Vector2Int(horizontalMove, verticalMove);
             if (map.InDirection(position, motion)) {
                 target = map.coordinates[position.position + motion];
             }
             facing = motion;
         }
-        
+
         //drift towards target, snap and set position to it when we're close enough
         Waypoint targetTile = map.coordinates[target.position];
         float moveDistance = moveSpeed * Time.deltaTime;
@@ -50,7 +52,16 @@ public class PlayerController : MonoBehaviour {
             gameObject.transform.Translate(movementThisFrame);
         }
 
+        if (Input.GetButtonDown("Pause")) {
 
+            Debug.Log("pausan");
+            // spawn  pause menu object
+            GameObject.Instantiate(pauseMenu);
+            //pause the game
+            Time.timeScale = 0;
+            //not sure how nicely this will play with UI but let's see
+
+        }
 
     }
 }

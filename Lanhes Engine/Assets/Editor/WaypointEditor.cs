@@ -23,7 +23,7 @@ public class WaypointEditor : Editor {
             }
         } else if (Event.current.type == EventType.MouseDown) {
             if (Event.current.button == 1) {
-                //TODO: does not check if we are strictly *on* the control; i.e we want to also right lick to *create* new links
+                //TODO: does not check if we are strictly *on* the control
                 int clicked = HandleUtility.nearestControl;
                 if (clicked >= 0 && clicked < waypoint.canExitWithMovement.Count) {
                     waypoint.canExitWithMovement.RemoveAt(clicked);

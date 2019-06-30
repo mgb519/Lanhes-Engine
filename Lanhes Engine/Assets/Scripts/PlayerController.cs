@@ -52,9 +52,7 @@ public class PlayerController : MonoBehaviour {
             gameObject.transform.Translate(movementThisFrame);
         }
 
-        if (Input.GetButtonDown("Pause")) {
-
-            Debug.Log("pausan");
+        if (Input.GetButtonDown("Pause") && Time.timeScale != 0) {
             // spawn  pause menu object
             GameObject.Instantiate(pauseMenu);
             //pause the game

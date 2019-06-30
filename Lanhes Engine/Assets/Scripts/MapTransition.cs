@@ -11,14 +11,11 @@ public class MapTransition : MonoBehaviour
     {
         manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SceneManager>();
         player = GameObject.FindGameObjectWithTag("Player");
-        print("Check");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("Check");
         if (collision.gameObject == player) {
-            print("CheckAgain");
             manager.StartLoadScene(sceneToLoad);
         }
     }

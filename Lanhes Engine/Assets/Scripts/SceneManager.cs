@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManager : MonoBehaviour
-{
+public class SceneManager : MonoBehaviour {
     public static SceneManager instance = null;
     enum gameState { MENU, WORLD, BATTLE }
     static gameState GameState;
@@ -13,32 +12,32 @@ public class SceneManager : MonoBehaviour
 
     private static bool isLoading;
 
-    void Awake()
-    {
+
+
+    public StringSelectWindow stringSelectWindow;
+    public StringWindow stringWindow;
+
+    void Awake() {
         if (instance == null) {
             instance = this;
             DontDestroyOnLoad(gameObject);
             loadingGroup = transform.GetChild(0).GetComponent<CanvasGroup>();
-        }
-        else if (instance != this) {
+        } else if (instance != this) {
             Destroy(gameObject);
         }
     }
 
-    public void StartLoadScene(string newScene)
-    {
+    public void StartLoadScene(string newScene) {
         if (isLoading)
             return;
         isLoading = true;
         instance.StartCoroutine(instance.LoadScene(newScene));
     }
 
-    private IEnumerator LoadScene(int levelId)
-    {
+    private IEnumerator LoadScene(int levelId) {
         float timer = 0f;
 
-        while (timer < 1f)
-        {
+        while (timer < 1f) {
             timer += Time.deltaTime * 3f;
             loadingGroup.alpha = Mathf.Lerp(loadingGroup.alpha, 1f, timer);
             yield return new WaitForEndOfFrame();
@@ -52,8 +51,7 @@ public class SceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        while (timer < 1f)
-        {
+        while (timer < 1f) {
             timer += Time.deltaTime * 3f;
             loadingGroup.alpha = Mathf.Lerp(1f, 0f, timer);
             yield return new WaitForEndOfFrame();
@@ -61,12 +59,10 @@ public class SceneManager : MonoBehaviour
         isLoading = false;
     }
 
-    private IEnumerator LoadScene(string levelName)
-    {
+    private IEnumerator LoadScene(string levelName) {
         float timer = 0f;
 
-        while (timer < 1f)
-        {
+        while (timer < 1f) {
             timer += Time.deltaTime * 3f;
             loadingGroup.alpha = Mathf.Lerp(loadingGroup.alpha, 1f, timer);
             yield return new WaitForEndOfFrame();
@@ -80,12 +76,37 @@ public class SceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        while (timer < 1f)
-        {
+        while (timer < 1f) {
             timer += Time.deltaTime * 3f;
             loadingGroup.alpha = Mathf.Lerp(1f, 0f, timer);
             yield return new WaitForEndOfFrame();
         }
         isLoading = false;
+    }
+
+
+    
+
+    private static MenuWindow CreateWindow(MenuWindow other) {
+        MenuWindow subwindow = GameObject.Instantiate(other);
+        return subwindow;
+    }
+
+    public static StringWindow CreateStringWindow(string text) {
+        StringWindow dialog = (StringWindow)CreateWindow(instance.stringWindow);
+        dialog.displayMe = text;//TODO: have a fucntion to update text which auto-refreshes; if might see use in spelling dialogue out
+        dialog.Refresh();
+        Time.timeScale = 0;
+        return dialog;
+    }
+
+    public static StringSelectWindow CreateStringSelectWindow(List<string> options) {
+        StringSelectWindow dialog = (StringSelectWindow)CreateWindow(instance.stringSelectWindow);
+        foreach (string i in options) {
+            dialog.data.Add(new GUIListItem<string>(i));
+        }
+        dialog.Refresh();
+        Time.timeScale = 0;
+        return dialog;
     }
 }

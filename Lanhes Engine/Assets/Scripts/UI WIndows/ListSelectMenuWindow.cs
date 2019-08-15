@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public abstract class ListSelectMenuWindow<T> : MenuWindow {
+public abstract class ListSelectMenuWindow<T> : MenuWindow where T : class {
 
 
     public ListMenuEntryButton buttonTemplate;
     public List<GUIListItem<T>> data = new List<GUIListItem<T>>();
 
+    public T selected = null;
 
     public void Refresh() {
         //find the Content object
@@ -29,7 +30,12 @@ public abstract class ListSelectMenuWindow<T> : MenuWindow {
     public void ReturnSelection(ListMenuEntryButton ret) {
         foreach (GUIListItem<T> g in data) {
             if (g.button == ret) {
-                creator.lastSelection = g.heldItem;
+                if (creator != null) {
+                    creator.lastSelection = g.heldItem;
+                } else {
+                    selected = g.heldItem;
+                }
+
                 break;
             }
         }

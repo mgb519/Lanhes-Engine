@@ -9,7 +9,6 @@ public class MenuWindow : MonoBehaviour {
 
     public MenuWindow creator = null;
 
-    public StringSelectWindow stringTest;
 
 
     //when this is null; nothing has been selected, when this is not null, we have recieved a selection and can continue with whatever we wanted to do with the selection
@@ -38,23 +37,10 @@ public class MenuWindow : MonoBehaviour {
         }
     }
 
-    public void StringTest() {
-        StartCoroutine(StringTestBody());
-    }
-
-    IEnumerator StringTestBody() {
-        StringSelectWindow s = (StringSelectWindow)CreateWindow(stringTest);
-        s.data.Add(new GUIListItem<string>("Foo"));
-        s.data.Add(new GUIListItem<string>("Bar"));
-        s.Refresh();
-        Debug.Log("going to wait...");
-
-        yield return new WaitUntil(() => CheckLastSelection());
-
-        Debug.Log("The player selected:" + (string)lastSelection);
-
-        yield break;
-    }
+    //public void Awake() {
+    //    //pause the game
+    //    Time.timeScale = 0;
+    //}
 
     private bool CheckLastSelection() {
         Debug.Log(lastSelection);

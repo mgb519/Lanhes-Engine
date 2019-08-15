@@ -557,7 +557,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creator: {fileID: 0}
-  stringTest: {fileID: 0}
   buttonTemplate: {fileID: 8972229684230165057, guid: 5d39cf5432acc454cac9fada41b3d64b,
     type: 3}
   yPadFromTop: 10
@@ -572,7 +571,7 @@ PrefabInstance:
     - target: {fileID: 8898313081985873731, guid: 4309ca9f77a736e4191042353a92867b,
         type: 3}
       propertyPath: m_Name
-      value: StringSelectWindow Variant
+      value: StringSelectWindow
       objectReference: {fileID: 0}
     - target: {fileID: 9037343755132206688, guid: 4309ca9f77a736e4191042353a92867b,
         type: 3}

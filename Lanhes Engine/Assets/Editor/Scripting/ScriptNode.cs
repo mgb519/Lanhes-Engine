@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class ScriptNode {
+public abstract class ScriptNode {
     public Rect rect;
     public string title;
     public bool isDragged;
@@ -35,9 +36,14 @@ public class ScriptNode {
         rect.position += delta;
     }
 
-    public void Draw() {
+    public virtual void Draw() {
         inPoint.Draw();
+        //for (int i = 0; i < outPoints.Count; i++) {
+        //    outPoints.Keys[i].Value.Draw();
+        //    //TODO: draw the key alongside
+        //}
         outPoint.Draw();
+
         GUI.Box(rect, title, style);
     }
 

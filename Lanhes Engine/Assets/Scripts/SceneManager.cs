@@ -9,6 +9,8 @@ public class SceneManager : MonoBehaviour
     enum gameState { MENU, WORLD, BATTLE }
     static gameState GameState;
 
+    public static ScriptData globalVariables;
+
     private static CanvasGroup loadingGroup;
 
     private static bool isLoading;
@@ -19,6 +21,8 @@ public class SceneManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             loadingGroup = transform.GetChild(0).GetComponent<CanvasGroup>();
+
+            globalVariables = new ScriptData();
         }
         else if (instance != this) {
             Destroy(gameObject);

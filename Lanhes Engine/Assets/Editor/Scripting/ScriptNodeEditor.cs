@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class ScriptNodeEditor : EditorWindow {
 
-    private List<ScriptNode> nodes;
+    private List<ScriptNode> nodes = new List<ScriptNode>();
     private GUIStyle nodeStyle;
 
     private List<Connection> connections;
@@ -34,6 +34,7 @@ public class ScriptNodeEditor : EditorWindow {
     private void OnEnable() {
         nodeStyle = new GUIStyle();
         nodeStyle.normal.background = EditorGUIUtility.Load("builtin skins/darkskin/images/node1.png") as Texture2D;
+        nodeStyle.alignment = TextAnchor.UpperCenter;
         nodeStyle.border = new RectOffset(12, 12, 12, 12);
 
         inPointStyle = new GUIStyle();
@@ -48,6 +49,7 @@ public class ScriptNodeEditor : EditorWindow {
 
         selectedNodeStyle = new GUIStyle();
         selectedNodeStyle.normal.background = EditorGUIUtility.Load("builtin skins/darkskin/images/node1 on.png") as Texture2D;
+        selectedNodeStyle.alignment = TextAnchor.UpperCenter;
         selectedNodeStyle.border = new RectOffset(12, 12, 12, 12);
     }
 
@@ -127,6 +129,7 @@ public class ScriptNodeEditor : EditorWindow {
 
     private void ProcessEvents(Event e) {
 
+
         drag = Vector2.zero;
 
         switch (e.type) {
@@ -146,16 +149,24 @@ public class ScriptNodeEditor : EditorWindow {
 
     private void ProcessContextMenu(Vector2 mousePosition) {
         GenericMenu genericMenu = new GenericMenu();
-        genericMenu.AddItem(new GUIContent("Add node"), false, () => OnClickAddNode(mousePosition));
+        genericMenu.AddItem(new GUIContent("Add Node/Show Window/Text"), false, () => AddNodeShowWindow(mousePosition));
+
+
+        genericMenu.AddItem(new GUIContent("Add Node/Terminate"), false, () => AddNodeTerminate(mousePosition));
         genericMenu.ShowAsContext();
     }
 
     private void OnClickAddNode(Vector2 mousePosition) {
-        if (nodes == null) {
-            nodes = new List<ScriptNode>();
-        }
 
-        nodes.Add(new ScriptNode(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode));
+        //nodes.Add(new ScriptNode(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode));
+    }
+
+
+    private void AddNodeShowWindow(Vector2 mousePosition) {
+        nodes.Add(new NodeShowWindow(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode));
+    }
+    private void AddNodeTerminate(Vector2 mousePosition) {
+        nodes.Add(new NodeTerminate(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, OnClickInPoint, OnClickOutPoint, OnClickRemoveNode));
     }
 
     //functions passed to Nodes to handle creating connections
@@ -195,7 +206,7 @@ public class ScriptNodeEditor : EditorWindow {
             List<Connection> connectionsToRemove = new List<Connection>();
 
             for (int i = 0; i < connections.Count; i++) {
-                if (connections[i].inPoint == node.inPoint || connections[i].outPoint == node.outPoint) {
+                if (connections[i].inPoint == node.inPoint || node.outPoint == (connections[i].outPoint)) {
                     connectionsToRemove.Add(connections[i]);
                 }
             }

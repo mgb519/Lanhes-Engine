@@ -46,4 +46,7 @@ public class MenuWindow : MonoBehaviour {
         Debug.Log(lastSelection);
         return lastSelection != null;
     }
+
+
+    public virtual void Refresh() { }
 }

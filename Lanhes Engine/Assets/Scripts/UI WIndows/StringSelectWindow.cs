@@ -18,7 +18,11 @@ public class StringSelectWindow : ListSelectMenuWindow<string> {
 
     public override void PositionButton(ref ListMenuEntryButton button, Transform contentWindow) {
         Button b = button.GetComponent<Button>();
-        b.transform.position = new Vector3(xPadFromLeft, contentWindow.parent.GetComponent<RectTransform>().sizeDelta.y - newButtonPos);
-        newButtonPos += b.GetComponent<RectTransform>().sizeDelta.y;
+        Debug.Log(b);
+        Debug.Log(contentWindow);
+        Debug.Log(contentWindow.parent);
+        RectTransform myRect = b.GetComponent<RectTransform>();
+        b.transform.position = new Vector3(xPadFromLeft + myRect.sizeDelta.x, -myRect.sizeDelta.y - newButtonPos);
+        newButtonPos += myRect.sizeDelta.y;
     }
 }

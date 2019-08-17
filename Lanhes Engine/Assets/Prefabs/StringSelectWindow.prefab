@@ -559,8 +559,10 @@ MonoBehaviour:
   creator: {fileID: 0}
   buttonTemplate: {fileID: 8972229684230165057, guid: 5d39cf5432acc454cac9fada41b3d64b,
     type: 3}
-  yPadFromTop: 10
-  xPadFromLeft: 10
+  contentWindow: {fileID: 936049252}
+  selected: 
+  yPadFromTop: 5
+  xPadFromLeft: 5
 --- !u!1001 &3121714381954906369
 PrefabInstance:
   m_ObjectHideFlags: 0

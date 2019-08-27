@@ -70,7 +70,7 @@ public class MapEditor : Editor {
         while (map.gameObject.transform.childCount > 0) {
             GameObject.DestroyImmediate(map.gameObject.transform.GetChild(0).gameObject);
         }
-        map.coordinates = new Map.coordDict();
+        map.coordinates = new Map.CoordDict();
 
 
         for (int i = 0; i < width; i++) {

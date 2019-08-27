@@ -31,6 +31,8 @@ public abstract class ListSelectMenuWindow<T> : MenuWindow where T : class {
 
     public abstract void PositionButton(ref ListMenuEntryButton button, Transform contentWindow);
 
+
+    //TODO: perhaps this should be a delegate? This would allow you to have windows that spawn windows that spawn windows and so on
     public void ReturnSelection(object ret) {
 
         if (creator != null) {

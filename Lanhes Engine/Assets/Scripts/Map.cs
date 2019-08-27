@@ -7,15 +7,12 @@ using UnityEngine;
 public class Map : MonoBehaviour {
 
     [SerializeField]
-    public coordDict coordinates;
-
-
+    public CoordDict coordinates;
     //this makes the above serializable, becuase a <T> class cannot be serialized by unity, but this can
     //for some reason
     //idunno but that's what the internet says
     [Serializable]
-    public class coordDict : SerializableDictionary<Vector2Int, Waypoint> { };
-
+    public class CoordDict : SerializableDictionary<Vector2Int, Waypoint> { };
 
 
     public bool InDirection(Waypoint from, Vector2Int direction) {
@@ -35,6 +32,6 @@ public class Map : MonoBehaviour {
 
         return false;
     }
-
-
 }
+
+

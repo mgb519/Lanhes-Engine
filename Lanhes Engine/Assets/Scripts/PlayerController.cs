@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour {
 
     public float moveSpeed; //how many tiles do you move in 1s?
 
+    public Inventory inventory;
+
+    //TODO: for game testing remove this later
+    public InertItem currency;
 
     // Start is called before the first frame update
     void Start() {
@@ -21,6 +25,10 @@ public class PlayerController : MonoBehaviour {
 
         position = map.coordinates[new Vector2Int(0, 0)];
         target = position;
+
+        for (int i = 0; i < 1000; i++) {
+            inventory.AddItem(currency);
+        }
     }
 
     // Update is called once per frame

@@ -16,6 +16,7 @@ public class SceneManager : MonoBehaviour {
 
     public StringSelectWindow stringSelectWindow;
     public StringWindow stringWindow;
+    public ShopWindow shopWindow;
 
     void Awake() {
         if (instance == null) {
@@ -85,7 +86,7 @@ public class SceneManager : MonoBehaviour {
     }
 
 
-    
+
 
     private static MenuWindow CreateWindow(MenuWindow other) {
         MenuWindow subwindow = GameObject.Instantiate(other);
@@ -103,10 +104,26 @@ public class SceneManager : MonoBehaviour {
     public static StringSelectWindow CreateStringSelectWindow(List<string> options) {
         StringSelectWindow dialog = (StringSelectWindow)CreateWindow(instance.stringSelectWindow);
         foreach (string i in options) {
-            dialog.data.Add(new GUIListItem<string>(i));
+            dialog.data.Add(i);
         }
         dialog.Refresh();
         Time.timeScale = 0;
         return dialog;
     }
+
+    public static ShopWindow CreateShopWindow(List<ItemCost> forSale, Inventory playerInventory) {
+        Debug.Log("Creating shop window");
+        ShopWindow window = (ShopWindow)CreateWindow(instance.shopWindow);
+        foreach (ItemCost item in forSale) {
+            //TODO: create item button
+            window.shopButtons.Add(item);
+        }
+
+        window.inventory = playerInventory;
+        window.Refresh();
+        Time.timeScale = 0;
+        return window;
+
+    }
+
 }

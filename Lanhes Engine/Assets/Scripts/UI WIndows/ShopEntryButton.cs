@@ -25,7 +25,7 @@ public class ShopEntryButton : MonoBehaviour {
     }
 
     public void MouseOver() {
-        Debug.Log("Making item panel");
+        //Debug.Log("Making item panel");
         //create a popup menu of the cost of this item
         //TODO: show stats of item? maybe game-specific
         itemPanel = Instantiate(itemPanelTemplate);
@@ -37,7 +37,7 @@ public class ShopEntryButton : MonoBehaviour {
     }
 
     public void Clicked() {
-        SendMessageUpwards("Buy", data);
+        SendMessageUpwards("Transaction", data);
     }
 
 }

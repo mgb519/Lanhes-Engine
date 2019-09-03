@@ -15,7 +15,7 @@ public class MenuWindow : MonoBehaviour {
     public object lastSelection = null;
 
 
-    protected MenuWindow CreateWindow(MenuWindow other) {
+    public MenuWindow CreateWindow(MenuWindow other) {
         MenuWindow subwindow = GameObject.Instantiate(other);
         subwindow.creator = this;
         gameObject.SetActive(false);

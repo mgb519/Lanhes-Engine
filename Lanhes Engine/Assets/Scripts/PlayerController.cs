@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour {
 
     private Map map;
 
-    public MenuWindow pauseMenu;
+  
 
     public float moveSpeed; //how many tiles do you move in 1s?
 
@@ -61,11 +61,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (Input.GetButtonDown("Pause") && Time.timeScale != 0) {
-            // spawn  pause menu object
-            GameObject.Instantiate(pauseMenu);
-            //pause the game
-            Time.timeScale = 0;
-            //not sure how nicely this will play with UI but let's see
+            WindowManager.CreatePauseWindow();          
 
         }
 

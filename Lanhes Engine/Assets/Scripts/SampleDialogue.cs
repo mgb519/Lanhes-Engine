@@ -5,7 +5,8 @@ using UnityEngine;
 public class SampleDialogue : MonoBehaviour {
     GameObject player;
 
-    public List<ItemCost> dummyShopData;
+    public List<ItemCost> dummyShopBuyData;
+    public List<ItemCost> dummyShopSellData;
 
     void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -22,37 +23,37 @@ public class SampleDialogue : MonoBehaviour {
 
     IEnumerator StringTestBody() {
 
-        SceneManager.CreateStringWindow("Hey there!");
+        WindowManager.CreateStringWindow("Hey there!");
         yield return new WaitUntil(() => Time.timeScale != 0);
 
         Debug.Log("returned from first dialogue");
 
-        SceneManager.CreateStringWindow("I'm going to make you choose between Foo and Bar!");
+        WindowManager.CreateStringWindow("I'm going to make you choose between Foo and Bar!");
         yield return new WaitUntil(() => Time.timeScale != 0);
 
 
         string selection = null;
         while (selection != "Foo" || selection != "Bar") {
-            StringSelectWindow s = SceneManager.CreateStringSelectWindow(new List<string> { "Foo", "Bar", "Baz" });
+            StringSelectWindow s = WindowManager.CreateStringSelectWindow(new List<string> { "Foo", "Bar", "Baz" });
 
             yield return new WaitUntil(() => Time.timeScale != 0);
             selection = s.selected;
 
             if (selection == "Foo" || selection == "Bar") {
-                SceneManager.CreateStringWindow("You chose " + selection + ".");
+                WindowManager.CreateStringWindow("You chose " + selection + ".");
                 yield return new WaitUntil(() => Time.timeScale != 0);
                 break;
             } else {
-                SceneManager.CreateStringWindow("Baz? You chose Baz? That's not fair!");
+                WindowManager.CreateStringWindow("Baz? You chose Baz? That's not fair!");
                 yield return new WaitUntil(() => Time.timeScale != 0);
-                SceneManager.CreateStringWindow("Choose something else!");
+                WindowManager.CreateStringWindow("Choose something else!");
                 yield return new WaitUntil(() => Time.timeScale != 0);
             }
         }
-        SceneManager.CreateStringWindow("Let's shop!");
+        WindowManager.CreateStringWindow("Let's shop!");
         yield return new WaitUntil(() => Time.timeScale != 0);
 
-        SceneManager.CreateShopWindow(dummyShopData, player.GetComponent<PlayerController>().inventory);
+        WindowManager.CreateShopWindow(dummyShopBuyData, dummyShopSellData, player.GetComponent<PlayerController>().inventory);
         yield return new WaitUntil(() => Time.timeScale != 0);
 
         yield break;

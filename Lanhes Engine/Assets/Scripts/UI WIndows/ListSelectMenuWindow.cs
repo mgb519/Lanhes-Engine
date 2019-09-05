@@ -14,7 +14,7 @@ public abstract class ListSelectMenuWindow<T> : MenuWindow where T : class {
     public override void Refresh() {
         //render each button
         foreach (T item in data) {
-            ListMenuEntryButton listMenuEntry = Render(buttonTemplate, item);
+            ListMenuEntryButton listMenuEntry = Render(item);
             //make it child of conetntWindow
             listMenuEntry.gameObject.transform.SetParent(contentWindow);
             PositionButton(ref listMenuEntry, contentWindow);
@@ -23,8 +23,8 @@ public abstract class ListSelectMenuWindow<T> : MenuWindow where T : class {
 
     }
 
-    public virtual ListMenuEntryButton Render(ListMenuEntryButton template, T data) {
-        ListMenuEntryButton ret = GameObject.Instantiate(template);
+    public virtual ListMenuEntryButton Render(T data) {
+        ListMenuEntryButton ret = GameObject.Instantiate(buttonTemplate);
         ret.SetData(data);
         return ret;
     }

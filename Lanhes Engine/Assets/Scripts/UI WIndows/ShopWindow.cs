@@ -43,7 +43,7 @@ public class ShopWindow : MenuWindow {
         if (buying) {
             foreach (ItemCost item in buyButtons) {
                 Debug.Log("Making buy button:" + item.item.name);
-                ShopEntryButton entry = Render(buttonTemplate, item);
+                ShopEntryButton entry = Render(item);
                 //make it child of contentWindow                
                 entry.gameObject.transform.SetParent(contentWindow);
                 PositionButton(ref entry, contentWindow, ref newButtonPos);
@@ -53,7 +53,7 @@ public class ShopWindow : MenuWindow {
                 //TODO: perhaps do show items that can be sold to this vendor but you don't have?
                 if (inventory.HasItem(item.item, 1)) {
                     Debug.Log("Making sell button:" + item.item.name);
-                    ShopEntryButton entry = Render(buttonTemplate, item);
+                    ShopEntryButton entry = Render(item);
                     //make it child of contentWindow
                     entry.gameObject.transform.SetParent(contentWindow);
                     PositionButton(ref entry, contentWindow, ref newButtonPos);
@@ -63,7 +63,7 @@ public class ShopWindow : MenuWindow {
 
     }
 
-    private ShopEntryButton Render(ShopEntryButton buttonTemplate, ItemCost data) {
+    private ShopEntryButton Render(ItemCost data) {
         ShopEntryButton ret = Instantiate(buttonTemplate);
         ret.SetData(data);
         return ret;

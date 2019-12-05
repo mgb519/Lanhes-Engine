@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class Inventory {
-    public InventoryContents items;
+    private InventoryContents items = new InventoryContents();
 
 
     public int HowManyOfItem(InventoryItem item) {

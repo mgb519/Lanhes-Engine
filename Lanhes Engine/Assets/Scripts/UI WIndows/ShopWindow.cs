@@ -73,8 +73,9 @@ public class ShopWindow : MenuWindow {
         Button b = button.GetComponent<Button>();
         RectTransform myRect = b.GetComponent<RectTransform>();
         Debug.Log(yPadFromTop - myRect.sizeDelta.y - newButtonPos);
-        b.transform.position = new Vector3(xPadFromLeft + myRect.sizeDelta.x, yPadFromTop - myRect.sizeDelta.y - newButtonPos);
+
         newButtonPos += myRect.sizeDelta.y;
+        b.transform.position = new Vector3(xPadFromLeft + myRect.sizeDelta.x, yPadFromTop+ newButtonPos);
     }
 
     public void Transaction(ItemCost transaction) {

@@ -11,7 +11,7 @@ public class MenuWindow : MonoBehaviour {
 
 
 
-    //when this is null; nothing has been selected, when this is not null, we have recieved a selection and can continue with whatever we wanted to do with the selection
+    //when this is null; nothing has been selected, when this is not null, we have recieved a selection from the last called window and can continue with whatever we wanted to do with the selection
     public object lastSelection = null;
 
 

@@ -12,7 +12,7 @@ public class MenuWindow : MonoBehaviour {
 
 
     //when this is null; nothing has been selected, when this is not null, we have recieved a selection from the last called window and can continue with whatever we wanted to do with the selection
-    public object lastSelection = null;
+    public ISelectable lastSelection = null;
 
 
     public MenuWindow CreateWindow(MenuWindow other) {
@@ -25,6 +25,7 @@ public class MenuWindow : MonoBehaviour {
 
     public void CloseMenu() {
         //destroy this object, we are returning to the previous layer of menu
+        Debug.Log("closing menu");
         GameObject.Destroy(gameObject);
     }
     private void OnDestroy() {
@@ -46,7 +47,5 @@ public class MenuWindow : MonoBehaviour {
         Debug.Log(lastSelection);
         return lastSelection != null;
     }
-
-
-    public virtual void Refresh() { }
+    
 }

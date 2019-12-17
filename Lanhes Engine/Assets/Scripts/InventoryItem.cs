@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //[CreateAssetMenu(fileName = "New Item" ,menuName ="Inventory Item")]
-public abstract class InventoryItem : ScriptableObject {
+public abstract class InventoryItem : ScriptableObject,ISelectable {
     new public string name;
 
     public int maxStack;
@@ -14,7 +15,12 @@ public abstract class InventoryItem : ScriptableObject {
 
     public List<Tags> tags;
 
-
+    public SelectionButton Render() {
+        SelectionButton button = GameObject.Instantiate(WindowManager.BaseButton());
+        button.GetComponentInChildren<Text>().text = name;
+        button.dat = this;
+        return button;
+    }
 
     public enum Tags {
         KeyItem,

@@ -30,14 +30,14 @@ public class SampleDialogue : MonoBehaviour {
 
         WindowManager.CreateStringWindow("I'm going to make you choose between Foo and Bar!");
         yield return new WaitUntil(() => Time.timeScale != 0);
-
+        
 
         string selection = null;
         while (selection != "Foo" || selection != "Bar") {
-            StringSelectWindow s = WindowManager.CreateStringSelectWindow(new List<string> { "Foo", "Bar", "Baz" });
+            SelectionWindow s = WindowManager.CreateStringSelection(new List<string> { "Foo", "Bar", "Baz" });
 
             yield return new WaitUntil(() => Time.timeScale != 0);
-            selection = s.selected;
+            selection = ((SelectableString)(s.selected)).data;
 
             if (selection == "Foo" || selection == "Bar") {
                 WindowManager.CreateStringWindow("You chose " + selection + ".");

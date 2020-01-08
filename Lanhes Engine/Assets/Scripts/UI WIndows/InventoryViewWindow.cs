@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class InventoryViewWindow : MenuWindow {
-    public InventoryButton buttonTemplate;
+    public SelectionButton buttonTemplate;
 
     public Transform contentWindow;
 
@@ -31,30 +31,23 @@ public abstract class InventoryViewWindow : MenuWindow {
         Refresh();
     }
 
-    public override void Refresh() {
+    public void Refresh() {
         //render each item
         foreach (InventoryItem item in inventory.Contents().Keys) {
             //check that every tag we are filtering for is present
             if (filter.TrueForAll(x => item.tags.Contains(x))) {
-                InventoryButton button = Render(item);
+                SelectionButton button = item.Render();
                 button.gameObject.transform.SetParent(contentWindow);
                 PositionButton(ref button, contentWindow);
             }
         }
     }
 
-    public virtual void PositionButton(ref InventoryButton button, Transform contentWindow) {
+    public virtual void PositionButton(ref SelectionButton button, Transform contentWindow) {
         Button b = button.GetComponent<Button>();
         RectTransform myRect = b.GetComponent<RectTransform>();
         b.transform.position = new Vector3(xPadFromLeft + myRect.sizeDelta.x, -myRect.sizeDelta.y - newButtonPos);
         newButtonPos += myRect.sizeDelta.y;
-    }
-
-
-    protected virtual InventoryButton Render(InventoryItem data) {
-        InventoryButton ret = Instantiate(buttonTemplate);
-        ret.SetData(data);
-        return ret;
     }
 
 

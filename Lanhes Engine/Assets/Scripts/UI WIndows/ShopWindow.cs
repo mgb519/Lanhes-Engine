@@ -24,9 +24,9 @@ public class ShopWindow : MenuWindow {
 
     public float yPadFromTop = 10;
     public float xPadFromLeft = 10;
+    //TODO: this does not follow the principles of our other selector windows, please refactor
 
-
-    public override void Refresh() {
+    public void Refresh() {
         //clear all buttons
         for (int i = 0; i < contentWindow.childCount; i++) { Destroy(contentWindow.GetChild(i).gameObject); }
         float newButtonPos = 0;

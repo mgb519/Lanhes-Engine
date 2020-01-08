@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class StringWindow : MenuWindow {
-    public string displayMe;
 
-    public override void Refresh() {
+    public void Refresh(string displayMe) {
 
         //find text element and give it the correct text
         //TODO: spell everything out character by character, feedback  like audio, cursor, etc.

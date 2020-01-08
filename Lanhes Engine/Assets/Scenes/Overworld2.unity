@@ -2849,13 +2849,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dc9a6f986a8b794caf1d957738d8ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stringSelectWindow: {fileID: 2051382167, guid: 2669d7b27a9e7bb408b2f981122ad028,
-    type: 3}
   stringWindow: {fileID: 3538980149694292484, guid: 14e6a742b3dc3a94a965749a4bff4077,
     type: 3}
   shopWindow: {fileID: 2470878822066953968, guid: 4f5b35e3c06530e4ab121ed25c87e074,
     type: 3}
   pauseMenu: {fileID: 7447873150300332872, guid: d5cff08b740c5644fa25029139acb1e2,
+    type: 3}
+  selectionButton: {fileID: 2199693121593086125, guid: 7fce5304b1c56be4299daf5e0cd83eb7,
+    type: 3}
+  selectionWindow: {fileID: 8878908754863080217, guid: 151498b3701e97244b7b56504a1fe509,
     type: 3}
 --- !u!1 &1317737718
 GameObject:

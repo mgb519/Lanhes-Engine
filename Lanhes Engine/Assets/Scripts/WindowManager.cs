@@ -2,16 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WindowManager : MonoBehaviour {
 
     public static WindowManager instance = null;
 
-
-    public StringSelectWindow stringSelectWindow;
     public StringWindow stringWindow;
     public ShopWindow shopWindow;
     public MenuWindow pauseMenu;
+
+    public SelectionButton selectionButton;
+    public SelectionWindow selectionWindow;
 
     void Awake() {
         if (instance == null) {
@@ -28,20 +30,11 @@ public class WindowManager : MonoBehaviour {
         return subwindow;
     }
 
+
+
     public static StringWindow CreateStringWindow(string text) {
         StringWindow dialog = (StringWindow)CreateWindow(instance.stringWindow);
-        dialog.displayMe = text;//TODO: have a fucntion to update text which auto-refreshes; if might see use in spelling dialogue out
-        dialog.Refresh();
-        Time.timeScale = 0;
-        return dialog;
-    }
-
-    public static StringSelectWindow CreateStringSelectWindow(List<string> options) {
-        StringSelectWindow dialog = (StringSelectWindow)CreateWindow(instance.stringSelectWindow);
-        foreach (string i in options) {
-            dialog.data.Add(i);
-        }
-        dialog.Refresh();
+        dialog.Refresh(text);
         Time.timeScale = 0;
         return dialog;
     }
@@ -56,6 +49,26 @@ public class WindowManager : MonoBehaviour {
         Time.timeScale = 0;
         return window;
 
+    }
+
+    public static SelectionWindow CreateStringSelection(List<string> list) {
+        List<ISelectable> processed = new List<ISelectable>();
+        foreach (string s in list) {
+            processed.Add(new SelectableString(s));
+        }
+        return CreateSelection(processed);
+    }
+
+    public static SelectionWindow CreateSelection(List<ISelectable> list) {
+        SelectionWindow window = Instantiate(instance.selectionWindow);
+        window.Refresh(list,window.ReturnAndClose);
+        Time.timeScale = 0;
+        return window;
+    }
+
+    public static SelectionButton BaseButton() {
+        SelectionButton b = Instantiate(instance.selectionButton);
+        return b;
     }
 
     public static void CreatePauseWindow() {

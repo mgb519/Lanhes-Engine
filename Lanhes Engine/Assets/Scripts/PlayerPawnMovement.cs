@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof(PlayerController))]
-[RequireComponent (typeof(Rigidbody))]
-public class PlayerPawnMovement : MonoBehaviour
-{
-
+[RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(Rigidbody))]
+public class PlayerPawnMovement : MonoBehaviour {
     public float moveSpeed; //how many tiles do you move in 1s?
 
-    
+    private Animator anim;
+
+
+    private void Start() {
+        anim = GetComponent<Animator>();
+    }
+
+
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         //TODO: snappng to grip option
         int horizontalMove = Mathf.RoundToInt(Input.GetAxis("Horizontal"));
         int verticalMove = Mathf.RoundToInt(Input.GetAxis("Vertical"));
@@ -20,6 +24,9 @@ public class PlayerPawnMovement : MonoBehaviour
         //TODO barriers I cant go up
 
         //TODO animation
-        GetComponent<Rigidbody>().velocity = new Vector3(horizontalMove,0,verticalMove)*moveSpeed;
+        GetComponent<Rigidbody>().velocity = new Vector3(horizontalMove, 0, verticalMove) * moveSpeed;
+
+        anim.SetInteger("Horizontal", horizontalMove);
+        anim.SetInteger("Vertical", verticalMove);
     }
 }

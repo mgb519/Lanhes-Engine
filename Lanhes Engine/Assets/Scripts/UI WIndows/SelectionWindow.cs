@@ -5,14 +5,6 @@ using UnityEngine.UI;
 
 public partial class SelectionWindow : MenuWindow {
 
-
-    public int yStart;
-    public int yOffset;
-
-    public int xStart;
-    public int xOffset;
-
-
     public delegate void HandleSelection(ISelectable element);
     private HandleSelection onSelected;
 
@@ -25,8 +17,6 @@ public partial class SelectionWindow : MenuWindow {
             SelectionButton b = current.Render();
             b.gameObject.transform.SetParent(GameObject.Find("Content").transform,false);
             Debug.Log(b.transform.parent.name);
-            b.transform.position = new Vector3(xStart + xOffset * i, yStart + yOffset * i, 0);
-            //b.onClick.AddListener(HandleItem);
         }
         onSelected = selectionHandler;
     }

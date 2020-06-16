@@ -22,23 +22,13 @@ public class ShopWindow : MenuWindow {
     public Transform contentWindow;
 
 
-    public float yPadFromTop = 10;
-    public float xPadFromLeft = 10;
+    //public float yPadFromTop = 10;
+    //public float xPadFromLeft = 10;
     //TODO: this does not follow the principles of our other selector windows, please refactor
 
     public void Refresh() {
         //clear all buttons
         for (int i = 0; i < contentWindow.childCount; i++) { Destroy(contentWindow.GetChild(i).gameObject); }
-        float newButtonPos = 0;
-        //List<ItemCost> buttons;
-        //buttons = (buying ? buyButtons : sellButtons);
-        //foreach (ItemCost item in buttons) {
-        //    ShopEntryButton entry = Render(buttonTemplate, item);
-        //    //make it child of conetntWindow
-        //    entry.gameObject.transform.SetParent(contentWindow);
-        //    PositionButton(ref entry, contentWindow, ref newButtonPos);
-        //}
-
 
         if (buying) {
             foreach (ItemCost item in buyButtons) {
@@ -46,7 +36,6 @@ public class ShopWindow : MenuWindow {
                 ShopEntryButton entry = Render(item);
                 //make it child of contentWindow                
                 entry.gameObject.transform.SetParent(contentWindow);
-                PositionButton(ref entry, contentWindow, ref newButtonPos);
             }
         } else {
             foreach (ItemCost item in sellButtons) {
@@ -56,7 +45,6 @@ public class ShopWindow : MenuWindow {
                     ShopEntryButton entry = Render(item);
                     //make it child of contentWindow
                     entry.gameObject.transform.SetParent(contentWindow);
-                    PositionButton(ref entry, contentWindow, ref newButtonPos);
                 }
             }
         }
@@ -69,15 +57,7 @@ public class ShopWindow : MenuWindow {
         return ret;
     }
 
-    public void PositionButton(ref ShopEntryButton button, Transform contentWindow, ref float newButtonPos) {
-        Button b = button.GetComponent<Button>();
-        RectTransform myRect = b.GetComponent<RectTransform>();
-        Debug.Log(yPadFromTop - myRect.sizeDelta.y - newButtonPos);
-
-        newButtonPos += myRect.sizeDelta.y;
-        b.transform.position = new Vector3(xPadFromLeft + myRect.sizeDelta.x, yPadFromTop+ newButtonPos);
-    }
-
+   
     public void Transaction(ItemCost transaction) {
         if (buying) {
             foreach (CostComponent i in transaction.costs) {

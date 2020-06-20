@@ -21,9 +21,7 @@ public class ShopWindow : MenuWindow {
 
     public Transform contentWindow;
 
-
-    //public float yPadFromTop = 10;
-    //public float xPadFromLeft = 10;
+    
     //TODO: this does not follow the principles of our other selector windows, please refactor
 
     public void Refresh() {

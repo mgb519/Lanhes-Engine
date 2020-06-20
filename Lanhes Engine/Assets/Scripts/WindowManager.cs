@@ -15,6 +15,13 @@ public class WindowManager : MonoBehaviour {
     public SelectionButton selectionButton;
     public SelectionWindow selectionWindow;
 
+    private MenuWindow baseWindow = null;
+
+    //TODO: should this be here? since it's also  used by PC script to know if they can continue
+    public bool ContinuePlay() {
+        return baseWindow==null;
+    }
+
     void Awake() {
         if (instance == null) {
             instance = this;
@@ -35,8 +42,12 @@ public class WindowManager : MonoBehaviour {
     public static StringWindow CreateStringWindow(string text) {
         StringWindow dialog = (StringWindow)CreateWindow(instance.stringWindow);
         dialog.Refresh(text);
-        Time.timeScale = 0;
+        instance.baseWindow = dialog;
         return dialog;
+    }
+
+    public void WindowClosed() {
+        baseWindow = null;
     }
 
     public static ShopWindow CreateShopWindow(List<ItemCost> forSale, List<ItemCost> willBuy, Inventory playerInventory) {
@@ -46,7 +57,7 @@ public class WindowManager : MonoBehaviour {
         window.sellButtons.AddRange(willBuy);
         window.inventory = playerInventory;
         window.Refresh();
-        Time.timeScale = 0;
+        instance.baseWindow = window;
         return window;
 
     }
@@ -62,7 +73,7 @@ public class WindowManager : MonoBehaviour {
     public static SelectionWindow CreateSelection(List<ISelectable> list) {
         SelectionWindow window = Instantiate(instance.selectionWindow);
         window.Refresh(list,window.ReturnAndClose);
-        Time.timeScale = 0;
+        instance.baseWindow = window;
         return window;
     }
 

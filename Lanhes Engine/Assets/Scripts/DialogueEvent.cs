@@ -43,7 +43,7 @@ public class DialogueEvent : MonoBehaviour {
                     //this is a dialogue
                     //TODO: get name and picture, etc
                     WindowManager.CreateStringWindow(command);
-                    yield return new WaitUntil(() => Time.timeScale != 0);
+                    yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                 } else {
                     // parse command
                     //TODO: this won't really like strings with spaces as arguments..
@@ -53,7 +53,7 @@ public class DialogueEvent : MonoBehaviour {
                         //TODO: make safer for debugging purposes
                         int index = int.Parse(args[1]);
                         WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, player.GetComponent<PlayerController>().inventory);
-                        yield return new WaitUntil(() => Time.timeScale != 0);
+                        yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                     } else {
                         //function not found!
                         Debug.LogWarning("Function " + function + " not found, script " + inkAsset.name);
@@ -68,7 +68,7 @@ public class DialogueEvent : MonoBehaviour {
                 foreach (Choice c in choices) { choicesAsString.Add(c.text); }
 
                 SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString);
-                yield return new WaitUntil(() => Time.timeScale != 0);
+                yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                 string selected = ((SelectableString)(s.selected)).data;
                 //TODO: sure this could be optimised
                 int index = choices.Find(x => x.text == selected).index;

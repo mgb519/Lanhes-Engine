@@ -2853,7 +2853,7 @@ MonoBehaviour:
     type: 3}
   shopWindow: {fileID: 2470878822066953968, guid: 4f5b35e3c06530e4ab121ed25c87e074,
     type: 3}
-  pauseMenu: {fileID: 7447873150300332872, guid: d5cff08b740c5644fa25029139acb1e2,
+  pauseMenu: {fileID: 1377767442809115469, guid: d5cff08b740c5644fa25029139acb1e2,
     type: 3}
   selectionButton: {fileID: 2199693121593086125, guid: 7fce5304b1c56be4299daf5e0cd83eb7,
     type: 3}

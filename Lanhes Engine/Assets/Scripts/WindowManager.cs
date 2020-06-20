@@ -10,7 +10,7 @@ public class WindowManager : MonoBehaviour {
 
     public StringWindow stringWindow;
     public ShopWindow shopWindow;
-    public MenuWindow pauseMenu;
+    public PauseMenu pauseMenu;
 
     public SelectionButton selectionButton;
     public SelectionWindow selectionWindow;
@@ -21,6 +21,11 @@ public class WindowManager : MonoBehaviour {
     public bool ContinuePlay() {
         return baseWindow==null;
     }
+
+    public void WindowClosed() {
+        baseWindow = null;
+    }
+
 
     void Awake() {
         if (instance == null) {
@@ -46,10 +51,7 @@ public class WindowManager : MonoBehaviour {
         return dialog;
     }
 
-    public void WindowClosed() {
-        baseWindow = null;
-    }
-
+   
     public static ShopWindow CreateShopWindow(List<ItemCost> forSale, List<ItemCost> willBuy, Inventory playerInventory) {
         Debug.Log("Creating shop window");
         ShopWindow window = (ShopWindow)CreateWindow(instance.shopWindow);
@@ -58,6 +60,8 @@ public class WindowManager : MonoBehaviour {
         window.inventory = playerInventory;
         window.Refresh();
         instance.baseWindow = window;
+
+        //TODO: NOTE: Do we want the shop to block NPC behavoir too?
         return window;
 
     }
@@ -84,8 +88,9 @@ public class WindowManager : MonoBehaviour {
 
     public static void CreatePauseWindow() {
         // spawn  pause menu object
-        CreateWindow(instance.pauseMenu);
-        //pause the game
-        Time.timeScale = 0;
+        MenuWindow window = CreateWindow(instance.pauseMenu);
+        
+        instance.baseWindow = window;
+        //pause the game is handled by the creation ofthe window
     }
 }

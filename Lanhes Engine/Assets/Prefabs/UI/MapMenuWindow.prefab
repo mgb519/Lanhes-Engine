@@ -313,12 +313,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MapMenuWindow
       objectReference: {fileID: 0}
-    - target: {fileID: 5521563559225857643, guid: 4309ca9f77a736e4191042353a92867b,
-        type: 3}
-      propertyPath: stringTest
-      value: 
-      objectReference: {fileID: 2051382167, guid: 2669d7b27a9e7bb408b2f981122ad028,
-        type: 3}
     - target: {fileID: 9037343755132206688, guid: 4309ca9f77a736e4191042353a92867b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -424,6 +418,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5521563559225857643, guid: 4309ca9f77a736e4191042353a92867b,
+        type: 3}
+      propertyPath: stringTest
+      value: 
+      objectReference: {fileID: 2051382167, guid: 2669d7b27a9e7bb408b2f981122ad028,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 5521563559225857643, guid: 4309ca9f77a736e4191042353a92867b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4309ca9f77a736e4191042353a92867b, type: 3}

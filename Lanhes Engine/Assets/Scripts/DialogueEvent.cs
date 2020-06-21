@@ -19,6 +19,11 @@ public class DialogueEvent : MonoBehaviour {
     // The ink story that we're wrapping
     Story _inkStory;
 
+
+
+    //TODO: we need to reset the Ink story to its head node when the event is over generally
+    //TODO: serialise state like "which branches should be removed since they've been traversed once"
+    //TODO: at what point do I realise that what I should do is just block user interaction with an "event is occuring" flag
     void Awake() {
         player = GameObject.FindGameObjectWithTag("Player");
         _inkStory = new Story(inkAsset.text);
@@ -26,7 +31,7 @@ public class DialogueEvent : MonoBehaviour {
     }
 
     //TODO: this script is only ever caled once? This might be due to Ink not resetting
-    public void OnTriggerEnter2D(Collider2D collision) {
+    public void OnTriggerEnter(Collider collision) {
         if (collision.gameObject == player) {
             //TODO: have script triggers and scripts be seperate
             StartCoroutine(HandleScript());

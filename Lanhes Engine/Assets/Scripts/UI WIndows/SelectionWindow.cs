@@ -15,8 +15,7 @@ public partial class SelectionWindow : MenuWindow {
         for (int i = 0; i < elements.Count; i++) {
             ISelectable current = elements[i];
             SelectionButton b = current.Render();
-            b.gameObject.transform.SetParent(GameObject.Find("Content").transform,false);
-            Debug.Log(b.transform.parent.name);
+            b.gameObject.transform.SetParent(GameObject.Find("Content").transform, false);
         }
         onSelected = selectionHandler;
     }

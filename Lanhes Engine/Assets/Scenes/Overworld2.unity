@@ -1277,12 +1277,12 @@ PrefabInstance:
     - target: {fileID: 2053100494195029206, guid: 4b6d2decb8c7e1d409cf07c301d4218f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.012
       objectReference: {fileID: 0}
     - target: {fileID: 2053100494195029206, guid: 4b6d2decb8c7e1d409cf07c301d4218f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.1
+      value: -0.187
       objectReference: {fileID: 0}
     - target: {fileID: 2053100494195029206, guid: 4b6d2decb8c7e1d409cf07c301d4218f,
         type: 3}
@@ -2853,7 +2853,7 @@ MonoBehaviour:
     type: 3}
   shopWindow: {fileID: 2470878822066953968, guid: 4f5b35e3c06530e4ab121ed25c87e074,
     type: 3}
-  pauseMenu: {fileID: 7447873150300332872, guid: d5cff08b740c5644fa25029139acb1e2,
+  pauseMenu: {fileID: 1377767442809115469, guid: d5cff08b740c5644fa25029139acb1e2,
     type: 3}
   selectionButton: {fileID: 2199693121593086125, guid: 7fce5304b1c56be4299daf5e0cd83eb7,
     type: 3}
@@ -3989,37 +3989,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 3665182712364963072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 589adacf467a61442a9c205ae8086a6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 294e07d658f80e74aba841aba5e6e99e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dummyShopBuyData:
-  - item: {fileID: 11400000, guid: 81aef2dddadb0724887d7932366060df, type: 2}
-    costs:
-    - costType: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
-      quantity: 25
-  - item: {fileID: 11400000, guid: 0797315e7c848d34e8062f7c4f2636e0, type: 2}
-    costs:
-    - costType: {fileID: 11400000, guid: 81aef2dddadb0724887d7932366060df, type: 2}
-      quantity: 16
-    - costType: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
-      quantity: 100
-  - item: {fileID: 11400000, guid: 5d4a7be4be6133d44850447202c08ee2, type: 2}
-    costs:
-    - costType: {fileID: 11400000, guid: 5d4a7be4be6133d44850447202c08ee2, type: 2}
-      quantity: 1
-    - costType: {fileID: 11400000, guid: 0797315e7c848d34e8062f7c4f2636e0, type: 2}
-      quantity: 8
-  dummyShopSellData:
-  - item: {fileID: 11400000, guid: 0797315e7c848d34e8062f7c4f2636e0, type: 2}
-    costs:
-    - costType: {fileID: 11400000, guid: 81aef2dddadb0724887d7932366060df, type: 2}
-      quantity: 10
-    - costType: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
-      quantity: 100
-  - item: {fileID: 11400000, guid: 81aef2dddadb0724887d7932366060df, type: 2}
-    costs:
-    - costType: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
-      quantity: 20
+  shops:
+  - buyPrices:
+    - item: {fileID: 11400000, guid: 81aef2dddadb0724887d7932366060df, type: 2}
+      costs:
+      - costType: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
+        quantity: 4
+    - item: {fileID: 11400000, guid: 0797315e7c848d34e8062f7c4f2636e0, type: 2}
+      costs:
+      - costType: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
+        quantity: 10
+    - item: {fileID: 11400000, guid: 5d4a7be4be6133d44850447202c08ee2, type: 2}
+      costs:
+      - costType: {fileID: 11400000, guid: 81aef2dddadb0724887d7932366060df, type: 2}
+        quantity: 5
+      - costType: {fileID: 11400000, guid: 0797315e7c848d34e8062f7c4f2636e0, type: 2}
+        quantity: 2
+    sellPrices:
+    - item: {fileID: 11400000, guid: 81aef2dddadb0724887d7932366060df, type: 2}
+      costs:
+      - costType: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
+        quantity: 3
+    - item: {fileID: 11400000, guid: 0797315e7c848d34e8062f7c4f2636e0, type: 2}
+      costs:
+      - costType: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
+        quantity: 10
+    - item: {fileID: 11400000, guid: 5d4a7be4be6133d44850447202c08ee2, type: 2}
+      costs:
+      - costType: {fileID: 11400000, guid: 81aef2dddadb0724887d7932366060df, type: 2}
+        quantity: 5
+      - costType: {fileID: 11400000, guid: 0797315e7c848d34e8062f7c4f2636e0, type: 2}
+        quantity: 2
+  inkAsset: {fileID: 4900000, guid: e6939eaf65d252544812b6123767c345, type: 3}
 --- !u!58 &3665182712364963135
 CircleCollider2D:
   m_ObjectHideFlags: 0

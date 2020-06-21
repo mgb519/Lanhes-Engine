@@ -34,7 +34,7 @@ public class MenuWindow : MonoBehaviour {
             creator.gameObject.SetActive(true);
         } else {
             //we are exiting a base window
-            Time.timeScale = 1;
+            WindowManager.instance.WindowClosed();
         }
     }
 

@@ -18,8 +18,6 @@ MonoBehaviour:
   buyButtons: []
   sellButtons: []
   contentWindow: {fileID: 2408973255252098152}
-  yPadFromTop: 10
-  xPadFromLeft: 10
 --- !u!1 &1121483826979988479
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2408973255252098152}
+  - component: {fileID: 2736875547910179184}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -398,6 +397,31 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -1, y: -0.8249512}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2736875547910179184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5418983456518119977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
 --- !u!1 &5751391959951435850
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +587,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -642,7 +666,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7880973214935832972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -843,10 +867,10 @@ RectTransform:
   m_Father: {fileID: 1766433123942944713}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.95}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1026, y: 615}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &8325727961290658660
 MonoBehaviour:
@@ -861,7 +885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 2408973255252098152}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 2
   m_Elasticity: 0.1
@@ -1014,7 +1038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5845893580095847308
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1215,8 +1239,6 @@ MonoBehaviour:
   buyButtons: []
   sellButtons: []
   contentWindow: {fileID: 0}
-  yPadFromTop: 10
-  xPadFromLeft: 10
 --- !u!1001 &8092676534779843933
 PrefabInstance:
   m_ObjectHideFlags: 0

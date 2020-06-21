@@ -19,12 +19,12 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-      
+        if (WindowManager.instance.ContinuePlay()) {
             if (Input.GetButtonDown("Pause") && Time.timeScale != 0 && WindowManager.instance.ContinuePlay()) {
                 WindowManager.CreatePauseWindow();
 
             }
         }
-
     }
+
 }

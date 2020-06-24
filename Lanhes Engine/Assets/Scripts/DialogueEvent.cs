@@ -19,6 +19,7 @@ public class DialogueEvent : MonoBehaviour {
     // The ink story that we're wrapping
     Story _inkStory;
 
+    private List<WaypointFollowerMovementController> overridenNPCs = new List<WaypointFollowerMovementController>();
 
 
     //TODO: we need to reset the Ink story to its head node when the event is over generally
@@ -37,7 +38,7 @@ public class DialogueEvent : MonoBehaviour {
             StartCoroutine(HandleScript());
         }
     }
-
+    
     IEnumerator HandleScript() {
         while (true) {
             if (_inkStory.canContinue) {
@@ -59,6 +60,32 @@ public class DialogueEvent : MonoBehaviour {
                         int index = int.Parse(args[1]);
                         WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, player.GetComponent<PlayerController>().inventory);
                         yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
+                    } else if (function == "$NPCWALK") {
+                        //NPC walks to positon
+                        string npcName = args[1];
+                        GameObject g = GameObject.Find(npcName);
+                        if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", did not find NPC " + npcName); break; }
+                        WaypointFollowerMovementController controller = g.GetComponent<WaypointFollowerMovementController>();
+                        //TODO: what about the player?
+                        //TODO: I suppose the player has a different scripted movement fucntion, they are special after all
+                        if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", NPC " + npcName + " can't be directed"); break; }
+                        Vector3 w = new Vector3(int.Parse(args[2]), int.Parse(args[3]), int.Parse(args[2]));
+                        overridenNPCs.Add(controller);
+                        controller.SetWaypoint(w);
+                        player.GetComponent<PlayerPawnMovement>().blocked = true;
+                        yield return new WaitUntil(() => controller.ReachedWaypoint());
+                        player.GetComponent<PlayerPawnMovement>().blocked = false;              //TODO: do we want a movement to be run asynchronously?
+
+                    } else if (function == "$NPCTELE") {
+                        //NPC is teleported to location
+                        string npcName = args[1];
+                        GameObject g = GameObject.Find(npcName);
+                        if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", did not find NPC " + npcName); break; }
+                        Vector3 w = new Vector3(int.Parse(args[2]), int.Parse(args[3]), int.Parse(args[2]));
+                        g.transform.position = w;
+                        //happens instantly, do not need to wait
+
+
                     } else {
                         //function not found!
                         Debug.LogWarning("Function " + function + " not found, script " + inkAsset.name);

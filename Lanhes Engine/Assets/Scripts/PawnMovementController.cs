@@ -30,7 +30,6 @@ public abstract class PawnMovementController : MonoBehaviour {
         //TODO barriers I cant go up
 
         rigidbody.velocity = dir * moveSpeed;
-        Debug.Log(dir);
         //animate
         //TODO: end on the last frame?
         anim.SetInteger("Horizontal", Mathf.RoundToInt(dir.x));

@@ -7,7 +7,7 @@ using System;
 
 public class DialogueEvent : MonoBehaviour {
 
-
+    //TODO: serialisation
     GameObject player;
 
 
@@ -83,6 +83,7 @@ public class DialogueEvent : MonoBehaviour {
                 Debug.Log("Finished event");
                 //I suppose this means we reached the end of ths script
                 //TODO: reset script?
+                _inkStory.ChoosePathString("head");
                 break;
 
             }

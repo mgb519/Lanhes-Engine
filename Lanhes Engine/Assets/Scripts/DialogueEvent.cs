@@ -29,6 +29,11 @@ public class DialogueEvent : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         _inkStory = new Story(inkAsset.text);
 
+        //bind some getter functions
+        _inkStory.BindExternalFunction("getInt", (string key) => DataManager.instance.GetInt(key));
+        _inkStory.BindExternalFunction("getStr", (string key) => DataManager.instance.GetString(key));
+        _inkStory.BindExternalFunction("getBol", (string key) => DataManager.instance.GetBool(key));
+
     }
 
     //TODO: this script is only ever caled once? This might be due to Ink not resetting
@@ -38,7 +43,7 @@ public class DialogueEvent : MonoBehaviour {
             StartCoroutine(HandleScript());
         }
     }
-    
+
     IEnumerator HandleScript() {
         while (true) {
             if (_inkStory.canContinue) {
@@ -86,6 +91,24 @@ public class DialogueEvent : MonoBehaviour {
                         //happens instantly, do not need to wait
 
 
+                    } else if (function == "$SETINT") {
+                        string key = args[1];
+                        //TODO: make safer for debugging purposes
+                        int val = int.Parse(args[2]);
+                        DataManager.instance.SetInt(key, val);
+
+                    } else if (function == "$SETSTR") {
+                        string key = args[1];
+                        //TODO: make safer for debugging purposes
+                        string val = args[2];
+                        DataManager.instance.SetString(key, val);
+
+                    } else if (function == "$SETBOL") {
+                        string key = args[1];
+                        //TODO: make safer for debugging purposes
+                        bool val = bool.Parse(args[2]);
+                        DataManager.instance.SetBool(key, val);
+
                     } else {
                         //function not found!
                         Debug.LogWarning("Function " + function + " not found, script " + inkAsset.name);
@@ -94,7 +117,7 @@ public class DialogueEvent : MonoBehaviour {
 
             } else if (_inkStory.currentChoices.Count > 0) {
                 //we have a choice window
-                //TODO: ths currently only works for string selection, figure out a syntax for other selections
+                //TODO: ths currently only works for string selection, as that is how Ink works normally. Figure out a syntax for other selections
                 List<Choice> choices = _inkStory.currentChoices;
                 List<string> choicesAsString = new List<string>();
                 foreach (Choice c in choices) { choicesAsString.Add(c.text); }
@@ -107,9 +130,8 @@ public class DialogueEvent : MonoBehaviour {
                 _inkStory.ChooseChoiceIndex(index);
 
             } else {
-                Debug.Log("Finished event");
-                //I suppose this means we reached the end of ths script
-                //TODO: reset script?
+                Debug.Log("Finished event "+inkAsset.name);
+                //reached and of script, return to the beginning for the next time the player triggers it
                 _inkStory.ChoosePathString("head");
                 break;
 

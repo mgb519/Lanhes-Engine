@@ -650,6 +650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  blocked: 0
 --- !u!54 &5116484526905156109
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -693,6 +694,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69469d887e94a494781c18a8fa2d0086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory:
+    items:
+      _Buckets: ffffffffffffffffffffffff
+      _HashCodes: 000000000000000000000000
+      _Next: 000000000000000000000000
+      _Count: 0
+      _Version: 0
+      _FreeList: -1
+      _FreeCount: 0
+      _Keys:
+      - {fileID: 0}
+      - {fileID: 0}
+      - {fileID: 0}
+      _Values: 000000000000000000000000
   currency: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
 --- !u!95 &5116484526905156112
 Animator:

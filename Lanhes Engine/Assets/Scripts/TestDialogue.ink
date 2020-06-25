@@ -1,5 +1,8 @@
 ﻿INCLUDE common.ink
 
+
+$SETINT didbar 0
+
 ->head
 ==head==
 
@@ -14,6 +17,8 @@ I'm going to make you choose between Foo and Bar!
 	You chose Foo!
 +	[Bar]
 	You chose Bar!
+	$SETINT didbar {getInt("didbar")+1}
+	This is the {getInt("didbar")} time you've chose Bar, by the way.
 *	[Baz]
 	What? That wasn't an option!
 	Choose something else!

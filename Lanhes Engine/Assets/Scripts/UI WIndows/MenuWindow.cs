@@ -25,7 +25,7 @@ public class MenuWindow : MonoBehaviour {
 
     public void CloseMenu() {
         //destroy this object, we are returning to the previous layer of menu
-        Debug.Log("closing menu");
+        //Debug.Log("closing menu");
         GameObject.Destroy(gameObject);
     }
     private void OnDestroy() {

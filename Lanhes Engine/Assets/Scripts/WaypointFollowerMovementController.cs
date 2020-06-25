@@ -10,7 +10,7 @@ public class WaypointFollowerMovementController : PawnMovementController {
     private bool overriden = false;
 
     internal override Vector3 GetInput() {
-        if (overrideWaypoint!=null) {
+        if (!overriden) {
             //TODO: patrol along path
             throw new System.NotImplementedException();
         } else {

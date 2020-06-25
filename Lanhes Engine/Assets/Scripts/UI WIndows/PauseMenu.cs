@@ -10,6 +10,7 @@ public class PauseMenu : MenuWindow
     }
 
     public void UnPause() {
+        DataManager.instance.Spew();
         Time.timeScale = 1f;
         CloseMenu();
     }

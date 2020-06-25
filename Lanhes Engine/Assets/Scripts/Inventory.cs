@@ -1,11 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[System.Serializable]
+//TODO: build an editor for this BS, then we wont need the SerializableDictionary stuff
+[Serializable]
 public class Inventory {
-    private InventoryContents items = new InventoryContents();
 
+
+
+
+    [Serializable]
+    public class InventoryContents : SerializableDictionary<InventoryItem, int> { }
+
+    public InventoryContents items = new InventoryContents();
+
+
+   
 
     public int HowManyOfItem(InventoryItem item) {
         if (items.ContainsKey(item)) { return items[item]; }
@@ -56,6 +67,3 @@ public class Inventory {
     public Dictionary<InventoryItem, int> Contents() { return new Dictionary<InventoryItem, int>(items); }
 
 }
-
-[System.Serializable]
-public class InventoryContents : SerializableDictionary<InventoryItem, int> { }

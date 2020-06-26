@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-//TODO: build an editor for this BS, then we wont need the SerializableDictionary stuff
+//TODO: build an editor for this BS
 [Serializable]
 public class Inventory {
 

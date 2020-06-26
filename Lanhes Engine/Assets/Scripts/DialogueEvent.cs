@@ -63,7 +63,7 @@ public class DialogueEvent : MonoBehaviour {
                     if (function == "$SHOP") {
                         //TODO: make safer for debugging purposes
                         int index = int.Parse(args[1]);
-                        WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, player.GetComponent<PlayerController>().inventory);
+                        WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, PartyManager.instance.GetParty().inventory);
                         yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                     } else if (function == "$NPCWALK") {
                         //NPC walks to positon

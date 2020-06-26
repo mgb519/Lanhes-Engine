@@ -37,18 +37,12 @@ public abstract class InventoryViewWindow : MenuWindow {
             //check that every tag we are filtering for is present
             if (filter.TrueForAll(x => item.tags.Contains(x))) {
                 SelectionButton button = item.Render();
-                button.gameObject.transform.SetParent(contentWindow);
-                PositionButton(ref button, contentWindow);
+                button.gameObject.transform.SetParent(GameObject.Find("Content").transform);
             }
         }
     }
 
-    public virtual void PositionButton(ref SelectionButton button, Transform contentWindow) {
-        Button b = button.GetComponent<Button>();
-        RectTransform myRect = b.GetComponent<RectTransform>();
-        b.transform.position = new Vector3(xPadFromLeft + myRect.sizeDelta.x, -myRect.sizeDelta.y - newButtonPos);
-        newButtonPos += myRect.sizeDelta.y;
-    }
+    
 
 
 }

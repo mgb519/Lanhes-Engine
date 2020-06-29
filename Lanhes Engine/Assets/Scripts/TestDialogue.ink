@@ -1,7 +1,7 @@
 ﻿INCLUDE common.ink
 
 
-$SETINT didbar 0
+//$SETINT didbar 0
 
 ->head
 ==head==

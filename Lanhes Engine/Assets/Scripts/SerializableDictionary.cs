@@ -1,5 +1,4 @@
-﻿//Serializable Dictionary class made by user "vexe" on forum.unity.com
-//https://forum.unity.com/threads/finally-a-serializable-dictionary-for-unity-extracted-from-system-collections-generic.335797/
+﻿//by user vexe at https://forum.unity.com/threads/finally-a-serializable-dictionary-for-unity-extracted-from-system-collections-generic.335797/
 using System;
 using System.Linq;
 using System.Collections;

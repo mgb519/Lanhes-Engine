@@ -11,9 +11,10 @@ public class Inventory {
 
 
     [Serializable]
-    public class InventoryContents : SerializableDictionary<InventoryItem, int> { }
+    public class InventoryContents : EditableDictionary<InventoryItem, int> { }
 
-    public InventoryContents items = new InventoryContents();
+    [SerializeField]
+    private InventoryContents items = new InventoryContents();
 
 
    
@@ -43,7 +44,7 @@ public class Inventory {
     }
 
     /// <summary>
-    /// removes 1 of the passed item to the inventory
+    /// removes 1 of the passed item from the inventory
     /// </summary>
     /// <param name="item">The item to remove</param>  
     public void RemoveItem(InventoryItem item) {
@@ -64,6 +65,16 @@ public class Inventory {
     }
 
 
-    public Dictionary<InventoryItem, int> Contents() { return new Dictionary<InventoryItem, int>(items); }
+    //TODO: ?????
+    public Dictionary<InventoryItem, int> Contents() {
+        Dictionary<InventoryItem, int> ret = new Dictionary<InventoryItem, int>();
+
+        foreach (var k in items.Keys) {
+            ret.Add(k, items[k]);
+        }
+        
+        return ret;
+
+    }
 
 }

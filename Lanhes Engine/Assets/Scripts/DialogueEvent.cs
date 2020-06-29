@@ -58,6 +58,7 @@ public class DialogueEvent : MonoBehaviour {
                 } else {
                     // parse command
                     //TODO: this won't really like strings with spaces as arguments..
+                    //TODO: maybe split by comma?
                     string[] args = command.Split(' ');
                     string function = args[0];
                     if (function == "$SHOP") {

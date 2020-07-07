@@ -143,9 +143,9 @@ public class Party : EditableDictionaryDrawer<InventoryItem, int> {
         if (dict == null) {
             PartyManager partyManager = dictionary.serializedObject.targetObject as PartyManager;
             Debug.Log(dictionary.propertyPath);
-            //TODO:AAAA THIS IS AWFUL
-            int idx = int.Parse(dictionary.propertyPath.Remove(0, 19).Remove(1));
-            Inventory holder = partyManager.parties[0].inventory;
+            //TODO:AAAA THIS IS AWFUL 
+            int idx = int.Parse(System.Text.RegularExpressions.Regex.Match(dictionary.propertyPath, @"\d+").Value);
+            Inventory holder = partyManager.parties[idx].inventory;
             dict = fieldInfo.GetValue(holder) as EditableDictionary<InventoryItem, int>;
 
         }

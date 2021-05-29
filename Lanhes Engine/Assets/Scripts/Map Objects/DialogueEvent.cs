@@ -81,6 +81,7 @@ public class DialogueEvent : MonoBehaviour {
                         player.GetComponent<PlayerPawnMovement>().blocked = true;
                         yield return new WaitUntil(() => controller.ReachedWaypoint());
                         player.GetComponent<PlayerPawnMovement>().blocked = false;              //TODO: do we want a movement to be run asynchronously?
+                        controller.FreeWaypoint();  //TODO presumably, we may want the NPC to stay in pace. maybe then we shouldn't free the waypoint? In this case, the waypoint needs to be freed up at *some* point. Except for cases where we alter patrol paths?
 
                     } else if (function == "$NPCTELE") {
                         //NPC is teleported to location

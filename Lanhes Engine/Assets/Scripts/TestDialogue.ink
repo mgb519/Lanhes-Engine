@@ -5,7 +5,7 @@
 
 ->head
 ==head==
-
+$NPCWALK TestNPC 9.0 0.0 9.0
 
 Hello there!
 //comment
@@ -24,7 +24,9 @@ I'm going to make you choose between Foo and Bar!
 	Choose something else!
 	-> foobarbaz
 
-- $SHOP 0
+
+- Let's shop!
+$SHOP 0
 
 ->END
 	

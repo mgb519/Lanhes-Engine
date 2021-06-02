@@ -36,7 +36,7 @@ public class DialogueEvent : MonoBehaviour {
 
     }
 
-    //TODO: this script is only ever caled once? This might be due to Ink not resetting
+    //TODO: this script is only ever called once? This might be due to Ink not resetting
     public void OnTriggerEnter(Collider collision) {
         if (collision.gameObject == player) {
             //TODO: have script triggers and scripts be seperate
@@ -49,7 +49,7 @@ public class DialogueEvent : MonoBehaviour {
             if (_inkStory.canContinue) {
                 //fetch the next window
                 string command = _inkStory.Continue();
-
+                //Debug.Log(command);
                 if (!command.StartsWith("$")) {
                     //this is a dialogue
                     //TODO: get name and picture, etc
@@ -62,25 +62,27 @@ public class DialogueEvent : MonoBehaviour {
                     string[] args = command.Split(' ');
                     string function = args[0];
                     if (function == "$SHOP") {
-                        //TODO: make safer for debugging purposes
+                        //TODO: make safer for debugging purposes (what did this mean(
                         int index = int.Parse(args[1]);
                         WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, PartyManager.instance.GetParty().inventory);
                         yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                     } else if (function == "$NPCWALK") {
                         //NPC walks to positon
-                        string npcName = args[1];
+                        string npcName = args[1];   
                         GameObject g = GameObject.Find(npcName);
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", did not find NPC " + npcName); break; }
                         WaypointFollowerMovementController controller = g.GetComponent<WaypointFollowerMovementController>();
                         //TODO: what about the player?
                         //TODO: I suppose the player has a different scripted movement fucntion, they are special after all
+                        //TODO: or maybe waypoint following is a behavoir that other pawn movement controllers should implement; i.e an interface
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", NPC " + npcName + " can't be directed"); break; }
-                        Vector3 w = new Vector3(int.Parse(args[2]), int.Parse(args[3]), int.Parse(args[2]));
+                        Vector3 w = new Vector3(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4])); 
                         overridenNPCs.Add(controller);
                         controller.SetWaypoint(w);
                         player.GetComponent<PlayerPawnMovement>().blocked = true;
+                        //TODO: getting the Y ever so slightly wrong can result in this never being triggered, as the agent cannot actually move freely on Y.
                         yield return new WaitUntil(() => controller.ReachedWaypoint());
-                        player.GetComponent<PlayerPawnMovement>().blocked = false;              //TODO: do we want a movement to be run asynchronously?
+                        player.GetComponent<PlayerPawnMovement>().blocked = false;              //TODO: do we want a movement to be run asynchronously? i.e we would move to the next line as the NPC moves
                         controller.FreeWaypoint();  //TODO presumably, we may want the NPC to stay in pace. maybe then we shouldn't free the waypoint? In this case, the waypoint needs to be freed up at *some* point. Except for cases where we alter patrol paths?
 
                     } else if (function == "$NPCTELE") {
@@ -88,7 +90,7 @@ public class DialogueEvent : MonoBehaviour {
                         string npcName = args[1];
                         GameObject g = GameObject.Find(npcName);
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", did not find NPC " + npcName); break; }
-                        Vector3 w = new Vector3(int.Parse(args[2]), int.Parse(args[3]), int.Parse(args[2]));
+                        Vector3 w = new Vector3(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4]));
                         g.transform.position = w;
                         //happens instantly, do not need to wait
 

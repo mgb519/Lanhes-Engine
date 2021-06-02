@@ -19,27 +19,38 @@ public abstract class PawnMovementController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    public void Update() {
+        if (WindowManager.instance.ContinuePlay())
+        {
+            //TODO: perhaps this should be got as a vector2? I *presume* we won't have Y axis movement, but the navmesh seems to assume we *can*.
+            Vector3 dir = GetInput();
+            dir.y = 0;
+            dir = dir.normalized;
+            Debug.Log(dir.y);
+            //TODO: snappng to grid option
 
-        Vector3 dir = GetInput();
 
+            //TODO barriers I cant go up
 
-        //TODO: snappng to grid option
-
-
-        //TODO barriers I cant go up
-
-        rigidbody.velocity = dir * moveSpeed;
-        //animate
-        //TODO: end on the last frame?
-        anim.SetInteger("Horizontal", Mathf.RoundToInt(dir.x));
-        anim.SetInteger("Vertical", Mathf.RoundToInt(dir.z));
-        anim.speed = anim.GetInteger("Horizontal") == 0 && anim.GetInteger("Vertical") == 0 ? 0 : 1;
-
+            rigidbody.velocity = dir * moveSpeed;
+            //animate
+            //TODO: make sure to end on the last frame?
+            anim.SetInteger("Horizontal", Mathf.RoundToInt(dir.x));
+            anim.SetInteger("Vertical", Mathf.RoundToInt(dir.z));
+            anim.speed = anim.GetInteger("Horizontal") == 0 && anim.GetInteger("Vertical") == 0 ? 0 : 1;
+        }
+        else {
+            rigidbody.velocity = Vector3.zero;
+            anim.speed = 0;
+        }
 
     }
 
     //TODO: maybe instead of abstract classes, use a delegate?
+    /// <summary>
+    /// Gets the input being sent to the direct the pawn, as appropriate for the pawn
+    /// </summary>
+    /// <returns> Vector representing the direction the pawn moves in.</returns>
     internal abstract Vector3 GetInput();
 
 }

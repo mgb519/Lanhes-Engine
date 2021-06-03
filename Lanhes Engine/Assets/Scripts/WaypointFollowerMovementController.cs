@@ -20,7 +20,7 @@ public class WaypointFollowerMovementController : PawnMovementController
         //TODO maybe just add the agent at runtime rather than editor time
         navMeshAgent.updatePosition = false;
         navMeshAgent.updateRotation = false;
-        navMeshAgent.speed = this.moveSpeed * 1.10f; //we add 10% velocity so that the agent is always a little ahead of the pawn, preventing stutter.
+        navMeshAgent.speed = this.moveSpeed ; 
         navMeshAgent.angularSpeed = 360000f;//Mathf.Infinity;
         navMeshAgent.autoRepath = true;
         navMeshAgent.autoBraking = true;
@@ -58,6 +58,7 @@ public class WaypointFollowerMovementController : PawnMovementController
     private Vector3 GetInputToPosition()
     {
         Vector3 diff = (navMeshAgent.nextPosition - transform.position);
+        /*
         if (diff.sqrMagnitude <= moveSpeed * moveSpeed * Time.deltaTime)
         {
             if (navMeshAgent.remainingDistance <= Mathf.Epsilon)
@@ -74,9 +75,9 @@ public class WaypointFollowerMovementController : PawnMovementController
            
         }
         else
-        {
+        {*/
             return diff.normalized;
-        }
+        /*}*/
 
         //return navMeshAgent.desiredVelocity.normalized; turns out this doesnt work, the pawn overshoots the agent and wont correct
     }

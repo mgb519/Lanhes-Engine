@@ -26,13 +26,13 @@ public abstract class PawnMovementController : MonoBehaviour {
             Vector3 dir = GetInput();
             dir.y = 0;
             dir = dir.normalized;
-            Debug.Log(dir.y);
             //TODO: snappng to grid option
 
 
             //TODO barriers I cant go up
 
             rigidbody.velocity = dir * moveSpeed;
+            //Debug.Log(rigidbody.velocity);
             //animate
             //TODO: make sure to end on the last frame?
             anim.SetInteger("Horizontal", Mathf.RoundToInt(dir.x));

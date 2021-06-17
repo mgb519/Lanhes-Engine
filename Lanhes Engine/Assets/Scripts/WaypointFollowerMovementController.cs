@@ -20,7 +20,7 @@ public class WaypointFollowerMovementController : PawnMovementController
         //TODO maybe just add the agent at runtime rather than editor time
         navMeshAgent.updatePosition = false;
         navMeshAgent.updateRotation = false;
-        navMeshAgent.speed = this.moveSpeed ; 
+        navMeshAgent.speed = this.moveSpeed;
         navMeshAgent.angularSpeed = 360000f;//Mathf.Infinity;
         navMeshAgent.autoRepath = true;
         navMeshAgent.autoBraking = true;
@@ -57,29 +57,20 @@ public class WaypointFollowerMovementController : PawnMovementController
 
     private Vector3 GetInputToPosition()
     {
-        Vector3 diff = (navMeshAgent.nextPosition - transform.position);
-        /*
-        if (diff.sqrMagnitude <= moveSpeed * moveSpeed * Time.deltaTime)
-        {
-            if (navMeshAgent.remainingDistance <= Mathf.Epsilon)
-            {
-                //we have come to the end of the path
-                //TODO this is not the cleanest of solutions, since we will not be animating for one frame, but it gets us to the desitination. Not a priority to fix, merely wrong.
-                transform.position = navMeshAgent.nextPosition;
-                return Vector3.zero;
-            }
-            else
-            {  //TODO: In this case, we get some horrid jittering
-                return diff.normalized;
-            }
-           
+        navMeshAgent.nextPosition = transform.position;
+        Vector3 d = navMeshAgent.desiredVelocity;
+        if ((transform.position-navMeshAgent.destination).sqrMagnitude <= moveSpeed * moveSpeed * Time.deltaTime) {
+            //if we can reach in one frame, snap to it, this should remove jitter
+            //TODO this is not the cleanest of solutions, since we will not be animating for one frame, but it gets us to the desitination. Not a priority to fix, merely wrong.
+            //TODO the snap is visible, fix that
+            transform.position = navMeshAgent.destination;
+            navMeshAgent.nextPosition = transform.position;
+            return Vector3.zero;
         }
-        else
-        {*/
-            return diff.normalized;
-        /*}*/
 
-        //return navMeshAgent.desiredVelocity.normalized; turns out this doesnt work, the pawn overshoots the agent and wont correct
+
+        return d.normalized;
+       
     }
 
     public void SetWaypoint(Vector3 waypoint)
@@ -90,8 +81,8 @@ public class WaypointFollowerMovementController : PawnMovementController
     }
 
     public bool ReachedWaypoint(Vector3 waypoint)
-    {
-        Debug.Log((transform.position - waypoint).sqrMagnitude);
+    {     
+        //Debug.Log((transform.position - waypoint).sqrMagnitude);
         return (transform.position - waypoint).sqrMagnitude <= Mathf.Epsilon;
     }
 
@@ -99,12 +90,20 @@ public class WaypointFollowerMovementController : PawnMovementController
     //called by cutscene
     public bool ReachedWaypoint()
     {
-        return ReachedWaypoint(overrideWaypoint);
+        return ReachedWaypoint(navMeshAgent.destination);
     }
+
     public void FreeWaypoint()
     {
         overriden = false;
-        navMeshAgent.SetDestination(waypoints.Peek());
+        if (waypoints.Count >= 1)
+        {
+            navMeshAgent.SetDestination(waypoints.Peek());
+        }
+        else {
+            navMeshAgent.ResetPath();
+        }
+
     }
 
 }

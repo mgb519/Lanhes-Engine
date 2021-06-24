@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour {
+public class DataManager : MonoBehaviour ,ISaveable{
 
 
     [System.Serializable]
@@ -86,9 +87,21 @@ public class DataManager : MonoBehaviour {
 
 
     //TODO: serialise and restoring databases
+    public XmlNode SaveToFile(XmlDocument doc) {
+        //TODO not sure if creating a new XmlElement and returnign it is a good idea, maybe use an inbuilt method?
+        XmlElement ret = doc.CreateElement("data");
+        //TODO call save on databases
+        ret.AppendChild(intData.SaveToFile(doc));
+
+        //TODO call saves of other data managers
 
 
 
+        return ret;
+    }
 
-
+    public void LoadFromFile(XmlNode node)
+    {
+        throw new NotImplementedException();
+    }
 }

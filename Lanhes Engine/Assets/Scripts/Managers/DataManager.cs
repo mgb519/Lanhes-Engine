@@ -12,8 +12,18 @@ public class DataManager : MonoBehaviour, ISaveable
     {
         void ISaveable.LoadFromFile(XmlNode node)
         {
-            throw new NotImplementedException();
+            //clear the DB
+            this.Clear();
+            //load from the node
+            XmlNode dbNode = node["db"];
+            foreach(XmlNode entry in dbNode.ChildNodes) {
+                XmlNode keyNode = entry["key"];
+                XmlNode valueNode = entry["value"];
+                this.Add(keyNode.InnerText,StringToValue(valueNode.InnerText));
+            }
         }
+
+        internal abstract TV StringToValue(string text);
 
         XmlNode ISaveable.SaveToFile(XmlDocument doc)
         {
@@ -46,6 +56,12 @@ public class DataManager : MonoBehaviour, ISaveable
     [System.Serializable]
     public class IntDatabase : Database<int>
     {
+        internal override int StringToValue(string text)
+        {
+            //TODO use TryParse and then give a nice error message
+            return int.Parse(text);
+        }
+
         internal override string ValueToString(int value)
         {
             return value.ToString();
@@ -58,6 +74,11 @@ public class DataManager : MonoBehaviour, ISaveable
     [System.Serializable]
     public class StringDatabase : Database<string>
     {
+        internal override string StringToValue(string text)
+        {
+            return text;
+        }
+
         internal override string ValueToString(string value)
         {
             return value;
@@ -71,6 +92,12 @@ public class DataManager : MonoBehaviour, ISaveable
     [System.Serializable]
     public class BoolDatabase : Database<bool>
     {
+        internal override bool StringToValue(string text)
+        {
+            //TODO convert T/F to bool
+            throw new NotImplementedException();
+        }
+
         internal override string ValueToString(bool value)
         {
             //TODO convert bools to T/F
@@ -167,6 +194,10 @@ public class DataManager : MonoBehaviour, ISaveable
     //TODO: serialise and restoring databases
     public XmlNode SaveToFile(XmlDocument doc)
     {
+
+        //TODO save the scene ID we are in
+
+
         XmlElement ret = doc.CreateElement("data");
 
         //store DBs
@@ -187,6 +218,21 @@ public class DataManager : MonoBehaviour, ISaveable
 
     public void LoadFromFile(XmlNode node)
     {
+        XmlElement dataNode = node["data"];
+        //TODO load the scene id
+
+        //TODO restore DBs
+        Debug.Log(node.ChildNodes.Count);
+        foreach ((string, ISaveable) dbData in databases)
+        {
+            XmlElement dbNode = dataNode[dbData.Item1];
+            dbData.Item2.LoadFromFile(dbNode);
+        }
+
+        //TODO load NPC positions
+
+        //TODO load Ink state...?
+
         throw new NotImplementedException();
     }
 }

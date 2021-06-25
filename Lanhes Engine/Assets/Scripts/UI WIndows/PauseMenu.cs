@@ -20,8 +20,8 @@ public class PauseMenu : MenuWindow
         string path = "savefile.sav";
         XmlDocument doc = new XmlDocument();
         doc.Load(path);
-        XmlNode root = doc.FirstChild;
-        DataManager.instance.LoadFromFile(root);
+        //XmlNode root = doc.FirstChild;
+        DataManager.instance.LoadFromFile(doc);
     }
 
     public void SaveGameToFile()

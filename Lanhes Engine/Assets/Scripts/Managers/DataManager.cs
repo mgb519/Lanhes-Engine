@@ -94,14 +94,13 @@ public class DataManager : MonoBehaviour, ISaveable
     {
         internal override bool StringToValue(string text)
         {
-            //TODO convert T/F to bool
-            throw new NotImplementedException();
+            return Boolean.Parse(text);
         }
 
         internal override string ValueToString(bool value)
         {
-            //TODO convert bools to T/F
-            throw new NotImplementedException();
+           
+            return value.ToString();
         }
     }
 

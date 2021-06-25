@@ -142,7 +142,7 @@ public class Party : EditableDictionaryDrawer<InventoryItem, int> {
     internal override void InitDict(SerializedProperty dictionary) {
         if (dict == null) {
             PartyManager partyManager = dictionary.serializedObject.targetObject as PartyManager;
-            Debug.Log(dictionary.propertyPath);
+            //Debug.Log(dictionary.propertyPath);
             //TODO:AAAA THIS IS AWFUL 
             int idx = int.Parse(System.Text.RegularExpressions.Regex.Match(dictionary.propertyPath, @"\d+").Value);
             Inventory holder = partyManager.parties[idx].inventory;

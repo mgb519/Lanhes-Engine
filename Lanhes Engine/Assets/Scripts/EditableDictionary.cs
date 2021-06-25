@@ -64,7 +64,7 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
     }
 
     public void Clear() {
-        if (IsReadOnly) {
+        if (!IsReadOnly) {
             keys.Clear();
             values.Clear();
             version++;

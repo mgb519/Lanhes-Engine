@@ -208,30 +208,77 @@ public class DataManager : MonoBehaviour, ISaveable
 
         //TODO call saves of other managers
 
-        //TODO save NPC positions
+        //save NPC positions
+        XmlElement npcHolderNode = doc.CreateElement("npcs");
+        ret.AppendChild(npcHolderNode);
+        //Get all NPCs that can move; i.e they have pawn movement.
+        PawnMovementController[] npcs = FindObjectsOfType<PawnMovementController>(); ;
+        foreach(PawnMovementController n in npcs) {
+            XmlElement npcNode = doc.CreateElement("npc");
+            npcHolderNode.AppendChild(npcNode);
+
+            GameObject npc = n.gameObject;
+            npcNode.SetAttribute("name",npc.name); //TODO: this requires that NPCs have unique editor names.
+
+            XmlElement x = doc.CreateElement("x");
+            npcNode.AppendChild(x);
+            x.InnerText = npc.transform.position.x.ToString();
+
+            XmlElement y = doc.CreateElement("y");
+            npcNode.AppendChild(y);
+            y.InnerText = npc.transform.position.y.ToString();
+
+            XmlElement z = doc.CreateElement("z");
+            npcNode.AppendChild(z);
+            z.InnerText = npc.transform.position.z.ToString();
+
+            //TODO: NPC rotation? will I need that?
+        }
 
         //TODO How do we store ink state? Especially since we will not save every scene, what about Ink state from previous scenes?
+        //TODO we'll have to put all ink state in memory when leaving a scene, then restore those when entering the scene. These must be stored until flushed via saving
 
         return ret;
     }
 
     public void LoadFromFile(XmlNode node)
     {
-        XmlElement dataNode = node["data"];
-        //TODO load the scene id
+        //TODO make this async somehow?
+        //TODO load the scene id and transition to that scene
 
-        //TODO restore DBs
-        Debug.Log(node.ChildNodes.Count);
+
+        XmlElement dataNode = node["data"];
+
+        //restore DBs
         foreach ((string, ISaveable) dbData in databases)
         {
             XmlElement dbNode = dataNode[dbData.Item1];
             dbData.Item2.LoadFromFile(dbNode);
         }
 
-        //TODO load NPC positions
+        //TODO load other managers
+
+        //load NPC positions
+        XmlNode npcHolder = dataNode["npcs"];
+        foreach(XmlNode npcNode in npcHolder.ChildNodes) {
+            string name = npcNode.Attributes["name"].Value;
+
+            GameObject npc = GameObject.Find(name);
+            if(npc == null) {
+                Debug.LogError("NPC "+name+" not found!");
+                continue;
+            }
+            float x = float.Parse(npcNode["x"].InnerText);
+            float y = float.Parse(npcNode["y"].InnerText);
+            float z = float.Parse(npcNode["z"].InnerText);
+
+            npc.transform.position= new Vector3(x,y,z);
+        }
+
+
 
         //TODO load Ink state...?
 
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 }

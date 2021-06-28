@@ -147,8 +147,12 @@ public class DialogueEvent : MonoBehaviour {
 
     }
 
+    public string Save()
+    {
+        return _inkStory.state.ToJson();
+    }
 
-
-
-
+    public void Load(string json) {
+        _inkStory.state.LoadJson(json);
+    }
 }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneManager : MonoBehaviour {
-    public static SceneManager instance = null;
+public class GameSceneManager : MonoBehaviour {
+    public static GameSceneManager instance = null;
     enum gameState { MENU, WORLD, BATTLE }
     static gameState GameState;
 
@@ -13,8 +13,8 @@ public class SceneManager : MonoBehaviour {
     private static bool isLoading;
 
 
+    //TODO when transitioning scenes make sure to call DataManager.RememberDialogues() before leaving the old scene and RestoreDialogues() when you enter the new scene
 
-  
 
     void Awake() {
         if (instance == null) {

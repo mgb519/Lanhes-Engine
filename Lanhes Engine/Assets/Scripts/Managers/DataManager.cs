@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DataManager : MonoBehaviour, ISaveable
 {
@@ -16,10 +17,11 @@ public class DataManager : MonoBehaviour, ISaveable
             this.Clear();
             //load from the node
             XmlNode dbNode = node["db"];
-            foreach(XmlNode entry in dbNode.ChildNodes) {
+            foreach (XmlNode entry in dbNode.ChildNodes)
+            {
                 XmlNode keyNode = entry["key"];
                 XmlNode valueNode = entry["value"];
-                this.Add(keyNode.InnerText,StringToValue(valueNode.InnerText));
+                this.Add(keyNode.InnerText, StringToValue(valueNode.InnerText));
             }
         }
 
@@ -99,13 +101,31 @@ public class DataManager : MonoBehaviour, ISaveable
 
         internal override string ValueToString(bool value)
         {
-           
+
             return value.ToString();
         }
     }
 
     [SerializeField]
     private BoolDatabase boolData = new BoolDatabase();
+
+
+
+
+
+    [System.Serializable]
+    public class InkStates : EditableDictionary<(int, string), string> { }
+
+
+    [SerializeField]
+    private InkStates inkStates = new InkStates();
+
+
+
+
+
+
+
 
 
     internal void Spew()
@@ -185,12 +205,117 @@ public class DataManager : MonoBehaviour, ISaveable
     }
 
 
+    //TODO What about dialogues that aren't in Ink? I guess just don't have those then.
+
+    //TODO this should be called when transitioning scenes too, so that Inks are held in memory to flush
+    /// <summary>
+    /// Collect dialogues in this scene and hold them in memory
+    /// </summary>
+    public void RememberDialogues()
+    {
+        DialogueEvent[] dialogueEvents = FindObjectsOfType<DialogueEvent>();
+        int currentSceneId = SceneManager.GetActiveScene().buildIndex;
+        foreach (DialogueEvent e in dialogueEvents)
+        {
+            string json = e.Save();
+            inkStates.Add((currentSceneId, e.name), json);
+        }
+
+    }
+
+    /// <summary>
+    /// Find dialogues that are held in memory and flush them into the scene. They will no longer be held in memory, but will be remembered when we leave the scene.
+    /// </summary>
+    public void RestoreDialogues()
+    {
+        int sceneId = SceneManager.GetActiveScene().buildIndex;
+        //get all npc names in this scene that have a remembered JSON
+        List<(int, string)> keys = inkStates.keys.FindAll(x => x.Item1 == sceneId);
+
+        foreach ((int, string) key in keys)
+        {
+            GameObject npc = GameObject.Find(key.Item2);
+
+            DialogueEvent e = npc.GetComponent<DialogueEvent>();
+            e.Load(inkStates[key]);
+            inkStates.Remove(key);
+        }
+
+    }
 
 
+    /// <summary>
+    /// Flush dialogues in memory to file, as well is dialogues in scene.
+    /// </summary>
+    public XmlNode SaveDialogues(XmlDocument doc)
+    {
+        //save Ink dialogues
+
+        XmlNode root = doc.CreateElement("inks");
+
+        //Get all DialogueEvents in scene, serialise thier JSON
+
+
+
+        //TODO: you should not remember Inks that have not been interacted with
+        //FIXME lots of shared code between this and saving rememebered dialogues
+        DialogueEvent[] dialogueEvents = FindObjectsOfType<DialogueEvent>();
+        string currentSceneId = SceneManager.GetActiveScene().buildIndex.ToString();
+        foreach (DialogueEvent e in dialogueEvents)
+        {
+            string json = e.Save();
+            XmlElement inkNode = doc.CreateElement("ink");
+            root.AppendChild(inkNode);
+
+            inkNode.SetAttribute("scene", currentSceneId);
+            inkNode.SetAttribute("name", e.name);
+
+            inkNode.InnerText = json;
+        }
+
+        //store all remembered extra-scene dialogues
+        foreach ((int, string) key in inkStates.Keys)
+        {
+            XmlElement inkNode = doc.CreateElement("ink");
+            root.AppendChild(inkNode);
+
+            inkNode.SetAttribute("scene", key.Item1.ToString());
+            inkNode.SetAttribute("name", key.Item2);
+
+            inkNode.InnerText = inkStates[key];
+
+        }
+
+        return root;
+
+
+    }
+
+
+    /// <summary>
+    /// Load all dialogues from file and place them in the Ink memory
+    /// </summary>
+    public void LoadDialogues(XmlNode node)
+    {
+        //load Ink dialogues
+        inkStates.Clear();
+
+        XmlNode inksNode = node["inks"];
+
+        foreach (XmlNode entry in inksNode.ChildNodes)
+        {
+            int sceneId = int.Parse(entry.Attributes["scene"].Value);
+            string npcId = entry.Attributes["name"].Value;
+            string json = entry.InnerText;
+
+            inkStates.Add((sceneId, npcId), json);
+        }
+
+
+    }
 
 
     //TODO How about we use JSON instead huh? JSONhelper *exists*
-    //TODO: serialise and restoring databases
     public XmlNode SaveToFile(XmlDocument doc)
     {
 
@@ -200,7 +325,8 @@ public class DataManager : MonoBehaviour, ISaveable
         XmlElement ret = doc.CreateElement("data");
 
         //store DBs
-        foreach((string,ISaveable) dbData in databases) {
+        foreach ((string, ISaveable) dbData in databases)
+        {
             XmlElement entry = doc.CreateElement(dbData.Item1);
             ret.AppendChild(entry);
             entry.AppendChild(dbData.Item2.SaveToFile(doc));
@@ -212,13 +338,14 @@ public class DataManager : MonoBehaviour, ISaveable
         XmlElement npcHolderNode = doc.CreateElement("npcs");
         ret.AppendChild(npcHolderNode);
         //Get all NPCs that can move; i.e they have pawn movement.
-        PawnMovementController[] npcs = FindObjectsOfType<PawnMovementController>(); ;
-        foreach(PawnMovementController n in npcs) {
+        PawnMovementController[] npcs = FindObjectsOfType<PawnMovementController>();
+        foreach (PawnMovementController n in npcs)
+        {
             XmlElement npcNode = doc.CreateElement("npc");
             npcHolderNode.AppendChild(npcNode);
 
             GameObject npc = n.gameObject;
-            npcNode.SetAttribute("name",npc.name); //TODO: this requires that NPCs have unique editor names.
+            npcNode.SetAttribute("name", npc.name); //TODO: this requires that NPCs have unique editor names.
 
             XmlElement x = doc.CreateElement("x");
             npcNode.AppendChild(x);
@@ -235,8 +362,11 @@ public class DataManager : MonoBehaviour, ISaveable
             //TODO: NPC rotation? will I need that?
         }
 
-        //TODO How do we store ink state? Especially since we will not save every scene, what about Ink state from previous scenes?
-        //TODO we'll have to put all ink state in memory when leaving a scene, then restore those when entering the scene. These must be stored until flushed via saving
+        //save dialogues
+        XmlElement dialoguesHolderNode = doc.CreateElement("dialogues");
+        ret.AppendChild(dialoguesHolderNode);
+
+        dialoguesHolderNode.AppendChild(SaveDialogues(doc));
 
         return ret;
     }
@@ -260,24 +390,28 @@ public class DataManager : MonoBehaviour, ISaveable
 
         //load NPC positions
         XmlNode npcHolder = dataNode["npcs"];
-        foreach(XmlNode npcNode in npcHolder.ChildNodes) {
+        foreach (XmlNode npcNode in npcHolder.ChildNodes)
+        {
             string name = npcNode.Attributes["name"].Value;
 
             GameObject npc = GameObject.Find(name);
-            if(npc == null) {
-                Debug.LogError("NPC "+name+" not found!");
+            if (npc == null)
+            {
+                Debug.LogError("NPC " + name + " not found!");
                 continue;
             }
             float x = float.Parse(npcNode["x"].InnerText);
             float y = float.Parse(npcNode["y"].InnerText);
             float z = float.Parse(npcNode["z"].InnerText);
 
-            npc.transform.position= new Vector3(x,y,z);
+            npc.transform.position = new Vector3(x, y, z);
         }
 
 
 
-        //TODO load Ink state...?
+        //load Ink state
+        LoadDialogues(dataNode["dialogues"]);
+        RestoreDialogues();
 
         //throw new NotImplementedException();
     }

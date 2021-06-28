@@ -5,11 +5,11 @@ using UnityEngine;
 public class MapTransition : MonoBehaviour
 {
     public string sceneToLoad;
-    SceneManager manager;
+    GameSceneManager manager;
     GameObject player;
     void Start()
     {
-        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<SceneManager>();
+        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameSceneManager>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 

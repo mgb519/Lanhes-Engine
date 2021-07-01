@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MapTransition : MonoBehaviour
 {
-    public Scene sceneToLoad; //TODO this just asks for a handle in editor, make it so we drag an asset
+    public string sceneToLoad; 
     GameSceneManager manager;
     GameObject player;
     void Start()
@@ -20,9 +20,7 @@ public class MapTransition : MonoBehaviour
     {
         if (collision.gameObject == player)
         {
-            Debug.Log(sceneToLoad.name);
-            Debug.Log(sceneToLoad.buildIndex);
-            manager.StartLoadScene(sceneToLoad.buildIndex);
+            manager.StartLoadScene(sceneToLoad);
         }
     }
 }

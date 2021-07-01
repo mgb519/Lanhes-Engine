@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameSceneManager : MonoBehaviour {
+public class GameSceneManager : MonoBehaviour
+{
     public static GameSceneManager instance = null;
     enum gameState { MENU, WORLD, BATTLE } //TODO maybe the isLoading could be used here?
     static gameState GameState;
@@ -12,17 +13,22 @@ public class GameSceneManager : MonoBehaviour {
 
     private static bool isLoading;
 
-    void Awake() {
-        if (instance == null) {
+    void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
             DontDestroyOnLoad(gameObject);
             loadingGroup = transform.GetChild(0).GetComponent<CanvasGroup>();
-        } else if (instance != this) {
+        }
+        else if (instance != this)
+        {
             Destroy(gameObject);
         }
     }
 
-    public void StartLoadScene(int newScene) {
+    public void StartLoadScene(string newScene)
+    {
         if (isLoading)
         {
             return;
@@ -34,10 +40,12 @@ public class GameSceneManager : MonoBehaviour {
         instance.StartCoroutine(instance.LoadScene(newScene));
     }
 
-    private IEnumerator LoadScene(int levelId) {
+    private IEnumerator LoadScene(string levelId)
+    {
         float timer = 0f;
 
-        while (timer < 1f) {
+        while (timer < 1f)
+        {
             timer += Time.deltaTime * 3f;
             loadingGroup.alpha = Mathf.Lerp(loadingGroup.alpha, 1f, timer);
             yield return new WaitForEndOfFrame();
@@ -56,7 +64,8 @@ public class GameSceneManager : MonoBehaviour {
 
         //now we have loaded the new scene, restore remembered dialogues in this scene
         DataManager.instance.RestoreDialogues();
-        while (timer < 1f) {
+        while (timer < 1f)
+        {
             timer += Time.deltaTime * 3f;
             loadingGroup.alpha = Mathf.Lerp(1f, 0f, timer);
             yield return new WaitForEndOfFrame();
@@ -69,7 +78,8 @@ public class GameSceneManager : MonoBehaviour {
     }*/
 
 
-    public static bool IsLoading() {
+    public static bool IsLoading()
+    {
         return isLoading;
     }
 

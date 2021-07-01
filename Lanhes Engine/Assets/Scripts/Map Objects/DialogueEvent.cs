@@ -8,7 +8,9 @@ using System;
 public class DialogueEvent : MonoBehaviour {
 
     //TODO: serialisation
-    GameObject player;
+    GameObject player { get {
+           return PartyManager.instance.playerInThisScene.gameObject;
+    } }
 
 
     public List<ShopData> shops;
@@ -26,7 +28,6 @@ public class DialogueEvent : MonoBehaviour {
     //TODO: serialise state like "which branches should be removed since they've been traversed once"
     //TODO: at what point do I realise that what I should do is just block user interaction with an "event is occuring" flag
     void Awake() {
-        player = GameObject.FindGameObjectWithTag("Player");
         _inkStory = new Story(inkAsset.text);
 
         //bind some getter functions
@@ -38,9 +39,9 @@ public class DialogueEvent : MonoBehaviour {
 
     //TODO: this script is only ever called once? This might be due to Ink not resetting
     public void OnTriggerEnter(Collider collision) {
-        if (collision.gameObject == player) {
-            //TODO: have script triggers and scripts be seperate
-            StartCoroutine(HandleScript());
+    if (collision.gameObject == player) {
+        //TODO: have script triggers and scripts be seperate
+        StartCoroutine(HandleScript());
         }
     }
 

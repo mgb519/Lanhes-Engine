@@ -8,10 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Title.unity
     guid: 08709285f9ce1f94b979bad99f94b6a5
-  - enabled: 1
-    path: Assets/Scenes/Overworld.unity
-    guid: 82d7e798b3181f6418cb1bcd05dea646
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Options.unity
     guid: 7fee51a4e4911ab4f9ed0c3b7d664a70
+  - enabled: 1
+    path: Assets/Scenes/TestScene1.unity
+    guid: f439ad1189d7d444d90d396b8992c6cf
+  - enabled: 1
+    path: Assets/Scenes/TestScene2.unity
+    guid: d9dcb04cdb53c47a4bb5f920db1cb1cb
   m_configObjects: {}

@@ -49,7 +49,7 @@ public abstract class EditableDictionaryDrawer<TK, TV> : PropertyDrawer {
                 Rect leftRec = new Rect(line.x, line.y, line.width * 0.45f, line.height);
                 Rect rightRec = new Rect(line.x + line.width * 0.45f, line.y, line.width * 0.45f, line.height);
 
-                //TODO: make sure we 't have duplicate keys!
+                //TODO: make sure we don't have duplicate keys!
                 EditorGUI.BeginChangeCheck();
                 EditorGUI.PropertyField(leftRec, keys.GetArrayElementAtIndex(i), GUIContent.none);
                 if (EditorGUI.EndChangeCheck()) {

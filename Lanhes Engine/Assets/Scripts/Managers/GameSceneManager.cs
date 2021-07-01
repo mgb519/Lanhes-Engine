@@ -5,16 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour {
     public static GameSceneManager instance = null;
-    enum gameState { MENU, WORLD, BATTLE }
+    enum gameState { MENU, WORLD, BATTLE } //TODO maybe the isLoading could be used here?
     static gameState GameState;
 
     private static CanvasGroup loadingGroup;
 
     private static bool isLoading;
-
-
-    //TODO when transitioning scenes make sure to call DataManager.RememberDialogues() before leaving the old scene and RestoreDialogues() when you enter the new scene
-
 
     void Awake() {
         if (instance == null) {
@@ -26,10 +22,15 @@ public class GameSceneManager : MonoBehaviour {
         }
     }
 
-    public void StartLoadScene(string newScene) {
+    public void StartLoadScene(int newScene) {
         if (isLoading)
+        {
             return;
+        }
         isLoading = true;
+
+        //hoover up this scene's dialogues and store them in the inter-scene memory
+        DataManager.instance.RememberDialogues();
         instance.StartCoroutine(instance.LoadScene(newScene));
     }
 
@@ -43,13 +44,18 @@ public class GameSceneManager : MonoBehaviour {
         }
         timer = 0f;
 
-        yield return new WaitForSeconds(1f);
+        yield return null; //new WaitForSeconds(1f);
+        AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(levelId);
+        while (!op.isDone)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(levelId);
+            yield return null;
         }
 
-        yield return new WaitForSeconds(1f);
 
+        yield return null; //new WaitForSeconds(1f);
+
+        //now we have loaded the new scene, restore remembered dialogues in this scene
+        DataManager.instance.RestoreDialogues();
         while (timer < 1f) {
             timer += Time.deltaTime * 3f;
             loadingGroup.alpha = Mathf.Lerp(1f, 0f, timer);
@@ -57,35 +63,16 @@ public class GameSceneManager : MonoBehaviour {
         }
         isLoading = false;
     }
-
+    /*
     private IEnumerator LoadScene(string levelName) {
-        float timer = 0f;
+        LoadScene();
+    }*/
 
-        while (timer < 1f) {
-            timer += Time.deltaTime * 3f;
-            loadingGroup.alpha = Mathf.Lerp(loadingGroup.alpha, 1f, timer);
-            yield return new WaitForEndOfFrame();
-        }
-        timer = 0f;
 
-        yield return new WaitForSeconds(1f);
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(levelName);
-        }
-
-        yield return new WaitForSeconds(1f);
-
-        while (timer < 1f) {
-            timer += Time.deltaTime * 3f;
-            loadingGroup.alpha = Mathf.Lerp(1f, 0f, timer);
-            yield return new WaitForEndOfFrame();
-        }
-        isLoading = false;
+    public static bool IsLoading() {
+        return isLoading;
     }
 
 
-
-
-    
 
 }

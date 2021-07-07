@@ -42,20 +42,25 @@ public class GameSceneManager : MonoBehaviour
 
     private IEnumerator LoadScene(string levelId)
     {
-        float timer = 0f;
+        float timer = 2f;
 
+        Debug.Log("before loop");
         while (timer < 1f)
         {
             timer += Time.deltaTime * 3f;
             loadingGroup.alpha = Mathf.Lerp(loadingGroup.alpha, 1f, timer);
             yield return new WaitForEndOfFrame();
+            Debug.Log("after yield");
         }
-        timer = 0f;
+        timer = 3f;
 
+        Debug.Log("after loop");
         yield return null; //new WaitForSeconds(1f);
+        Debug.Log("after null");
         AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(levelId);
         while (!op.isDone)
         {
+            Debug.Log("waiting for op");
             yield return null;
         }
 
@@ -69,6 +74,8 @@ public class GameSceneManager : MonoBehaviour
             timer += Time.deltaTime * 3f;
             loadingGroup.alpha = Mathf.Lerp(1f, 0f, timer);
             yield return new WaitForEndOfFrame();
+
+            Debug.Log("waiting for timer");
         }
         isLoading = false;
     }

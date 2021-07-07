@@ -15,7 +15,9 @@ public class PauseMenu : MenuWindow
         CloseMenu();
     }
 
-    public void LoadFromFile() {
+    public void LoadFromFile()
+    {
+        Debug.Log("loading");
         //TODO dialog UI for selecting file
         string path = "savefile.sav";
         XmlDocument doc = new XmlDocument();

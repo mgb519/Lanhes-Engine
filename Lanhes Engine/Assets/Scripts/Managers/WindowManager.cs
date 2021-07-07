@@ -38,7 +38,7 @@ public class WindowManager : MonoBehaviour {
 
 
     private static MenuWindow CreateWindow(MenuWindow other) {
-        MenuWindow subwindow = GameObject.Instantiate(other);
+        MenuWindow subwindow = GameObject.Instantiate(other,instance.transform);
         return subwindow;
     }
 

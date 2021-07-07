@@ -143,7 +143,9 @@ public class DataManager : MonoBehaviour, ISaveable
 
 
     public static DataManager instance = null;
+    private static bool isLoading = false;
 
+    public static bool IsLoading() { return isLoading; }
     void Awake()
     {
 
@@ -319,10 +321,15 @@ public class DataManager : MonoBehaviour, ISaveable
     public XmlNode SaveToFile(XmlDocument doc)
     {
 
-        //TODO save the scene ID we are in
-
 
         XmlElement ret = doc.CreateElement("data");
+
+
+        //Save the scene we are in
+        XmlElement sceneId = doc.CreateElement("scene");
+        ret.AppendChild(sceneId);
+        sceneId.InnerText = SceneManager.GetActiveScene().name;
+
 
         //store DBs
         foreach ((string, ISaveable) dbData in databases)
@@ -371,13 +378,15 @@ public class DataManager : MonoBehaviour, ISaveable
         return ret;
     }
 
-    public void LoadFromFile(XmlNode node)
+    public IEnumerator LoadBody(XmlNode node)
     {
-        //TODO make this async somehow?
-        //TODO load the scene id and transition to that scene
 
 
-        XmlElement dataNode = node["data"];
+        Debug.Log("load body");
+        isLoading = true;
+       
+        XmlElement dataNode = node["data"];     
+
 
         //restore DBs
         foreach ((string, ISaveable) dbData in databases)
@@ -386,6 +395,14 @@ public class DataManager : MonoBehaviour, ISaveable
             dbData.Item2.LoadFromFile(dbNode);
         }
 
+
+        //load the scene id and transition to that scene
+        string sceneId = dataNode["scene"].InnerText;
+        GameSceneManager.instance.StartLoadScene(sceneId);
+
+        yield return new WaitUntil(() => !GameSceneManager.IsLoading());
+
+        Debug.Log("loaded scene");
         //TODO load other managers
 
         //load NPC positions
@@ -408,11 +425,19 @@ public class DataManager : MonoBehaviour, ISaveable
         }
 
 
-
         //load Ink state
         LoadDialogues(dataNode["dialogues"]);
         RestoreDialogues();
-
+        isLoading = false;
         //throw new NotImplementedException();
+        Debug.Log("Finsihed load body");
+
+    }
+
+
+    public void LoadFromFile(XmlNode node)
+    {
+        Debug.Log("start load");
+        StartCoroutine(LoadBody(node));
     }
 }

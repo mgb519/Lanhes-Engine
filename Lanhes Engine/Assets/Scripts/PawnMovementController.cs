@@ -20,7 +20,7 @@ public abstract class PawnMovementController : MonoBehaviour {
 
     // Update is called once per frame
     public void Update() {
-        if (WindowManager.instance.ContinuePlay() && !GameSceneManager.IsLoading())
+        if (WindowManager.instance.ContinuePlay() && !GameSceneManager.IsLoading() && !DataManager.IsLoading())
         {
             //TODO: perhaps this should be got as a vector2? I *presume* we won't have Y axis movement, but the navmesh seems to assume we *can*.
             Vector3 dir = GetInput();

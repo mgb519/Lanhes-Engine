@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameSceneManager : MonoBehaviour
 {
     public static GameSceneManager instance = null;
-    enum gameState { MENU, WORLD, BATTLE } //TODO maybe the isLoading could be used here?
+    enum gameState { MENU, WORLD, BATTLE } //TODO maybe the functionality of isLoading could be moved here?
     static gameState GameState;
 
     private static CanvasGroup loadingGroup;
@@ -42,47 +42,18 @@ public class GameSceneManager : MonoBehaviour
 
     private IEnumerator LoadScene(string levelId)
     {
-        float timer = 2f;
-
-        Debug.Log("before loop");
-        while (timer < 1f)
-        {
-            timer += Time.deltaTime * 3f;
-            loadingGroup.alpha = Mathf.Lerp(loadingGroup.alpha, 1f, timer);
-            yield return new WaitForEndOfFrame();
-            Debug.Log("after yield");
-        }
-        timer = 3f;
-
-        Debug.Log("after loop");
-        yield return null; //new WaitForSeconds(1f);
-        Debug.Log("after null");
+        //Wait for Unity to finish loading the scene in the background
         AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(levelId);
         while (!op.isDone)
         {
-            Debug.Log("waiting for op");
             yield return null;
         }
 
-
-        yield return null; //new WaitForSeconds(1f);
-
         //now we have loaded the new scene, restore remembered dialogues in this scene
         DataManager.instance.RestoreDialogues();
-        while (timer < 1f)
-        {
-            timer += Time.deltaTime * 3f;
-            loadingGroup.alpha = Mathf.Lerp(1f, 0f, timer);
-            yield return new WaitForEndOfFrame();
 
-            Debug.Log("waiting for timer");
-        }
         isLoading = false;
     }
-    /*
-    private IEnumerator LoadScene(string levelName) {
-        LoadScene();
-    }*/
 
 
     public static bool IsLoading()

@@ -21,6 +21,7 @@ public class DialogueEvent : MonoBehaviour {
     // The ink story that we're wrapping
     Story _inkStory;
 
+    //FIXME: what does this do again? Do we save and restore it or something?
     private List<WaypointFollowerMovementController> overridenNPCs = new List<WaypointFollowerMovementController>();
 
 
@@ -85,7 +86,7 @@ public class DialogueEvent : MonoBehaviour {
                         yield return new WaitUntil(() => controller.ReachedWaypoint());
                         player.GetComponent<PlayerPawnMovement>().blocked = false;              //TODO: do we want a movement to be run asynchronously? i.e we would move to the next line as the NPC moves
                         controller.FreeWaypoint();  //TODO presumably, we may want the NPC to stay in pace. maybe then we shouldn't free the waypoint? In this case, the waypoint needs to be freed up at *some* point. Except for cases where we alter patrol paths?
-
+                        overridenNPCs.Remove(controller); //TODO is this correct? unsure what overrdien NPCs was for
                     } else if (function == "$NPCTELE") {
                         //NPC is teleported to location
                         string npcName = args[1];

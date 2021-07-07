@@ -384,8 +384,8 @@ public class DataManager : MonoBehaviour, ISaveable
 
         Debug.Log("load body");
         isLoading = true;
-       
-        XmlElement dataNode = node["data"];     
+
+        XmlElement dataNode = node["data"];
 
 
         //restore DBs

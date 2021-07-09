@@ -5,6 +5,7 @@ using System.Xml;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//TODO this class is getting a bit chunky
 public class DataManager : MonoBehaviour, ISaveable
 {
 
@@ -139,7 +140,7 @@ public class DataManager : MonoBehaviour, ISaveable
 
     //TODO: would prefer a more concrete type than ISaveable this this is just used for saving anyway so no biggie rn
     (string, ISaveable)[] databases;
-
+    (string, ISaveable)[] managers;
 
 
     public static DataManager instance = null;
@@ -155,6 +156,7 @@ public class DataManager : MonoBehaviour, ISaveable
             DontDestroyOnLoad(gameObject);
             //register databases so that saveing and loading can see them
             databases = new (string, ISaveable)[] { ("ints", intData), ("strings", stringData), ("bools", boolData) };
+            managers = new (string, ISaveable)[] { ("gamescenes", gameObject.GetComponent<GameSceneManager>()), ("parties", gameObject.GetComponent<PartyManager>()), ("windows", gameObject.GetComponent<WindowManager>()) }; //TODO is it even necessary to save some of these? (specifically, looking and window manager and scene manager)
         }
         else if (instance != this)
         {
@@ -339,7 +341,17 @@ public class DataManager : MonoBehaviour, ISaveable
             entry.AppendChild(dbData.Item2.SaveToFile(doc));
         }
 
-        //TODO call saves of other managers
+        //call saves of other managers
+        XmlElement managerHolderNode = doc.CreateElement("managers");
+        ret.AppendChild(managerHolderNode); 
+        foreach ((string, ISaveable) manData in managers)
+        {
+            XmlElement entry = doc.CreateElement(manData.Item1);
+            managerHolderNode.AppendChild(entry);
+            entry.AppendChild(manData.Item2.SaveToFile(doc));
+
+            managerHolderNode.AppendChild(entry);
+        }
 
         //save NPC positions
         XmlElement npcHolderNode = doc.CreateElement("npcs");
@@ -398,12 +410,20 @@ public class DataManager : MonoBehaviour, ISaveable
 
         //load the scene id and transition to that scene
         string sceneId = dataNode["scene"].InnerText;
-        GameSceneManager.instance.StartLoadScene(sceneId);
+        GameSceneManager.StartLoadScene(sceneId);
 
         yield return new WaitUntil(() => !GameSceneManager.IsLoading());
 
         Debug.Log("loaded scene");
-        //TODO load other managers
+
+        //load other managers
+        XmlElement managerHolderNode = dataNode["managers"];
+        foreach ((string, ISaveable) m in managers)
+        {
+            XmlElement managerNode = managerHolderNode[m.Item1];
+            m.Item2.LoadFromFile(managerNode);
+        }
+        //player has been spawned correctly when loading PartyManager, so it exists in-scene.
 
         //load NPC positions
         XmlNode npcHolder = dataNode["npcs"];
@@ -412,6 +432,7 @@ public class DataManager : MonoBehaviour, ISaveable
             string name = npcNode.Attributes["name"].Value;
 
             GameObject npc = GameObject.Find(name);
+            Debug.Log(name);
             if (npc == null)
             {
                 Debug.LogError("NPC " + name + " not found!");
@@ -420,7 +441,7 @@ public class DataManager : MonoBehaviour, ISaveable
             float x = float.Parse(npcNode["x"].InnerText);
             float y = float.Parse(npcNode["y"].InnerText);
             float z = float.Parse(npcNode["z"].InnerText);
-
+            //FIXME: player is not positioned correctly, and always returns to spawn point
             npc.transform.position = new Vector3(x, y, z);
         }
 

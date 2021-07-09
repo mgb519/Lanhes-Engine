@@ -130,7 +130,7 @@ public class BoolDatabaseDrawer : StringIndexedDictionaryDrawer<bool> { }
 
 
 [CustomPropertyDrawer(typeof(Inventory.InventoryContents))]
-public class Party : EditableDictionaryDrawer<InventoryItem, int> {
+public class InventoryDrawer : EditableDictionaryDrawer<InventoryItem, int> {
     internal override InventoryItem GetNewKey(Rect newNameField, InventoryItem previous) {
         return (InventoryItem)EditorGUI.ObjectField(newNameField, previous, typeof(InventoryItem), false); //uhhhh, not 100% how good this will be...
     }
@@ -141,12 +141,16 @@ public class Party : EditableDictionaryDrawer<InventoryItem, int> {
     //And what if we have
     internal override void InitDict(SerializedProperty dictionary) {
         if (dict == null) {
+
             PartyManager partyManager = dictionary.serializedObject.targetObject as PartyManager;
             //Debug.Log(dictionary.propertyPath);
             //TODO:AAAA THIS IS AWFUL 
             int idx = int.Parse(System.Text.RegularExpressions.Regex.Match(dictionary.propertyPath, @"\d+").Value);
+            Debug.Log(idx);
+            Debug.Log(partyManager.parties.Count);
             Inventory holder = partyManager.parties[idx].inventory;
             dict = fieldInfo.GetValue(holder) as EditableDictionary<InventoryItem, int>;
+
 
         }
     }

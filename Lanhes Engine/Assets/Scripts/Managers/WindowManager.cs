@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WindowManager : MonoBehaviour {
+public class WindowManager : MonoBehaviour , ISaveable {  //FIXME does this need to be Saveable?
 
     public static WindowManager instance = null;
 
@@ -92,5 +93,18 @@ public class WindowManager : MonoBehaviour {
         
         instance.baseWindow = window;
         //pause the game is handled by the creation ofthe window
+    }
+
+    public XmlNode SaveToFile(XmlDocument doc)
+    {
+        XmlElement ret = doc.CreateElement("windows");
+
+
+        return ret;
+    }
+
+    public void LoadFromFile(XmlNode node)
+    {
+        //nothing is saved, so nothing is loaded!
     }
 }

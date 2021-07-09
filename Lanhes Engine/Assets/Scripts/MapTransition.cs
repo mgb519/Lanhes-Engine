@@ -5,12 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MapTransition : MonoBehaviour
 {
-    public string sceneToLoad; 
-    GameSceneManager manager;
+    public string sceneToLoad;
+    public string entrypoint;
     GameObject player;
+
+
     void Start()
     {
-        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameSceneManager>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -20,7 +21,7 @@ public class MapTransition : MonoBehaviour
     {
         if (collision.gameObject == player)
         {
-            manager.StartLoadScene(sceneToLoad);
+            GameSceneManager.StartLoadScene(sceneToLoad,entrypoint);
         }
     }
 }

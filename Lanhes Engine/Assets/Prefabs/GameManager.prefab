@@ -162,11 +162,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2712385093993735700}
-  - component: {fileID: 948332357377060550}
   - component: {fileID: 2549812948673304026}
   - component: {fileID: 3390516612725745431}
+  - component: {fileID: 948332357377060550}
   - component: {fileID: 4991302870453160485}
   - component: {fileID: 1825160770870204550}
+  - component: {fileID: 6729582798819793251}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -189,28 +190,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &948332357377060550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 494302135492462658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dc9a6f986a8b794caf1d957738d8ed2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stringWindow: {fileID: 3538980149694292484, guid: 14e6a742b3dc3a94a965749a4bff4077,
-    type: 3}
-  shopWindow: {fileID: 2470878822066953968, guid: 4f5b35e3c06530e4ab121ed25c87e074,
-    type: 3}
-  pauseMenu: {fileID: 1377767442809115469, guid: d5cff08b740c5644fa25029139acb1e2,
-    type: 3}
-  selectionButton: {fileID: 2199693121593086125, guid: 7fce5304b1c56be4299daf5e0cd83eb7,
-    type: 3}
-  selectionWindow: {fileID: 8878908754863080217, guid: 151498b3701e97244b7b56504a1fe509,
-    type: 3}
 --- !u!114 &2549812948673304026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +224,28 @@ MonoBehaviour:
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
+--- !u!114 &948332357377060550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494302135492462658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc9a6f986a8b794caf1d957738d8ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stringWindow: {fileID: 3538980149694292484, guid: 14e6a742b3dc3a94a965749a4bff4077,
+    type: 3}
+  shopWindow: {fileID: 2470878822066953968, guid: 4f5b35e3c06530e4ab121ed25c87e074,
+    type: 3}
+  pauseMenu: {fileID: 1377767442809115469, guid: d5cff08b740c5644fa25029139acb1e2,
+    type: 3}
+  selectionButton: {fileID: 2199693121593086125, guid: 7fce5304b1c56be4299daf5e0cd83eb7,
+    type: 3}
+  selectionWindow: {fileID: 8878908754863080217, guid: 151498b3701e97244b7b56504a1fe509,
+    type: 3}
 --- !u!114 &4991302870453160485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +281,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a4d9fb05ee8035d1859312b6551e68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6729582798819793251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494302135492462658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2657ab5dcd8ff40a385308437df352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parties: []
 --- !u!1 &5332216448509554728
 GameObject:
   m_ObjectHideFlags: 0

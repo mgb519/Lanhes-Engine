@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+//TODO should this be ISaveable to save the overriden status? On the other hand, currently overrides only take place within dialogues; and you can't save mid-dialogue.
 public class WaypointFollowerMovementController : PawnMovementController
 {
 

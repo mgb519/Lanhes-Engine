@@ -9,7 +9,7 @@ public class DialogueEvent : MonoBehaviour {
 
     //TODO: serialisation
     GameObject player { get {
-           return PartyManager.instance.playerInThisScene.gameObject;
+           return PartyManager.playerInThisScene.gameObject;
     } }
 
 

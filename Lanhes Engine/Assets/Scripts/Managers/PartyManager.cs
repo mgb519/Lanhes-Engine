@@ -14,7 +14,7 @@ public class PartyManager : MonoBehaviour, ISaveable
 
     //FIXME: this *should* be private, but the EDITOR needs this to be public, apprently labvelling it serializable is not enough.
     [SerializeField]
-    public List<Party> parties = new List<Party>();//TODO couldn't this be a SerializableDisctionary and the player spanwer use a key rather than an index?
+    public Party[] parties = new Party[7];// TODO couldn't this be a SerializableDisctionary and the player spanwer use a key rather than an index?
 
     private Party partyThisScene;
     //points towards the party in this scene
@@ -88,7 +88,7 @@ public class PartyManager : MonoBehaviour, ISaveable
         XmlElement ret = doc.CreateElement("partyman");
         XmlElement partiesNode = doc.CreateElement("parties");
         ret.AppendChild(partiesNode);
-        for (int i = 0; i < parties.Count; i++)
+        for (int i = 0; i < parties.Length; i++)
         {
             Party party = parties[i];
             XmlElement partyNode = doc.CreateElement("party");

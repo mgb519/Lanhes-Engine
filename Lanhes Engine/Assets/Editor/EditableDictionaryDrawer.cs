@@ -147,7 +147,7 @@ public class InventoryDrawer : EditableDictionaryDrawer<InventoryItem, int> {
             //TODO:AAAA THIS IS AWFUL 
             int idx = int.Parse(System.Text.RegularExpressions.Regex.Match(dictionary.propertyPath, @"\d+").Value);
             Debug.Log(idx);
-            Debug.Log(partyManager.parties.Count);
+            Debug.Log(partyManager.parties.Length);
             Inventory holder = partyManager.parties[idx].inventory;
             dict = fieldInfo.GetValue(holder) as EditableDictionary<InventoryItem, int>;
 

@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: TestScene1
+  entrypoint: Entrance FromTestScene2
 --- !u!65 &633108856
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -424,7 +425,7 @@ PrefabInstance:
     - target: {fileID: 1169193328615470465, guid: d695d87660940e1a3a7bcf60c64e30bd,
         type: 3}
       propertyPath: m_Name
-      value: Player Spawn Point
+      value: Entrance FromTestScene1
       objectReference: {fileID: 0}
     - target: {fileID: 1169193328615470471, guid: d695d87660940e1a3a7bcf60c64e30bd,
         type: 3}

@@ -392,9 +392,7 @@ public class DataManager : MonoBehaviour, ISaveable
 
     public IEnumerator LoadBody(XmlNode node)
     {
-
-
-        Debug.Log("load body");
+    
         isLoading = true;
 
         XmlElement dataNode = node["data"];
@@ -432,7 +430,6 @@ public class DataManager : MonoBehaviour, ISaveable
             string name = npcNode.Attributes["name"].Value;
 
             GameObject npc = GameObject.Find(name);
-            Debug.Log(name);
             if (npc == null)
             {
                 Debug.LogError("NPC " + name + " not found!");
@@ -451,14 +448,14 @@ public class DataManager : MonoBehaviour, ISaveable
         RestoreDialogues();
         isLoading = false;
         //throw new NotImplementedException();
-        Debug.Log("Finsihed load body");
+        Debug.Log("Finished load body");
 
     }
 
 
     public void LoadFromFile(XmlNode node)
     {
-        Debug.Log("start load");
+        Debug.Log("starting load");
         StartCoroutine(LoadBody(node));
     }
 }

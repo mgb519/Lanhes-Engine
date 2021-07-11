@@ -7,19 +7,11 @@ public class MapTransition : MonoBehaviour
 {
     public string sceneToLoad;
     public string entrypoint;
-    GameObject player;
-
-
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
-
-
-    //TODO specify a spawn point
+  
+    
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject == player)
+        if (collision.gameObject == PartyManager.playerInThisScene.gameObject)
         {
             GameSceneManager.StartLoadScene(sceneToLoad,entrypoint);
         }

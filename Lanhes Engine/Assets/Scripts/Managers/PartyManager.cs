@@ -43,7 +43,7 @@ public class PartyManager : MonoBehaviour, ISaveable
     /// <param name="id">index of the party being spawned in</param>
     public static void SpawnPlayer(int id)
     {
-        //TODO make sure to spawn at the correctly named spawn point
+        Debug.Log("Spawning player by ID");
         if (playerInThisScene != null)
         {
             //a player already exists, do not spawn a new one. TODO maybe delete it and create a new one? idk anymore. Can this even happen?
@@ -56,7 +56,7 @@ public class PartyManager : MonoBehaviour, ISaveable
         playerInThisScene.gameObject.name = "Player";
 
         //Destroy any spawners in the level; if we let them live, then they will spawn in a party. This is a bad thing; we've just spawned in the correct one!
-        //FIXME this isn't necessary anymore since they have no behaviour.
+        //FIXME this isn't necessary anymore since they have no behaviour. Maybe use a Tag instead?
         PlayerSpawnMarker[] spawners = GameObject.FindObjectsOfType<PlayerSpawnMarker>();
         foreach (PlayerSpawnMarker spawner in spawners)
         {
@@ -65,16 +65,29 @@ public class PartyManager : MonoBehaviour, ISaveable
     }
 
     /// <summary>
-    /// Spawn the curent player party in the current scene at the speceficied spawn point.
+    /// Spawn the currently set player party in the current scene at the speceficied spawn point.
     /// </summary>
     /// <param name="marker">The name of the spawn point marker in the new scene.</param>
-    public static void SpawnPlayer(string marker) {
-        throw new NotImplementedException();
+    public static void SpawnPlayer(string marker)
+    {
+        Debug.Log("Spawning player by marker");
+
+        if (playerInThisScene != null)
+        {
+            Debug.Log("Aborting spawning by marker");
+            //a player already exists, do not spawn a new one. TODO maybe delete it and create a new one? idk anymore. Can this even happen?
+            return;
+        }
+
+        GameObject named = GameObject.Find(marker);
+        PlayerSpawnMarker m = named.GetComponent<PlayerSpawnMarker>();
+        if (m != null) {
+            //partyThisScene should already be set, we just need to spawn its avatar in.
+            playerInThisScene = Instantiate(instance.partyThisScene.avatar, named.transform.position, named.transform.rotation);
+            playerInThisScene.gameObject.name = "Player";
+        }
+
     }
-
-
-    //TODO function to swap current party (would probably be called as part of a scene transition)
-
 
 
     public Party GetParty()
@@ -103,9 +116,13 @@ public class PartyManager : MonoBehaviour, ISaveable
 
     public void LoadFromFile(XmlNode node)
     {
+
         //dispose of the player party
-        Destroy(playerInThisScene.gameObject);
-        playerInThisScene = null;
+        //Destroy(playerInThisScene.gameObject);
+        //playerInThisScene = null;
+        //The player party is already destroyed by virtue of a NEW SCENE BEING LOADED
+
+
 
         XmlNode baseNode = node["partyman"];
         XmlNode partiesNode = baseNode["parties"];
@@ -144,7 +161,7 @@ public class PartyManager : MonoBehaviour, ISaveable
         }
     }
 
-
+   
 }
 
 [System.Serializable]

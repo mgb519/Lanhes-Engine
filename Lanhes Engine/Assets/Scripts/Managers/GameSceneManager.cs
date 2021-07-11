@@ -53,7 +53,7 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
 
         if (spawnPositionName != null)
         {
-            //we have been supplied a spawn point name. This means we were called  by a scene transition (rather than a load) and thus need to player the player at the correct position.
+            //we have been supplied a spawn point name. This means we were called  by a scene transition (rather than a load) and thus need to spawn the player at the correct position.
             PartyManager.SpawnPlayer(spawnPositionName);
         }
 

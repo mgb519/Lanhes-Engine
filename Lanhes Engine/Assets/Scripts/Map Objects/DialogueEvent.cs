@@ -8,7 +8,9 @@ using System;
 public class DialogueEvent : MonoBehaviour {
 
     //TODO: serialisation
-    GameObject player;
+    GameObject player { get {
+           return PartyManager.playerInThisScene.gameObject;
+    } }
 
 
     public List<ShopData> shops;
@@ -19,6 +21,7 @@ public class DialogueEvent : MonoBehaviour {
     // The ink story that we're wrapping
     Story _inkStory;
 
+    //FIXME: what does this do again? Do we save and restore it or something?
     private List<WaypointFollowerMovementController> overridenNPCs = new List<WaypointFollowerMovementController>();
 
 
@@ -26,7 +29,6 @@ public class DialogueEvent : MonoBehaviour {
     //TODO: serialise state like "which branches should be removed since they've been traversed once"
     //TODO: at what point do I realise that what I should do is just block user interaction with an "event is occuring" flag
     void Awake() {
-        player = GameObject.FindGameObjectWithTag("Player");
         _inkStory = new Story(inkAsset.text);
 
         //bind some getter functions
@@ -38,9 +40,9 @@ public class DialogueEvent : MonoBehaviour {
 
     //TODO: this script is only ever called once? This might be due to Ink not resetting
     public void OnTriggerEnter(Collider collision) {
-        if (collision.gameObject == player) {
-            //TODO: have script triggers and scripts be seperate
-            StartCoroutine(HandleScript());
+    if (collision.gameObject == player) {
+        //TODO: have script triggers and scripts be seperate
+        StartCoroutine(HandleScript());
         }
     }
 
@@ -84,7 +86,7 @@ public class DialogueEvent : MonoBehaviour {
                         yield return new WaitUntil(() => controller.ReachedWaypoint());
                         player.GetComponent<PlayerPawnMovement>().blocked = false;              //TODO: do we want a movement to be run asynchronously? i.e we would move to the next line as the NPC moves
                         controller.FreeWaypoint();  //TODO presumably, we may want the NPC to stay in pace. maybe then we shouldn't free the waypoint? In this case, the waypoint needs to be freed up at *some* point. Except for cases where we alter patrol paths?
-
+                        overridenNPCs.Remove(controller); //TODO is this correct? unsure what overrdien NPCs was for
                     } else if (function == "$NPCTELE") {
                         //NPC is teleported to location
                         string npcName = args[1];
@@ -147,8 +149,12 @@ public class DialogueEvent : MonoBehaviour {
 
     }
 
+    public string Save()
+    {
+        return _inkStory.state.ToJson();
+    }
 
-
-
-
+    public void Load(string json) {
+        _inkStory.state.LoadJson(json);
+    }
 }

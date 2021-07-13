@@ -14,7 +14,7 @@ public class Inventory {
     public class InventoryContents : EditableDictionary<InventoryItem, int> { }
 
     [SerializeField]
-    private InventoryContents items = new InventoryContents();
+    public InventoryContents items = new InventoryContents();
 
 
    

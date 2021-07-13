@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class PlayerSpawnMarker : MonoBehaviour
 {
-    public int partyIndex;
-
+    //TODO This is just a marker. So why are we using the full wieght of a MonoBehaviour? Find a better way, seriously.
 }

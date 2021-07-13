@@ -49,7 +49,7 @@ public abstract class EditableDictionaryDrawer<TK, TV> : PropertyDrawer {
                 Rect leftRec = new Rect(line.x, line.y, line.width * 0.45f, line.height);
                 Rect rightRec = new Rect(line.x + line.width * 0.45f, line.y, line.width * 0.45f, line.height);
 
-                //TODO: make sure we 't have duplicate keys!
+                //TODO: make sure we don't have duplicate keys!
                 EditorGUI.BeginChangeCheck();
                 EditorGUI.PropertyField(leftRec, keys.GetArrayElementAtIndex(i), GUIContent.none);
                 if (EditorGUI.EndChangeCheck()) {
@@ -130,7 +130,7 @@ public class BoolDatabaseDrawer : StringIndexedDictionaryDrawer<bool> { }
 
 
 [CustomPropertyDrawer(typeof(Inventory.InventoryContents))]
-public class Party : EditableDictionaryDrawer<InventoryItem, int> {
+public class InventoryDrawer : EditableDictionaryDrawer<InventoryItem, int> {
     internal override InventoryItem GetNewKey(Rect newNameField, InventoryItem previous) {
         return (InventoryItem)EditorGUI.ObjectField(newNameField, previous, typeof(InventoryItem), false); //uhhhh, not 100% how good this will be...
     }
@@ -141,12 +141,16 @@ public class Party : EditableDictionaryDrawer<InventoryItem, int> {
     //And what if we have
     internal override void InitDict(SerializedProperty dictionary) {
         if (dict == null) {
+
             PartyManager partyManager = dictionary.serializedObject.targetObject as PartyManager;
-            Debug.Log(dictionary.propertyPath);
+            //Debug.Log(dictionary.propertyPath);
             //TODO:AAAA THIS IS AWFUL 
             int idx = int.Parse(System.Text.RegularExpressions.Regex.Match(dictionary.propertyPath, @"\d+").Value);
+            Debug.Log(idx);
+            Debug.Log(partyManager.parties.Length);
             Inventory holder = partyManager.parties[idx].inventory;
             dict = fieldInfo.GetValue(holder) as EditableDictionary<InventoryItem, int>;
+
 
         }
     }

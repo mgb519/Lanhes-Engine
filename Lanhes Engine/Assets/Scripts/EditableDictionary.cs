@@ -49,7 +49,8 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
             if (key == null) { throw new ArgumentNullException(); }
             if (keys.Contains(key)) {
                 throw new ArgumentException("Dictionary already contains key " + key);
-            } else {
+            } else
+            {
                 keys.Add(key);
                 values.Add(value);
                 version++;
@@ -64,7 +65,7 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
     }
 
     public void Clear() {
-        if (IsReadOnly) {
+        if (!IsReadOnly) {
             keys.Clear();
             values.Clear();
             version++;

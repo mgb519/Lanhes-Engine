@@ -126,6 +126,11 @@ public class DialogueEvent : MonoBehaviour {
                         //TODO restore the above instead
                         BattleManager.StartBattle(null);
                         yield return new WaitUntil(() => !BattleManager.InBattle()); //wait for the battle to finish before continuing the script.
+                        //BATTLE directives should be followed by a choice function, with an outcome for each BattleResult
+                        List<Choice> paths = _inkStory.currentChoices;
+                        string compare = BattleManager.BattleResultAsString(BattleManager.GetResultOfLastBattle());
+                        Choice result = paths.Find(x => x.text == compare);
+                        _inkStory.ChooseChoiceIndex(result.index);
                     }
                     else {
                         //function not found!

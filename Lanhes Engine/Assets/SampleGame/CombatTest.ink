@@ -6,18 +6,17 @@
 -It's time to d-d-d-d-duel!
 
 $BATTLE 0
-
-{ getBattleResult():
-- 1: -> won_battle
-- 2: -> lost_battle
-}
++	[victory]
+	-> won_battle
++	[loss]
+	->lost_battle
 
 ==won_battle==
 You are victorious!
 -> end_of_dialogue
 
 ==lost_battle==
-\| \|\| \n\|\| \|\_
+\| \|\| \|\| \|\_
 And now, you see that Evil will always triumph over Good, becuase Good is dumb.
 
 -> end_of_dialogue

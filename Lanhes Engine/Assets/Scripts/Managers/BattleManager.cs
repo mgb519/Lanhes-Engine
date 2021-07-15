@@ -115,6 +115,23 @@ public class BattleManager : MonoBehaviour, ISaveable
     }
 
 
+    /// <summary>
+    /// Converts the given BattleResult into its string representation for use in Ink scripts. Must be defined on a per-game basis.
+    /// </summary>
+    /// <returns>The battleResults string representation.</returns>
+    /// <param name="battleResult">Battle result to convert</param>
+    internal static string BattleResultAsString(BattleResult battleResult)
+    {
+        switch (battleResult)
+        {
+            case BattleResult.Victory:
+                return "victory";
+            case BattleResult.Loss:
+                return "loss";
+            default:
+                return null; //This should never happen. And so we can safely return null, thus breaking the game, clearly. (I mean, yeah, it alerts the dev to a problem at least.)
+        }
+    }
 }
 
 //TODO move these to thier own file

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 //TODO this class is getting a bit chunky
+[RequireComponent(typeof(GameSceneManager)), RequireComponent(typeof(PartyManager)), RequireComponent(typeof(WindowManager)), RequireComponent(typeof(BattleManager))]
 public class DataManager : MonoBehaviour, ISaveable
 {
 
@@ -156,7 +157,7 @@ public class DataManager : MonoBehaviour, ISaveable
             DontDestroyOnLoad(gameObject);
             //register databases so that saveing and loading can see them
             databases = new (string, ISaveable)[] { ("ints", intData), ("strings", stringData), ("bools", boolData) };
-            managers = new (string, ISaveable)[] { ("gamescenes", gameObject.GetComponent<GameSceneManager>()), ("parties", gameObject.GetComponent<PartyManager>()), ("windows", gameObject.GetComponent<WindowManager>()) }; //TODO is it even necessary to save some of these? (specifically, looking and window manager and scene manager)
+            managers = new (string, ISaveable)[] { ("gamescenes", gameObject.GetComponent<GameSceneManager>()), ("parties", gameObject.GetComponent<PartyManager>()), ("windows", gameObject.GetComponent<WindowManager>()) , ("battles", gameObject.GetComponent<BattleManager>()) }; //TODO is it even necessary to save some of these? (specifically, looking and window manager and scene manager)
         }
         else if (instance != this)
         {

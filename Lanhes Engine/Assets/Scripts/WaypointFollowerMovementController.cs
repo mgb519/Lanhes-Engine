@@ -7,7 +7,7 @@ using UnityEngine.AI;
 //TODO should this be ISaveable to save the overriden status? On the other hand, currently overrides only take place within dialogues; and you can't save mid-dialogue.
 public class WaypointFollowerMovementController : PawnMovementController
 {
-
+    //TODO actually TEST the waypoint behaviour.
     public Queue<Vector3> waypoints = new Queue<Vector3>();//TODO show in editor
 
     private Vector3 overrideWaypoint;

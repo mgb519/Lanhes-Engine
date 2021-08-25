@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 4991302870453160485}
   - component: {fileID: 1825160770870204550}
   - component: {fileID: 6729582798819793251}
+  - component: {fileID: 494302135909537610}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -293,7 +294,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2657ab5dcd8ff40a385308437df352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parties: []
+  parties:
+  - inventory:
+      items:
+        keys:
+        - {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
+        values: 64000000
+    avatar: {fileID: 6416550481888765071, guid: fbbc859538824cb4ea23671577ab33b3,
+      type: 3}
+  - inventory:
+      items:
+        keys: []
+        values: 
+    avatar: {fileID: 0}
+  - inventory:
+      items:
+        keys: []
+        values: 
+    avatar: {fileID: 0}
+--- !u!114 &494302135909537610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494302135492462658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3390cb902a16dbc685841a4a5491c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5332216448509554728
 GameObject:
   m_ObjectHideFlags: 0

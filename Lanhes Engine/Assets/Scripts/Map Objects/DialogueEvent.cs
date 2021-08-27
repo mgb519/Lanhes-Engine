@@ -5,16 +5,17 @@ using Ink.Runtime;
 using System;
 
 
-public class DialogueEvent : MonoBehaviour {
+public class DialogueEvent : MapScript {
 
-    //TODO: serialisation
+  
     GameObject player { get {
            return PartyManager.playerInThisScene.gameObject;
     } }
 
-
-    public ShopData[] shops;
-    public IOpponentGroup[] enemyParties;
+    [SerializeField]
+    private ShopData[] shops;
+    [SerializeField]
+    private IOpponentGroup[] enemyParties;
 
     // Set this file to your compiled json asset
     public TextAsset inkAsset;
@@ -40,11 +41,9 @@ public class DialogueEvent : MonoBehaviour {
     }
 
 
-    public void OnTriggerEnter(Collider collision) {
-    if (collision.gameObject == player) {
-        //TODO: have script triggers and scripts be seperate
+    public override void Action() {
+    
         StartCoroutine(HandleScript());
-        }
     }
 
     IEnumerator HandleScript() {
@@ -166,6 +165,8 @@ public class DialogueEvent : MonoBehaviour {
 
     }
 
+
+    //We do not save the shops or enemyParties variables, since they do not change.
     public string Save()
     {
         return _inkStory.state.ToJson();

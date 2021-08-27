@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MapTransition : MonoBehaviour
+public class MapTransition : MapScript
 {
     public string sceneToLoad;
     public string entrypoint;
-  
-    
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.gameObject == PartyManager.playerInThisScene.gameObject)
-        {
-            GameSceneManager.StartLoadScene(sceneToLoad,entrypoint);
-        }
+    public override void Action() {
+        GameSceneManager.StartLoadScene(sceneToLoad, entrypoint);
     }
 }

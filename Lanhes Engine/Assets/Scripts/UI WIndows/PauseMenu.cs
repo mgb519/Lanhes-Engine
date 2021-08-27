@@ -35,4 +35,9 @@ public class PauseMenu : MenuWindow
         doc.AppendChild(root);
         doc.Save(path);
     }
+
+    public void GoToMain() {
+        GameSceneManager.GoToMain();
+        UnPause();
+    }
 }

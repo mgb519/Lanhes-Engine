@@ -10,6 +10,8 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
     enum gameState { MENU, WORLD, BATTLE } //TODO maybe the functionality of isLoading could be moved here?
     static gameState GameState;
 
+
+
     private static CanvasGroup loadingGroup;
 
     private static bool isLoading;
@@ -65,6 +67,7 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
     }
 
 
+
     public static bool IsLoading()
     {
         return isLoading;
@@ -81,5 +84,14 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
     public void LoadFromFile(XmlNode node)
     {
         //nothing is saved, so nothing is loaded!
+    }
+
+    public static void GoToGameOver() {
+        StartLoadScene("Scenes/GameOver");//We are assumign this is always the name of the Game Over scene. This may not always be the case.
+    }
+
+
+    public static void GoToMain() {
+        StartLoadScene("Scenes/Title");//We are assumign this is always the name of the main menu scene. This may not always be the case.
     }
 }

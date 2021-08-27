@@ -61,6 +61,7 @@ public class BattleManager : MonoBehaviour, ISaveable
 
         //load in the new scene
         SceneManager.LoadSceneAsync(instance.battleScene, LoadSceneMode.Additive);
+        //TODO we can have some frames with no camera, it seems, probably since we deactivate the player cam first.
         //TODO put a loading screen up
 
     }

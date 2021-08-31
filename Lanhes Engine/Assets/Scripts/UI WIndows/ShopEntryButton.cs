@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class ShopEntryButton : MonoBehaviour {
 
 
-    public GameObject itemPanelTemplate;
+    //public GameObject itemPanelTemplate;
     private Button button;
     private GameObject itemPanel;
     private ItemCost data;
@@ -24,19 +24,21 @@ public class ShopEntryButton : MonoBehaviour {
 
     }
 
-    public void MouseOver() {
+
+    //The panel-related functions are game-specific
+    public virtual void MouseOver() {
         //Debug.Log("Making item panel");
         //create a popup menu of the cost of this item
         //TODO: show stats of item? maybe game-specific
-        itemPanel = Instantiate(itemPanelTemplate);
-        itemPanel.transform.SetParent(transform.parent);
+        //itemPanel = Instantiate(itemPanelTemplate);
+        //itemPanel.transform.SetParent(transform.parent);
     }
 
-    public void MouseExit() {
-        Destroy(itemPanel);
+    public virtual void MouseExit() {
+        //Destroy(itemPanel);
     }
 
-    public void Clicked() {
+    public virtual void Clicked() {
         SendMessageUpwards("Transaction", data);
     }
 

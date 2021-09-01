@@ -23,6 +23,7 @@ public class SaveMenu : MenuWindow
     public void SaveNew() { 
         //TODO save a new slot
         //TODO what if we want to name,say, slots? 
+        //That is a problem for whatever game uses this in the end.
     }
 
 }

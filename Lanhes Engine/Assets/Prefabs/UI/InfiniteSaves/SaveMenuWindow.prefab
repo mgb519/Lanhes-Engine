@@ -112,6 +112,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8810723461470386711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382974530453097541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f2821d05f6bae945a68b1195b3c471b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: {fileID: 0}
+  template: {fileID: 0}
 --- !u!1 &3641049160683212547
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +266,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000063628686}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &4889890742479653188
@@ -462,7 +476,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 491101116519834932}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8810723461470386711}
+        m_MethodName: SaveNew
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6543204074065628318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,8 +1117,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5521563559225857643, guid: 4309ca9f77a736e4191042353a92867b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4309ca9f77a736e4191042353a92867b, type: 3}
+--- !u!1 &5382974530453097541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8898313081985873731, guid: 4309ca9f77a736e4191042353a92867b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3587401099278777094}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5522004721497572710 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9037343755132206688, guid: 4309ca9f77a736e4191042353a92867b,

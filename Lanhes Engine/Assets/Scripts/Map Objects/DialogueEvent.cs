@@ -56,7 +56,7 @@ public class DialogueEvent : MapScript {
                     Debug.Log("Showing dialogue"+command);
                     //this is a dialogue
                     //TODO: get name and picture, etc
-                    WindowManager.CreateStringWindow(command);
+                    WindowManager.CreateStringWindow(command,null);
                     yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                 } else {
                     // parse command
@@ -67,7 +67,7 @@ public class DialogueEvent : MapScript {
                     if (function == "$SHOP") {
                         //TODO: make safer for debugging purposes; this will fail if int.Parse fails. Although that may be a good thing, it's a clear indicator of a malformed script.
                         int index = int.Parse(args[1]);
-                        WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, PartyManager.instance.GetParty().inventory);
+                        WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, PartyManager.instance.GetParty().inventory,null);
                         yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                     } else if (function == "$NPCWALK") {
                         //NPC walks to positon
@@ -144,7 +144,7 @@ public class DialogueEvent : MapScript {
                 List<string> choicesAsString = new List<string>();
                 foreach (Choice c in choices) { choicesAsString.Add(c.text); }
 
-                SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString);
+                SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString,null);
                 yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                 string selected = ((SelectableString)(s.selected)).data;
                 //TODO: sure this could be optimised

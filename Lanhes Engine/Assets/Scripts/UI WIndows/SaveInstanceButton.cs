@@ -10,6 +10,9 @@ using UnityEngine.UI;
 public class SaveInstanceButton : MonoBehaviour
 {
 
+    [SerializeField]
+    private Text timeText;
+
     private string path;
     public void Clicked() {
         SendMessageUpwards("SaveSelected", path);
@@ -24,9 +27,9 @@ public class SaveInstanceButton : MonoBehaviour
         XmlDocument doc = new XmlDocument();
         doc.Load(path);
 
-        //TODO fill this out further (even though it is just a demo lol)
+        //TODO fill this out further (even though it is just a demo, it'll be edited by the end user)
 
-        transform.Find("Time").GetComponent<Text>().text = new System.IO.FileInfo(path).LastWriteTime.ToString();
+        timeText.text = new System.IO.FileInfo(path).LastWriteTime.ToString();
        
     }
 

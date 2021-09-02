@@ -54,28 +54,38 @@ public class SlotlessSaveMenu : SaveMenu
 
             //TODO confirmation dialogue
             LoadGame(path);
+            CollapseMenu();
         }
     }
 
 
     public void SaveNew() {
         DateTimeOffset dto = new DateTimeOffset(DateTime.Now);
-        string path = saveDirectory+"/"+dto.ToUnixTimeSeconds().ToString()+".lhsav";
+        string path = saveDirectory + "/" + dto.ToUnixTimeSeconds().ToString() + ".lhsav";
         SaveSelected(path);
     }
 
 
 
     private void RefreshList() {
-        //refresh the list of saves
-        IEnumerable<string> filepaths = Directory.EnumerateFiles(saveDirectory,".lhsav");
+        //TODO: object pooling would be a nice idea, i.e if we already have some eixtsing slots on refresh, just call SetPath on them rather than Destroy and Create
 
+
+        //refresh the list of saves
+        for (int i = scrollviewContentBox.childCount - 1; i >= 0; --i) {
+            GameObject.Destroy(scrollviewContentBox.GetChild(i).gameObject);
+        }
+        scrollviewContentBox.DetachChildren();
+
+
+
+        IEnumerable<string> filepaths = Directory.EnumerateFiles(saveDirectory, "*.lhsav");
         List<FileInfo> fileInfos = new List<FileInfo>();
         foreach (string p in filepaths) {
             fileInfos.Add(new FileInfo(p));
         }
 
-        fileInfos.Sort((x,y) => x.LastWriteTime.CompareTo(y.LastWriteTime));
+        fileInfos.Sort((x, y) => y.LastWriteTime.CompareTo(x.LastWriteTime));
 
         foreach (FileInfo f in fileInfos) {
             SaveInstanceButton fileSlot = Instantiate(saveSlotTemplate);

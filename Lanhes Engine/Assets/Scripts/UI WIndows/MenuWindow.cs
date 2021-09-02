@@ -34,9 +34,10 @@ public class MenuWindow : MonoBehaviour {
     /// close all the menus leading up to this; return to the game.
     /// </summary>
     public void CollapseMenu() {
-       
         CloseMenu();
-        creator.CollapseMenu();
+        if (creator != null) {
+            creator.CollapseMenu();
+        }
     }
 
     private void OnDestroy() {

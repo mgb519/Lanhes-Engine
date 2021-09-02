@@ -17,12 +17,12 @@ public class PauseMenu : MenuWindow
 
     public void LoadFromFile()
     {
-        WindowManager.CreateLoadWindow(false);
+        WindowManager.CreateLoadWindow(this);
     }
 
     public void SaveGameToFile()
     {
-        WindowManager.CreateSaveWindow(false);
+        WindowManager.CreateSaveWindow(this);
     }
 
     public void GoToMain() {

@@ -5,7 +5,7 @@ using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WindowManager : MonoBehaviour , ISaveable {  //FIXME does this need to be Saveable?
+public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need to be Saveable?
 
     public static WindowManager instance = null;
 
@@ -24,7 +24,7 @@ public class WindowManager : MonoBehaviour , ISaveable {  //FIXME does this need
 
     //TODO: should this be here? since it's also  used by PC script to know if they can continue
     public bool ContinuePlay() {
-        return baseWindow==null;
+        return baseWindow == null;
     }
 
     public void WindowClosed() {
@@ -42,47 +42,50 @@ public class WindowManager : MonoBehaviour , ISaveable {  //FIXME does this need
     }
 
 
-    private static MenuWindow CreateWindow(MenuWindow other) {
-        MenuWindow subwindow = GameObject.Instantiate(other,instance.transform);
+    private static T CreateWindow<T>(T other, MenuWindow creator) where T : MenuWindow {
+        T subwindow = GameObject.Instantiate(other, instance.transform);
+
+        if (creator == null) {
+            instance.baseWindow = subwindow;
+        } else {
+            subwindow.creator = creator;
+        }
         return subwindow;
     }
 
 
 
-    public static StringWindow CreateStringWindow(string text) {
-        StringWindow dialog = (StringWindow)CreateWindow(instance.stringWindow);
+    public static StringWindow CreateStringWindow(string text, MenuWindow creator) {
+        StringWindow dialog = CreateWindow(instance.stringWindow, creator);
         dialog.Refresh(text);
-        instance.baseWindow = dialog;
         return dialog;
     }
 
-   
-    public static ShopWindow CreateShopWindow(List<ItemCost> forSale, List<ItemCost> willBuy, Inventory playerInventory) {
-        Debug.Log("Creating shop window");
-        ShopWindow window = (ShopWindow)CreateWindow(instance.shopWindow);
+
+    public static ShopWindow CreateShopWindow(List<ItemCost> forSale, List<ItemCost> willBuy, Inventory playerInventory, MenuWindow creator) {
+        //Debug.Log("Creating shop window");
+        ShopWindow window = CreateWindow(instance.shopWindow, creator);
         window.buyButtons.AddRange(forSale);
         window.sellButtons.AddRange(willBuy);
         window.inventory = playerInventory;
         window.Refresh();
-        instance.baseWindow = window;
 
         //TODO: NOTE: Do we want the shop to block NPC behavoir too?
         return window;
 
     }
 
-    public static SelectionWindow CreateStringSelection(List<string> list) {
+    public static SelectionWindow CreateStringSelection(List<string> list, MenuWindow creator) {
         List<ISelectable> processed = new List<ISelectable>();
         foreach (string s in list) {
             processed.Add(new SelectableString(s));
         }
-        return CreateSelection(processed);
+        return CreateSelection(processed, creator);
     }
 
-    public static SelectionWindow CreateSelection(List<ISelectable> list) {
-        SelectionWindow window = Instantiate(instance.selectionWindow);
-        window.Refresh(list,window.ReturnAndClose);
-        instance.baseWindow = window; //TODO This may not be true! For example; using an item from the inventory may cloWe need some kind of option to select if this is the base window or not. Or perhaps setting this to be the root is the responsibility of the caller; return the window.
+    public static SelectionWindow CreateSelection(List<ISelectable> list, MenuWindow creator) {
+        SelectionWindow window = CreateWindow(instance.selectionWindow, creator);
+        window.Refresh(list, window.ReturnAndClose);
         return window;
     }
 
@@ -93,50 +96,33 @@ public class WindowManager : MonoBehaviour , ISaveable {  //FIXME does this need
 
     public static void CreatePauseWindow() {
         // spawn  pause menu object
-        MenuWindow window = CreateWindow(instance.pauseMenu);
-        
+        MenuWindow window = CreateWindow(instance.pauseMenu, null); //pause menus aren't created by other menus
+
         instance.baseWindow = window;
         //pause the game is handled by the creation ofthe window
     }
 
-    /// <summary>
-    /// Creates a menu to load a game from
-    /// </summary>
-    /// <param name="fromRoot">Was this function called from something other than an already-existing menu?</param>
-    public static SaveMenu CreateLoadWindow(bool fromRoot) {
-        SaveMenu window = (SaveMenu)CreateWindow(instance.saveMenu);
+    public static SaveMenu CreateLoadWindow(MenuWindow creator) {
+        SaveMenu window = CreateWindow(instance.saveMenu, creator);
         window.LoadMode();
-        if (fromRoot) {
-            instance.baseWindow = window;
-        }
         return window;
     }
 
 
-
-    /// <summary>
-    /// Creates a menu to save a game from
-    /// </summary>
-    /// <param name="fromRoot">Was this function called from something other than an already-existing menu?</param>
-    public static SaveMenu CreateSaveWindow(bool fromRoot) {
-        SaveMenu window = (SaveMenu)CreateWindow(instance.saveMenu);
+    public static SaveMenu CreateSaveWindow(MenuWindow creator) {
+        SaveMenu window = CreateWindow(instance.saveMenu, creator);
         window.SaveMode();
-        if (fromRoot) {
-            instance.baseWindow = window;
-        }
         return window;
     }
 
-    public XmlNode SaveToFile(XmlDocument doc)
-    {
+    public XmlNode SaveToFile(XmlDocument doc) {
         XmlElement ret = doc.CreateElement("windows");
 
 
         return ret;
     }
 
-    public void LoadFromFile(XmlNode node)
-    {
+    public void LoadFromFile(XmlNode node) {
         //nothing is saved, so nothing is loaded!
     }
 }

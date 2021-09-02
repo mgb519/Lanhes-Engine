@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //TODO finish this
@@ -15,7 +17,21 @@ public class SaveInstanceButton : MonoBehaviour
 
     public void SetPath(string newPath) {
         path = newPath;
-        //TODO populate the panel
+        //populate the panel
+
+        //maybe figure out a way to not have to read the whole file in? My best solution is a header to the file, so that we can just pipe in the first few lines rather than LOADING AN ENTIRE XML DOCUMENT INTO MEMORY
+        //TODO implement the above
+        XmlDocument doc = new XmlDocument();
+        doc.Load(path);
+
+        //TODO fill this out further (even though it is just a demo lol)
+
+        transform.Find("Time").GetComponent<Text>().text = new System.IO.FileInfo(path).LastWriteTime.ToString();
+       
+    }
+
+    public void Delete() {
+        SendMessageUpwards("DeleteSave", path);
     }
 
 }

@@ -17,23 +17,12 @@ public class PauseMenu : MenuWindow
 
     public void LoadFromFile()
     {
-        Debug.Log("loading");
-        //TODO dialog UI for selecting file
-        string path = "savefile.sav";
-        XmlDocument doc = new XmlDocument();
-        doc.Load(path);
-        //XmlNode root = doc.FirstChild;
-        DataManager.instance.LoadFromFile(doc);
+        WindowManager.CreateLoadWindow(false);
     }
 
     public void SaveGameToFile()
     {
-        //TODO dialog UI for selecting file
-        string path = "savefile.sav";
-        XmlDocument doc = new XmlDocument();
-        XmlNode root =  DataManager.instance.SaveToFile(doc);
-        doc.AppendChild(root);
-        doc.Save(path);
+        WindowManager.CreateSaveWindow(false);
     }
 
     public void GoToMain() {

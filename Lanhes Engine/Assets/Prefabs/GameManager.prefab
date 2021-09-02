@@ -247,6 +247,8 @@ MonoBehaviour:
     type: 3}
   selectionWindow: {fileID: 8878908754863080217, guid: 151498b3701e97244b7b56504a1fe509,
     type: 3}
+  saveMenu: {fileID: 8810723461470386711, guid: d2276e5a6b2fd2442af55332f1f49967,
+    type: 3}
 --- !u!114 &4991302870453160485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,8 +262,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intData:
-    keys: []
-    values: 
+    keys:
+    - didbar
+    values: 05000000
   stringData:
     keys: []
     values: []
@@ -324,6 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3390cb902a16dbc685841a4a5491c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleScene: SampleBattle
 --- !u!1 &5332216448509554728
 GameObject:
   m_ObjectHideFlags: 0

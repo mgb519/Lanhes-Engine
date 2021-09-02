@@ -1,29 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
-//TODO this class is unfinshed
-public class SaveMenu : MenuWindow
+public abstract class SaveMenu : MenuWindow
 {
+    public abstract void LoadMode();
+    public abstract void SaveMode();
 
-    public SaveInstanceButton template;
-
-    void Awake() {
-        //Time.timeScale = 0f;
-
-        //TODO populate the list
+    internal void LoadGame(string path) {
+        Debug.Log("loading");
+        //TODO dialog UI for selecting file
+        XmlDocument doc = new XmlDocument();
+        doc.Load(path);
+        //XmlNode root = doc.FirstChild;
+        DataManager.instance.LoadFromFile(doc);
     }
 
 
-    public void SaveSelected(string path) {
-        //TODO save over the selected slot
+    internal void SaveGame() {    
+        //TODO
     }
 
+    public abstract void DeleteSave(string path);
 
-    public void SaveNew() { 
-        //TODO save a new slot
-        //TODO what if we want to name,say, slots? 
-        //That is a problem for whatever game uses this in the end.
-    }
+
 
 }

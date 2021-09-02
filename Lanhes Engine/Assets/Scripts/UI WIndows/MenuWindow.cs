@@ -28,6 +28,17 @@ public class MenuWindow : MonoBehaviour {
         //Debug.Log("closing menu");
         GameObject.Destroy(gameObject);
     }
+
+
+    /// <summary>
+    /// close all the menus leading up to this; return to the game.
+    /// </summary>
+    public void CollapseMenu() {
+       
+        CloseMenu();
+        creator.CollapseMenu();
+    }
+
     private void OnDestroy() {
         if (creator != null) {
             //go to the original window

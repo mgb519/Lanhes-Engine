@@ -21,12 +21,7 @@ public class MainMenu : MonoBehaviour
 
     public void LoadGame()
     {
-        //TODO this is the same code as in PauseMenu. DRY this?
-        //TODO dialog UI for selecting file
-        string path = "savefile.sav";
-        XmlDocument doc = new XmlDocument();
-        doc.Load(path);
-        //XmlNode root = doc.FirstChild;
-        DataManager.instance.LoadFromFile(doc);
+
+        WindowManager.CreateLoadWindow(true);
     }
 }

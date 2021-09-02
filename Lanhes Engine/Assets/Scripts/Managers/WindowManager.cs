@@ -16,7 +16,11 @@ public class WindowManager : MonoBehaviour , ISaveable {  //FIXME does this need
     public SelectionButton selectionButton;
     public SelectionWindow selectionWindow;
 
+    public SaveMenu saveMenu;
+
     private MenuWindow baseWindow = null;
+
+
 
     //TODO: should this be here? since it's also  used by PC script to know if they can continue
     public bool ContinuePlay() {
@@ -78,7 +82,7 @@ public class WindowManager : MonoBehaviour , ISaveable {  //FIXME does this need
     public static SelectionWindow CreateSelection(List<ISelectable> list) {
         SelectionWindow window = Instantiate(instance.selectionWindow);
         window.Refresh(list,window.ReturnAndClose);
-        instance.baseWindow = window;
+        instance.baseWindow = window; //TODO This may not be true! For example; using an item from the inventory may cloWe need some kind of option to select if this is the base window or not. Or perhaps setting this to be the root is the responsibility of the caller; return the window.
         return window;
     }
 
@@ -93,6 +97,34 @@ public class WindowManager : MonoBehaviour , ISaveable {  //FIXME does this need
         
         instance.baseWindow = window;
         //pause the game is handled by the creation ofthe window
+    }
+
+    /// <summary>
+    /// Creates a menu to load a game from
+    /// </summary>
+    /// <param name="fromRoot">Was this function called from something other than an already-existing menu?</param>
+    public static SaveMenu CreateLoadWindow(bool fromRoot) {
+        SaveMenu window = (SaveMenu)CreateWindow(instance.saveMenu);
+        window.LoadMode();
+        if (fromRoot) {
+            instance.baseWindow = window;
+        }
+        return window;
+    }
+
+
+
+    /// <summary>
+    /// Creates a menu to save a game from
+    /// </summary>
+    /// <param name="fromRoot">Was this function called from something other than an already-existing menu?</param>
+    public static SaveMenu CreateSaveWindow(bool fromRoot) {
+        SaveMenu window = (SaveMenu)CreateWindow(instance.saveMenu);
+        window.SaveMode();
+        if (fromRoot) {
+            instance.baseWindow = window;
+        }
+        return window;
     }
 
     public XmlNode SaveToFile(XmlDocument doc)

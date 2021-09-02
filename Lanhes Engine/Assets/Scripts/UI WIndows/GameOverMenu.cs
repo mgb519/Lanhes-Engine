@@ -11,7 +11,7 @@ public class GameOverMenu : MonoBehaviour
     }
 
 
-    public void OpenLoadDialogue() { 
-    
+    public void OpenLoadDialogue() {
+        WindowManager.CreateLoadWindow(true);
     }
 }

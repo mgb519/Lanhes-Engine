@@ -30,7 +30,7 @@ public class SaveInstanceButton : MonoBehaviour
         //TODO fill this out further (even though it is just a demo, it'll be edited by the end user)
 
         timeText.text = new System.IO.FileInfo(path).LastWriteTime.ToString();
-       
+
     }
 
     public void Delete() {

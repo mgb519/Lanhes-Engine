@@ -18,7 +18,7 @@ public abstract class SaveMenu : MenuWindow
     }
 
 
-    internal void SaveGame() {    
+    internal void SaveGame() {
         //TODO
     }
 

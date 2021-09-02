@@ -43,7 +43,7 @@ public class PartyManager : MonoBehaviour, ISaveable
     /// <param name="id">index of the party being spawned in</param>
     public static void SpawnPlayer(int id)
     {
-        Debug.Log("Spawning player by ID");
+        //Debug.Log("Spawning player by ID");
         if (playerInThisScene != null)
         {
             //a player already exists, do not spawn a new one. TODO maybe delete it and create a new one? idk anymore. Can this even happen?
@@ -70,11 +70,11 @@ public class PartyManager : MonoBehaviour, ISaveable
     /// <param name="marker">The name of the spawn point marker in the new scene.</param>
     public static void SpawnPlayer(string marker)
     {
-        Debug.Log("Spawning player by marker");
+        //Debug.Log("Spawning player by marker");
 
         if (playerInThisScene != null)
         {
-            Debug.Log("Aborting spawning by marker");
+            //Debug.Log("Aborting spawning by marker");
             //a player already exists, do not spawn a new one. TODO maybe delete it and create a new one? idk anymore. Can this even happen?
             return;
         }

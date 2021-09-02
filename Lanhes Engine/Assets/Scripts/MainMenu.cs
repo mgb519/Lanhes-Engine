@@ -22,6 +22,6 @@ public class MainMenu : MonoBehaviour
     public void LoadGame()
     {
 
-        WindowManager.CreateLoadWindow(true);
+        WindowManager.CreateLoadWindow(null);
     }
 }

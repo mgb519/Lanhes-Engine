@@ -5,8 +5,7 @@ using System.IO;
 using System.Xml;
 using System;
 using UnityEngine.UI;
-
-//TODO this class is unfinshed
+//TODO The user has to override this class
 public class SlotlessSaveMenu : SaveMenu
 {
 
@@ -26,6 +25,10 @@ public class SlotlessSaveMenu : SaveMenu
     [SerializeField]
     private Button saveButton;
 
+
+    //TODO this should not exist, get this statically
+    public InventoryItem goldItem;
+
     private bool saving = true;
 
     void Awake() {
@@ -41,13 +44,7 @@ public class SlotlessSaveMenu : SaveMenu
             //save over the selected slot
 
             //TODO confirmation dialog
-
-            XmlDocument doc = new XmlDocument();
-            XmlNode root = DataManager.instance.SaveToFile(doc);
-            doc.AppendChild(root);
-            doc.Save(path);
-            //TODO add a header for saves to read rather than do full save prpcessing
-
+            SaveGame(path);
             RefreshList();
         } else {
             //load the selected slot
@@ -113,5 +110,19 @@ public class SlotlessSaveMenu : SaveMenu
         //TODO throw a confirmation dialogue
         File.Delete(path);
         RefreshList();
+    }
+
+    internal override void SaveHeader(ref StreamWriter file) {
+        //TODO shouldn't we be getting the data through the XML document maybe, rather than direct data access?
+        string saveName = saveNameField.text==null?"no notes":saveNameField.text;
+        file.WriteLine(saveName);
+        int gold = PartyManager.GetParty().inventory.HowManyOfItem(goldItem);//TODO get Gold statically
+        file.WriteLine(gold.ToString());
+
+    }
+
+    internal override void SkipHeader(ref StreamReader file) {
+        file.ReadLine();//skip the save name
+        file.ReadLine();//skip the gold number
     }
 }

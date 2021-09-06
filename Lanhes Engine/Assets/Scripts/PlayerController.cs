@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
 
 
     public Inventory GetInventory() {
-        return PartyManager.instance.GetParty().inventory;
+        return PartyManager.GetParty().inventory;
     }
 
 }

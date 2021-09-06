@@ -13,10 +13,11 @@ public class PartyManager : MonoBehaviour, ISaveable
     public static PartyManager instance = null;
 
     //FIXME: this *should* be private, but the EDITOR needs this to be public, apprently labvelling it serializable is not enough.
+    //FIXME: this should be static.
     [SerializeField]
     public Party[] parties = new Party[7];// TODO couldn't this be a SerializableDisctionary and the player spanwer use a key rather than an index?
 
-    private Party partyThisScene;
+    private static Party partyThisScene;
     //points towards the party in this scene
     //maybe this one isn't the best place to put it?
     public static PlayerController playerInThisScene;
@@ -50,9 +51,9 @@ public class PartyManager : MonoBehaviour, ISaveable
             return;
         }
 
-        instance.partyThisScene = instance.parties[id];
+        partyThisScene = instance.parties[id];
 
-        playerInThisScene = Instantiate(instance.partyThisScene.avatar, instance.transform.position, instance.transform.rotation);
+        playerInThisScene = Instantiate(partyThisScene.avatar, instance.transform.position, instance.transform.rotation);
         playerInThisScene.gameObject.name = "Player";
 
         //Destroy any spawners in the level; if we let them live, then they will spawn in a party. This is a bad thing; we've just spawned in the correct one!
@@ -83,14 +84,14 @@ public class PartyManager : MonoBehaviour, ISaveable
         PlayerSpawnMarker m = named.GetComponent<PlayerSpawnMarker>();
         if (m != null) {
             //partyThisScene should already be set, we just need to spawn its avatar in.
-            playerInThisScene = Instantiate(instance.partyThisScene.avatar, named.transform.position, named.transform.rotation);
+            playerInThisScene = Instantiate(partyThisScene.avatar, named.transform.position, named.transform.rotation);
             playerInThisScene.gameObject.name = "Player";
         }
 
     }
 
 
-    public Party GetParty()
+    public static Party GetParty()
     {
         return partyThisScene;
     }

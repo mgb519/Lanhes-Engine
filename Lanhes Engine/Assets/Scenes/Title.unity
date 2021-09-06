@@ -1081,5 +1081,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6729582798819793251, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
+        type: 3}
+      propertyPath: parties.Array.data[0].avatar
+      value: 
+      objectReference: {fileID: 6416550481888765071, guid: fbbc859538824cb4ea23671577ab33b3,
+        type: 3}
+    - target: {fileID: 6729582798819793251, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
+        type: 3}
+      propertyPath: parties.Array.data[0].inventory.items.keys.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6729582798819793251, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
+        type: 3}
+      propertyPath: parties.Array.data[0].inventory.items.values.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6729582798819793251, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
+        type: 3}
+      propertyPath: parties.Array.data[0].inventory.items.keys.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60,
+        type: 2}
+    - target: {fileID: 6729582798819793251, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
+        type: 3}
+      propertyPath: parties.Array.data[0].inventory.items.values.Array.data[0]
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf, type: 3}

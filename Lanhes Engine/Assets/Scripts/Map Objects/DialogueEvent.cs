@@ -67,7 +67,7 @@ public class DialogueEvent : MapScript {
                     if (function == "$SHOP") {
                         //TODO: make safer for debugging purposes; this will fail if int.Parse fails. Although that may be a good thing, it's a clear indicator of a malformed script.
                         int index = int.Parse(args[1]);
-                        WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, PartyManager.instance.GetParty().inventory,null);
+                        WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, PartyManager.GetParty().inventory,null);
                         yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                     } else if (function == "$NPCWALK") {
                         //NPC walks to positon

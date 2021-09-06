@@ -432,6 +432,7 @@ MonoBehaviour:
   scrollviewContentBox: {fileID: 5610236112567002672}
   saveNameField: {fileID: 1728422875613326591}
   saveButton: {fileID: 7983170826236477287}
+  goldItem: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
 --- !u!1 &3641049160683212547
 GameObject:
   m_ObjectHideFlags: 0

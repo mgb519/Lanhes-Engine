@@ -323,6 +323,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeText: {fileID: 6036247882504015217}
+  goldText: {fileID: 2423699333540129328}
+  notes: {fileID: 2882904623654154625}
 --- !u!114 &5278148843748672151
 MonoBehaviour:
   m_ObjectHideFlags: 0

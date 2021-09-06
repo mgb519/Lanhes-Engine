@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.IO;
 
 //TODO finish this
 //This should be overriden by the game, depending on how a save slot looks.
 public class SaveInstanceButton : MonoBehaviour
 {
-
+    //TODO these should be taken out to an example file that overrides this!
     [SerializeField]
     private Text timeText;
+    [SerializeField]
+    private Text goldText;
+    [SerializeField]
+    private Text notes;
 
     private string path;
     public void Clicked() {
@@ -21,15 +25,17 @@ public class SaveInstanceButton : MonoBehaviour
     public void SetPath(string newPath) {
         path = newPath;
         //populate the panel
+        ReadHeader();
+    }
 
-        //maybe figure out a way to not have to read the whole file in? My best solution is a header to the file, so that we can just pipe in the first few lines rather than LOADING AN ENTIRE XML DOCUMENT INTO MEMORY
-        //TODO implement the above
-        XmlDocument doc = new XmlDocument();
-        doc.Load(path);
 
-        //TODO fill this out further (even though it is just a demo, it'll be edited by the end user)
-
-        timeText.text = new System.IO.FileInfo(path).LastWriteTime.ToString();
+    internal virtual void ReadHeader() {
+        
+        timeText.text = new FileInfo(path).LastWriteTime.ToString(); //TODO should this be stored in the header?
+        StreamReader reader = new StreamReader(path);
+        notes.text = reader.ReadLine();
+        goldText.text = reader.ReadLine();
+        reader.Close();
 
     }
 

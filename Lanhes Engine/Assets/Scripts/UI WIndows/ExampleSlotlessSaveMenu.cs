@@ -6,7 +6,7 @@ using System.Xml;
 using System;
 using UnityEngine.UI;
 //TODO The user has to override this class
-public class SlotlessSaveMenu : SaveMenu
+public class ExampleSlotlessSaveMenu : SaveMenu
 {
 
 
@@ -117,7 +117,7 @@ public class SlotlessSaveMenu : SaveMenu
         string saveName = saveNameField.text==null?"no notes":saveNameField.text;
         file.WriteLine(saveName);
         int gold = PartyManager.GetParty().inventory.HowManyOfItem(goldItem);//TODO get Gold statically
-        file.WriteLine(gold.ToString());
+        file.WriteLine("Money: "+gold.ToString());
 
     }
 

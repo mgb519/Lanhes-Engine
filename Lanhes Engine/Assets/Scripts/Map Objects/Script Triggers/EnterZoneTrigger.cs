@@ -5,11 +5,8 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Collider))]
-public class EnterZoneTrigger : MonoBehaviour
+public class EnterZoneTrigger : Trigger
 {
-
-    public MapScript scriptToCall;
-
 
     public void OnTriggerEnter(Collider collision) {
         if (collision.gameObject == PartyManager.playerInThisScene.gameObject) {

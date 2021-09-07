@@ -10,6 +10,10 @@ public abstract class PawnMovementController : MonoBehaviour {
 
     private Animator anim;
     new private Rigidbody rigidbody;
+    private Vector3 lastDirection;
+
+    [SerializeField]
+    private float useDistance;
 
     // Start is called before the first frame update
     void Start() {
@@ -18,18 +22,22 @@ public abstract class PawnMovementController : MonoBehaviour {
 
     }
 
+
+
     // Update is called once per frame
     public void Update() {
         if (WindowManager.instance.ContinuePlay() && !GameSceneManager.IsLoading() && !DataManager.IsLoading() && !BattleManager.InBattle())
         {
             //TODO: perhaps this should be got as a vector2? I *presume* we won't have Y axis movement, but the navmesh seems to assume we *can*.
-            Vector3 dir = GetInput();
-            dir.y = 0;
-            dir = dir.normalized;
+            Vector3 inp = GetInput();
+            inp.y = 0;
+            Vector3 dir = inp.normalized;
             //TODO: snappng to grid option
+            if (dir.magnitude > 0) {
+                lastDirection = dir;
+            }
 
-
-            //TODO barriers I cant go up
+            //TODO set an angle for slopes I can't go up
 
             rigidbody.velocity = dir * moveSpeed;
             //Debug.Log(rigidbody.velocity);
@@ -38,6 +46,22 @@ public abstract class PawnMovementController : MonoBehaviour {
             anim.SetInteger("Horizontal", Mathf.RoundToInt(dir.x));
             anim.SetInteger("Vertical", Mathf.RoundToInt(dir.z));
             anim.speed = anim.GetInteger("Horizontal") == 0 && anim.GetInteger("Vertical") == 0 ? 0 : 1;
+
+
+            //raycast for use
+            //TODO should this be moved up to the concrete class?
+            if (Input.GetButtonDown("Use")) {
+                RaycastHit hitInfo;
+                if (Physics.Raycast(transform.position,lastDirection,out hitInfo,useDistance)) {
+                    UseTrigger trigger = hitInfo.collider.gameObject.GetComponent<UseTrigger>();
+                    if (trigger != null) {
+                        trigger.Used();
+                    }
+                }
+            }
+            
+
+                        
         }
         else {
             rigidbody.velocity = Vector3.zero;

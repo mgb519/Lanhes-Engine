@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  useDistance: 1
   blocked: 0
 --- !u!95 &6416550481888765072
 Animator:

@@ -4,40 +4,55 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[System.Serializable]
-public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
+[Serializable]
+public class EditableDictionary<TK, TV> : IDictionary<TK, TV>
+{
+    [Serializable]
+    public class Pair<TK2, TV2>
+    {
+        [SerializeField]
+        public TK2 key;
+        [SerializeField]
+        public TV2 value;
+        public Pair(TK2 key, TV2 value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+
 
     [SerializeField]
-    public List<TK> keys = new List<TK>();
+    private List<Pair<TK, TV>> pairs = new List<Pair<TK, TV>>();
 
-    [SerializeField]
-    public List<TV> values = new List<TV>();
 
     public TV this[TK key] { get => Get(key); set => Set(key, value); }
 
     private void Set(TK key, TV value) {
         if (key == null) { throw new ArgumentNullException(); }
         if (IsReadOnly) { throw new NotSupportedException(); }
-        if (!ContainsKey(key)) { throw new ArgumentException("argument " + key + "not found"); }
-        int idx = FindIndex(key);
-        values[idx] = value;
+        Pair<TK, TV> pair;
+        bool found = FindPair(key, out pair);
+        if (!found) { throw new ArgumentException("argument " + key + "not found"); }
+        pair.value = value;
         version++;
-
     }
+
 
     private TV Get(TK key) {
         if (key == null) { throw new ArgumentNullException(); }
         if (IsReadOnly) { throw new NotSupportedException(); }
-        if (!ContainsKey(key)) { throw new ArgumentException("argument " + key + "not found"); }
-        int idx = FindIndex(key);
-        return values[idx];
+        Pair<TK, TV> pair;
+        bool found = FindPair(key, out pair);
+        if (!found) { throw new ArgumentException("argument " + key + "not found"); }
+        return pair.value;
     }
 
-    public ICollection<TK> Keys => new List<TK>(keys);
+    public ICollection<TK> Keys => new List<TK>(pairs.ConvertAll(x => x.key));
 
-    public ICollection<TV> Values => new List<TV>(values);
+    public ICollection<TV> Values => new List<TV>(pairs.ConvertAll(x => x.value));
 
-    public int Count => keys.Count;
+    public int Count => pairs.Count;
 
     //I have no fucking clue why this exists
     public bool IsReadOnly => false;
@@ -47,12 +62,10 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
     public void Add(TK key, TV value) {
         if (!IsReadOnly) {
             if (key == null) { throw new ArgumentNullException(); }
-            if (keys.Contains(key)) {
+            if (!ContainsKey(key)) {
                 throw new ArgumentException("Dictionary already contains key " + key);
-            } else
-            {
-                keys.Add(key);
-                values.Add(value);
+            } else {
+                pairs.Add(new Pair<TK, TV>(key, value));
                 version++;
             }
         } else {
@@ -66,29 +79,42 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
 
     public void Clear() {
         if (!IsReadOnly) {
-            keys.Clear();
-            values.Clear();
+            pairs.Clear();
             version++;
         } else {
             throw new NotSupportedException("Dictionary is read-only");
         }
     }
 
+
+
     public bool Contains(KeyValuePair<TK, TV> item) {
-        int index = FindIndex(item.Key);
-        return index >= 0 &&
-            EqualityComparer<TV>.Default.Equals(values[index], item.Value);
+        Pair<TK, TV> pair;
+        bool found = FindPair(item.Key,out pair);
+        if (found) {
+            return EqualityComparer<TV>.Default.Equals(pair.value, item.Value);
+        } else {
+            return false;
+        }
     }
 
     private int FindIndex(TK key) {
         if (!ContainsKey(key)) { throw new KeyNotFoundException(); }
-        return keys.FindIndex(x => x.Equals(key));
+        return pairs.FindIndex(x => x.key.Equals(key));
+    }
+
+    private  bool FindPair(TK key, out Pair<TK, TV> found) {
+        if (!ContainsKey(key)) {
+            found = default(Pair<TK, TV>);
+            return false; 
+        }
+        found = pairs.Find(x => x.key.Equals(key));
+        return true;
     }
 
     public bool ContainsKey(TK key) {
         if (key == null) { throw new ArgumentNullException(); }
-        return keys.Contains(key);
-
+        return pairs.Exists(x => x.key.Equals(key));
     }
 
     public void CopyTo(KeyValuePair<TK, TV>[] array, int arrayIndex) {
@@ -107,7 +133,8 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
         }
 
         for (int idx = arrayIndex; idx < array.Length; idx++) {
-            array[idx] = new KeyValuePair<TK, TV>(keys[idx], values[idx]);
+            Pair<TK, TV> pair = pairs[idx];
+            array[idx] = new KeyValuePair<TK, TV>(pair.key, pair.value);
         }
     }
 
@@ -125,8 +152,7 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
         if (IsReadOnly) { throw new NotSupportedException(); }
         if (!ContainsKey(key)) { return false; }
         int idx = FindIndex(key);
-        keys.RemoveAt(idx);
-        values.RemoveAt(idx);
+        pairs.RemoveAt(idx);
         version++;
         return true;
     }
@@ -135,10 +161,10 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
         if (item.Key == null) { throw new ArgumentNullException(); }
         if (IsReadOnly) { throw new NotSupportedException(); }
         if (!ContainsKey(item.Key)) { return false; }
-        for (int idx = 0; idx < keys.Count; idx++) {
-            if (item.Key.Equals(keys[idx]) && item.Value.Equals(values[idx])) {
-                keys.RemoveAt(idx);
-                values.RemoveAt(idx);
+        for (int idx = 0; idx < pairs.Count; idx++) {
+            Pair<TK, TV> pair = pairs[idx];
+            if (item.Key.Equals(pair.key) && item.Value.Equals(pair.value)) {
+                pairs.RemoveAt(idx);
                 version++;
                 return true;
             }
@@ -148,9 +174,14 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
 
     public bool TryGetValue(TK key, out TV value) {
         if (key == null) { throw new ArgumentNullException(); }
-        int idx = FindIndex(key);
-        value = values[idx];
-        return true;
+        foreach (Pair<TK, TV> pair in pairs) {
+            if (pair.key.Equals(key)) {
+                value = pair.value;
+                return true;
+            }
+        }
+        value = default(TV);
+        return false;
     }
 
     IEnumerator IEnumerable.GetEnumerator() {
@@ -158,7 +189,8 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
     }
 
 
-    public struct Enumerator : IEnumerator<KeyValuePair<TK, TV>> {
+    public struct Enumerator : IEnumerator<KeyValuePair<TK, TV>>
+    {
         private readonly EditableDictionary<TK, TV> dictonary;
         private int version;
         private int idx;
@@ -180,7 +212,8 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV> {
                 throw new InvalidOperationException(string.Format("Enumerator version {0} != Dictionary version {1}", version, dictonary.version));
 
             while (idx < dictonary.Count) {
-                current = new KeyValuePair<TK, TV>(dictonary.keys[idx], dictonary.values[idx]);
+                Pair<TK, TV> pair = dictonary.pairs[idx];
+                current = new KeyValuePair<TK, TV>(pair.key, pair.value);
                 idx++;
                 return true;
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class StringWindow : MenuWindow {
 
@@ -9,7 +10,7 @@ public class StringWindow : MenuWindow {
 
         //find text element and give it the correct text
         //TODO: spell everything out character by character, feedback  like audio, cursor, etc.
-        Text text = GetComponentInChildren<Text>();
+        TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
         text.text = displayMe;
     }
 

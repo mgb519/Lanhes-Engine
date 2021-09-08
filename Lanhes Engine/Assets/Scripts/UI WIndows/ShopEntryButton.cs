@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 [RequireComponent(typeof(Button))]
 public class ShopEntryButton : MonoBehaviour {
@@ -20,7 +20,7 @@ public class ShopEntryButton : MonoBehaviour {
 
     public void SetData(ItemCost data) {
         this.data = data;
-        button.GetComponentInChildren<Text>().text = data.item.name;
+        button.GetComponentInChildren<TextMeshProUGUI>().text = data.item.name;
 
     }
 

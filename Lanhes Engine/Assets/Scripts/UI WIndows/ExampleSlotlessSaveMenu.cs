@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using System;
 using UnityEngine.UI;
+using TMPro;
 //TODO The user has to override this class
 public class ExampleSlotlessSaveMenu : SaveMenu
 {
@@ -20,7 +21,7 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     private Transform scrollviewContentBox;
 
     [SerializeField]
-    private InputField saveNameField;
+    private TMP_InputField saveNameField; 
 
     [SerializeField]
     private Button saveButton;

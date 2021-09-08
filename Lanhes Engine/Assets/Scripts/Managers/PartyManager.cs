@@ -128,6 +128,9 @@ public class PartyManager : MonoBehaviour, ISaveable
         XmlNode baseNode = node["partyman"];
         XmlNode partiesNode = baseNode["parties"];
         int partyidx = -1;
+
+        
+       
         foreach (XmlElement element in partiesNode.ChildNodes)
         {
             int index = int.Parse(element.GetAttribute("idx"));//TODO secure this
@@ -174,14 +177,22 @@ public class Party : ISaveable
 
     public void LoadFromFile(XmlNode node)
     {
-        //TODO
+        XmlNode partyNode = node["party"];
+        XmlNode inventoryNode = partyNode["inventory"];
+        inventory.LoadFromFile(inventoryNode);
+
+        //We don't need to load avatars as those are static
     }
 
     public XmlNode SaveToFile(XmlDocument doc)
     {
         XmlNode ret = doc.CreateElement("party");
 
-
+        XmlNode inventoryNode = doc.CreateElement("inventory");
+        ret.AppendChild(inventoryNode);
+        inventoryNode.AppendChild(inventory.SaveToFile(doc));
+        //we don't need to save the avatars, they shouldn't change.
+        //TODO But some games may want the avatar to change... They'll have to transfer the inventory to a new party with the new avatar, it seems.
 
         return ret;
     }

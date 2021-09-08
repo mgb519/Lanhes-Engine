@@ -315,6 +315,26 @@ MonoBehaviour:
         keys: []
         values: 
     avatar: {fileID: 0}
+  - inventory:
+      items:
+        keys: []
+        values: 
+    avatar: {fileID: 0}
+  - inventory:
+      items:
+        keys: []
+        values: 
+    avatar: {fileID: 0}
+  - inventory:
+      items:
+        keys: []
+        values: 
+    avatar: {fileID: 0}
+  - inventory:
+      items:
+        keys: []
+        values: 
+    avatar: {fileID: 0}
 --- !u!114 &494302135909537610
 MonoBehaviour:
   m_ObjectHideFlags: 0

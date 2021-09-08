@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Xml;
 
 //TODO: build an editor for this BS
 [Serializable]
-public class Inventory {
+public class Inventory : ISaveable {
 
 
 
@@ -77,4 +78,15 @@ public class Inventory {
 
     }
 
+    public XmlNode SaveToFile(XmlDocument doc) {
+        //TODO finish
+        return doc.CreateElement("a");
+        throw new NotImplementedException();
+    }
+
+    public void LoadFromFile(XmlNode node) {
+        //TODO finish
+        return;
+        throw new NotImplementedException();
+    }
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 /// </summary>
 public class GenericBattle : MapScript
 {
-    //TODO decouple trigger from action
     //TODO this uses no MonoBehaviour methods, so why does it have the extra weight? A friend of mine had this exact problem, I'll ask him when I can get ahold of him...
     [SerializeField]
     private IOpponentGroup enemies;

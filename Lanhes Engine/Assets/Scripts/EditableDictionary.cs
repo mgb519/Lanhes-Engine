@@ -5,67 +5,40 @@ using UnityEngine;
 
 
 [Serializable]
-public class EditableDictionary<TK, TV> : IDictionary<TK, TV>
+public class EditableDictionary<TK, TV> : SerializableDictionary<TK, TV>, IDictionary<TK, TV>
 {
-    [Serializable]
-    public class Pair<TK2, TV2>
-    {
-        [SerializeField]
-        public TK2 key;
-        [SerializeField]
-        public TV2 value;
-        public Pair(TK2 key, TV2 value) {
-            this.key = key;
-            this.value = value;
-        }
-    }
-
-
-
-    [SerializeField]
-    private List<Pair<TK, TV>> pairs = new List<Pair<TK, TV>>();
-
-
-    public TV this[TK key] { get => Get(key); set => Set(key, value); }
+    private int version = 0;
+    new public TV this[TK key] { get => Get(key); set => Set(key, value); }
 
     private void Set(TK key, TV value) {
         if (key == null) { throw new ArgumentNullException(); }
         if (IsReadOnly) { throw new NotSupportedException(); }
-        Pair<TK, TV> pair;
-        bool found = FindPair(key, out pair);
-        if (!found) { throw new ArgumentException("argument " + key + "not found"); }
-        pair.value = value;
-        version++;
+        Set(new Pair(key, value));
     }
 
 
     private TV Get(TK key) {
         if (key == null) { throw new ArgumentNullException(); }
         if (IsReadOnly) { throw new NotSupportedException(); }
-        Pair<TK, TV> pair;
-        bool found = FindPair(key, out pair);
-        if (!found) { throw new ArgumentException("argument " + key + "not found"); }
-        return pair.value;
+        return base[key];
     }
 
-    public ICollection<TK> Keys => new List<TK>(pairs.ConvertAll(x => x.key));
+    new public ICollection<TK> Keys => new List<TK>(base.Keys); //TODO there must be a better way of doing this, this seems hefty on overhead
 
-    public ICollection<TV> Values => new List<TV>(pairs.ConvertAll(x => x.value));
+    new public ICollection<TV> Values => new List<TV>(base.Values); //TODO there must be a better way of doing this, this seems hefty on overhead
 
-    public int Count => pairs.Count;
+    new public int Count => base.Count;
 
     //I have no fucking clue why this exists
     public bool IsReadOnly => false;
 
-    private int version = 0;
-
     public void Add(TK key, TV value) {
         if (!IsReadOnly) {
             if (key == null) { throw new ArgumentNullException(); }
-            if (!ContainsKey(key)) {
+            if (ContainsKey(key)) {
                 throw new ArgumentException("Dictionary already contains key " + key);
             } else {
-                pairs.Add(new Pair<TK, TV>(key, value));
+                Add(new Pair(key, value));
                 version++;
             }
         } else {
@@ -77,9 +50,9 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV>
         Add(item.Key, item.Value);
     }
 
-    public void Clear() {
+    new public void Clear() {
         if (!IsReadOnly) {
-            pairs.Clear();
+            base.Clear();
             version++;
         } else {
             throw new NotSupportedException("Dictionary is read-only");
@@ -89,32 +62,17 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV>
 
 
     public bool Contains(KeyValuePair<TK, TV> item) {
-        Pair<TK, TV> pair;
-        bool found = FindPair(item.Key,out pair);
-        if (found) {
-            return EqualityComparer<TV>.Default.Equals(pair.value, item.Value);
+        if (ContainsKey(item.Key)) {
+            return EqualityComparer<TV>.Default.Equals(Get(item.Key), item.Value);
         } else {
             return false;
         }
     }
 
-    private int FindIndex(TK key) {
-        if (!ContainsKey(key)) { throw new KeyNotFoundException(); }
-        return pairs.FindIndex(x => x.key.Equals(key));
-    }
 
-    private  bool FindPair(TK key, out Pair<TK, TV> found) {
-        if (!ContainsKey(key)) {
-            found = default(Pair<TK, TV>);
-            return false; 
-        }
-        found = pairs.Find(x => x.key.Equals(key));
-        return true;
-    }
-
-    public bool ContainsKey(TK key) {
+    new public bool ContainsKey(TK key) {
         if (key == null) { throw new ArgumentNullException(); }
-        return pairs.Exists(x => x.key.Equals(key));
+        return base.ContainsKey(key);
     }
 
     public void CopyTo(KeyValuePair<TK, TV>[] array, int arrayIndex) {
@@ -132,9 +90,11 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV>
             throw new ArgumentException("Dictionary is too large to fit into array," + Count + " > " + (array.Length - arrayIndex));
         }
 
-        for (int idx = arrayIndex; idx < array.Length; idx++) {
-            Pair<TK, TV> pair = pairs[idx];
-            array[idx] = new KeyValuePair<TK, TV>(pair.key, pair.value);
+        ICollection<TK> keys = this.Keys;
+        int idx = arrayIndex;
+        foreach (TK k in keys) {
+            array[idx] = new KeyValuePair<TK, TV>(k, Get(k));
+            idx++;
         }
     }
 
@@ -143,45 +103,36 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV>
         return new Enumerator(this);
     }
 
-    public IEnumerator<KeyValuePair<TK, TV>> GetEnumerator() {
+
+    new public IEnumerator<KeyValuePair<TK, TV>> GetEnumerator() {
         return GetEnumeratorObject();
     }
 
-    public bool Remove(TK key) {
+    new public bool Remove(TK key) {
         if (key == null) { throw new ArgumentNullException(); }
         if (IsReadOnly) { throw new NotSupportedException(); }
         if (!ContainsKey(key)) { return false; }
-        int idx = FindIndex(key);
-        pairs.RemoveAt(idx);
         version++;
-        return true;
+        return base.Remove(key);
     }
 
     public bool Remove(KeyValuePair<TK, TV> item) {
         if (item.Key == null) { throw new ArgumentNullException(); }
         if (IsReadOnly) { throw new NotSupportedException(); }
         if (!ContainsKey(item.Key)) { return false; }
-        for (int idx = 0; idx < pairs.Count; idx++) {
-            Pair<TK, TV> pair = pairs[idx];
-            if (item.Key.Equals(pair.key) && item.Value.Equals(pair.value)) {
-                pairs.RemoveAt(idx);
-                version++;
-                return true;
-            }
+        TV val = Get(item.Key);
+        if (item.Value.Equals(val)) {
+            version++;
+            return Remove(item.Key);
+
         }
+
         return false;
     }
 
-    public bool TryGetValue(TK key, out TV value) {
+    new public bool TryGetValue(TK key, out TV value) {
         if (key == null) { throw new ArgumentNullException(); }
-        foreach (Pair<TK, TV> pair in pairs) {
-            if (pair.key.Equals(key)) {
-                value = pair.value;
-                return true;
-            }
-        }
-        value = default(TV);
-        return false;
+        return base.TryGetValue(key, out value);
     }
 
     IEnumerator IEnumerable.GetEnumerator() {
@@ -189,12 +140,13 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV>
     }
 
 
+    //TODO there must be a way to improve performance of this, through understanding enumerators properly!
     public struct Enumerator : IEnumerator<KeyValuePair<TK, TV>>
     {
         private readonly EditableDictionary<TK, TV> dictonary;
         private int version;
-        private int idx;
         private KeyValuePair<TK, TV> current;
+        private IEnumerator<TK> keys;
 
         public KeyValuePair<TK, TV> Current {
             get { return current; }
@@ -204,31 +156,30 @@ public class EditableDictionary<TK, TV> : IDictionary<TK, TV>
             dictonary = dictionary;
             version = dictionary.version;
             current = default(KeyValuePair<TK, TV>);
-            idx = 0;
+            keys = dictionary.Keys.GetEnumerator();
         }
 
         public bool MoveNext() {
             if (version != dictonary.version)
                 throw new InvalidOperationException(string.Format("Enumerator version {0} != Dictionary version {1}", version, dictonary.version));
 
-            while (idx < dictonary.Count) {
-                Pair<TK, TV> pair = dictonary.pairs[idx];
-                current = new KeyValuePair<TK, TV>(pair.key, pair.value);
-                idx++;
+            bool moved = keys.MoveNext();
+            if (!moved) {
+                current = default(KeyValuePair<TK, TV>);
+                return false;
+            } else {
+                TK key = keys.Current;
+                current = new KeyValuePair<TK, TV>(key, dictonary[key]);
                 return true;
             }
-
-            idx = dictonary.Count + 1;
-            current = default(KeyValuePair<TK, TV>);
-            return false;
         }
 
         void IEnumerator.Reset() {
             if (version != dictonary.version)
                 throw new InvalidOperationException(string.Format("Enumerator version {0} != Dictionary version {1}", version, dictonary.version));
 
-            idx = 0;
             current = default(KeyValuePair<TK, TV>);
+            keys.Reset();
         }
 
         object IEnumerator.Current {

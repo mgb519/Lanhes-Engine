@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+//using SerializableDictionary;
 
 //TODO this class is getting a bit chunky
 [RequireComponent(typeof(GameSceneManager)), RequireComponent(typeof(PartyManager)), RequireComponent(typeof(WindowManager)), RequireComponent(typeof(BattleManager))]
@@ -23,7 +24,7 @@ public class DataManager : MonoBehaviour, ISaveable
             {
                 XmlNode keyNode = entry["key"];
                 XmlNode valueNode = entry["value"];
-                this.Add(keyNode.InnerText, StringToValue(valueNode.InnerText));
+                this.Add(keyNode.InnerText, StringToValue(valueNode.InnerText)); 
             }
         }
 
@@ -112,17 +113,15 @@ public class DataManager : MonoBehaviour, ISaveable
     private BoolDatabase boolData = new BoolDatabase();
 
 
+    //[System.Serializable]
+    public class InkStates : EditableDictionary<(int, string), string> { } //TODO make this isaveable and place it in the array of databases, and place RestoreDialogues and such into here
 
 
-
-    [System.Serializable]
-    public class InkStates : EditableDictionary<(int, string), string> { }
-
-
-    [SerializeField]
+    //[SerializeField]
     private InkStates inkStates = new InkStates();
 
-
+    [SerializeField]
+    public EditableDictionary<string, string> check = new EditableDictionary<string, string>();
 
 
 
@@ -181,8 +180,7 @@ public class DataManager : MonoBehaviour, ISaveable
     {
         if (dict.ContainsKey(key))
         {
-            dict.Remove(key);
-            dict.Add(key, newValue);
+            dict[key] = newValue;
             return;
         }
         else
@@ -194,7 +192,7 @@ public class DataManager : MonoBehaviour, ISaveable
         }
     }
 
-    //TODO: should be initialise the entry if it doesn't exist instead?
+    //TODO: should be initialise the entry if it doesn't exist instead? or give a default value?
     public T GetVal<T>(string key, IDictionary<string, T> dict)
     {
         if (dict.ContainsKey(key))
@@ -235,10 +233,11 @@ public class DataManager : MonoBehaviour, ISaveable
     {
         int sceneId = SceneManager.GetActiveScene().buildIndex;
         //get all npc names in this scene that have a remembered JSON
-        List<(int, string)> keys = inkStates.keys.FindAll(x => x.Item1 == sceneId);
-
+        ICollection<(int, string)> keys = inkStates.Keys;
         foreach ((int, string) key in keys)
         {
+            if (key.Item1 != sceneId) { continue; } //if this NPC is not in the current scene, do not flush it
+
             GameObject npc = GameObject.Find(key.Item2);
 
             DialogueEvent e = npc.GetComponent<DialogueEvent>();

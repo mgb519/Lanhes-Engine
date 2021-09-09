@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 using System.Xml;
 
-//TODO: build an editor for this BS
 [Serializable]
 public class Inventory : ISaveable {
 

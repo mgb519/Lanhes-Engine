@@ -12,7 +12,7 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
 
 
 
-    private static CanvasGroup loadingGroup;
+    private static LoadingScreen loadingGroup;
 
     private static bool isLoading;
 
@@ -22,7 +22,8 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            loadingGroup = transform.GetChild(0).GetComponent<CanvasGroup>();
+            loadingGroup = transform.GetChild(0).GetComponent<LoadingScreen>(); //TODO more robust method for getting the loading screen!
+            loadingGroup.gameObject.SetActive(false); //We don't need a loading screen on startup
         }
         else if (instance != this)
         {
@@ -39,6 +40,10 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
         isLoading = true;
 
         //hoover up this scene's dialogues and store them in the inter-scene memory
+
+        //show loading screen
+        loadingGroup.gameObject.SetActive(true);
+
         DataManager.instance.RememberDialogues();
         instance.StartCoroutine(instance.LoadScene(newScene, spawnPositionName));
     }
@@ -46,9 +51,10 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
     private IEnumerator LoadScene(string levelId, string spawnPositionName = null)
     {
         //Wait for Unity to finish loading the scene in the background
-        AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(levelId);
+        AsyncOperation op = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(levelId);       
         while (!op.isDone)
         {
+            loadingGroup.UpdateProgress(op.progress);
             yield return null;
         }
 
@@ -62,6 +68,9 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
 
         //now we have loaded the new scene, restore remembered dialogues in this scene
         DataManager.instance.RestoreDialogues();
+
+        //remove the loading screen
+        loadingGroup.gameObject.SetActive(false);
 
         isLoading = false;
     }

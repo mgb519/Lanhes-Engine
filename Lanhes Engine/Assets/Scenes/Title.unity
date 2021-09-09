@@ -1091,46 +1091,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4991302870453160485, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
-        type: 3}
-      propertyPath: intData.array.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4991302870453160485, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
-        type: 3}
-      propertyPath: intData.array.Array.data[0].Key
-      value: didbar
-      objectReference: {fileID: 0}
-    - target: {fileID: 4991302870453160485, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
-        type: 3}
-      propertyPath: intData.array.Array.data[1].Key
-      value: yabadaba
-      objectReference: {fileID: 0}
-    - target: {fileID: 4991302870453160485, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
-        type: 3}
-      propertyPath: intData.array.Array.data[0].Value
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4991302870453160485, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
-        type: 3}
-      propertyPath: intData.array.Array.data[1].Value
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6729582798819793251, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
-        type: 3}
-      propertyPath: parties.Array.data[0].inventory.items.array.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6729582798819793251, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
-        type: 3}
-      propertyPath: parties.Array.data[0].inventory.items.array.Array.data[0].Key
-      value: 
-      objectReference: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60,
-        type: 2}
-    - target: {fileID: 6729582798819793251, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
-        type: 3}
-      propertyPath: parties.Array.data[0].inventory.items.array.Array.data[0].Value
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf, type: 3}

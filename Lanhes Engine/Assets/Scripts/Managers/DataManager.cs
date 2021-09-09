@@ -114,14 +114,12 @@ public class DataManager : MonoBehaviour, ISaveable
 
 
     //[System.Serializable]
-    public class InkStates : EditableDictionary<(int, string), string> { } //TODO make this isaveable and place it in the array of databases, and place RestoreDialogues and such into here
+    public class InkStates : EditableDictionary<(int, string), string> { } //TODO couldn't this just be ISaveable, and saved with the databases? On the other hand, this isn't stricty a DB so maybe don't place them together.
 
 
     //[SerializeField]
     private InkStates inkStates = new InkStates();
 
-    [SerializeField]
-    public EditableDictionary<string, string> check = new EditableDictionary<string, string>();
 
 
 
@@ -208,7 +206,8 @@ public class DataManager : MonoBehaviour, ISaveable
     }
 
 
-    //TODO What about dialogues that aren't in Ink? I guess just don't have those then.
+    //TODO What about dialogues that aren't in Ink? I guess just don't have those then. Maybe we can have an interface we look for, and a custom saving mechanism tha DialogueEvent implements?
+    //TODO Method for culling dialogues that wont appear again (i.e chapters that you have passed)
 
     //TODO this should be called when transitioning scenes too, so that Inks are held in memory to flush
     /// <summary>

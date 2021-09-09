@@ -140,7 +140,6 @@ public class EditableDictionary<TK, TV> : SerializableDictionary<TK, TV>, IDicti
     }
 
 
-    //TODO there must be a way to improve performance of this, through understanding enumerators properly!
     public struct Enumerator : IEnumerator<KeyValuePair<TK, TV>>
     {
         private readonly EditableDictionary<TK, TV> dictonary;

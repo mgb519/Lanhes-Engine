@@ -4,18 +4,19 @@ using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using TMPro;
 
 //TODO finish this
-//This should be overriden by the game, depending on how a save slot looks.
+//This should be overriden by the game, depending on how a save slot looks. Or maybe each game writes its own with this as a base? idfk
 public class SaveInstanceButton : MonoBehaviour
 {
-    //TODO these should be taken out to an example file that overrides this!
+    //TODO these should be taken out to an example file that overrides this! Maybe?
     [SerializeField]
-    private Text timeText;
+    private TextMeshProUGUI timeText;
     [SerializeField]
-    private Text goldText;
+    private TextMeshProUGUI goldText;
     [SerializeField]
-    private Text notes;
+    private TextMeshProUGUI notes;
 
     private string path;
     public void Clicked() {

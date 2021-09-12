@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class EditableDictionary<TK, TV> : SerializableDictionary<TK, TV>, IDictionary<TK, TV>
 {
-    private int version = 0;
+    private int v = 0;
     new public TV this[TK key] { get => Get(key); set => Set(key, value); }
 
     private void Set(TK key, TV value) {
@@ -39,7 +39,7 @@ public class EditableDictionary<TK, TV> : SerializableDictionary<TK, TV>, IDicti
                 throw new ArgumentException("Dictionary already contains key " + key);
             } else {
                 Add(new Pair(key, value));
-                version++;
+                v++;
             }
         } else {
             throw new NotSupportedException("Dictionary is read-only");
@@ -53,7 +53,7 @@ public class EditableDictionary<TK, TV> : SerializableDictionary<TK, TV>, IDicti
     new public void Clear() {
         if (!IsReadOnly) {
             base.Clear();
-            version++;
+            v++;
         } else {
             throw new NotSupportedException("Dictionary is read-only");
         }
@@ -112,7 +112,7 @@ public class EditableDictionary<TK, TV> : SerializableDictionary<TK, TV>, IDicti
         if (key == null) { throw new ArgumentNullException(); }
         if (IsReadOnly) { throw new NotSupportedException(); }
         if (!ContainsKey(key)) { return false; }
-        version++;
+        v++;
         return base.Remove(key);
     }
 
@@ -122,7 +122,7 @@ public class EditableDictionary<TK, TV> : SerializableDictionary<TK, TV>, IDicti
         if (!ContainsKey(item.Key)) { return false; }
         TV val = Get(item.Key);
         if (item.Value.Equals(val)) {
-            version++;
+            v++;
             return Remove(item.Key);
 
         }
@@ -153,14 +153,14 @@ public class EditableDictionary<TK, TV> : SerializableDictionary<TK, TV>, IDicti
 
         internal Enumerator(EditableDictionary<TK, TV> dictionary) {
             dictonary = dictionary;
-            version = dictionary.version;
+            version = dictionary.v;
             current = default(KeyValuePair<TK, TV>);
             keys = dictionary.Keys.GetEnumerator();
         }
 
         public bool MoveNext() {
-            if (version != dictonary.version)
-                throw new InvalidOperationException(string.Format("Enumerator version {0} != Dictionary version {1}", version, dictonary.version));
+            if (version != dictonary.v)
+                throw new InvalidOperationException(string.Format("Enumerator version {0} != Dictionary version {1}", version, dictonary.v));
 
             bool moved = keys.MoveNext();
             if (!moved) {
@@ -174,8 +174,8 @@ public class EditableDictionary<TK, TV> : SerializableDictionary<TK, TV>, IDicti
         }
 
         void IEnumerator.Reset() {
-            if (version != dictonary.version)
-                throw new InvalidOperationException(string.Format("Enumerator version {0} != Dictionary version {1}", version, dictonary.version));
+            if (version != dictonary.v)
+                throw new InvalidOperationException(string.Format("Enumerator version {0} != Dictionary version {1}", version, dictonary.v));
 
             current = default(KeyValuePair<TK, TV>);
             keys.Reset();

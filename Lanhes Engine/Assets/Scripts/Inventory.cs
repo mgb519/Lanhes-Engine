@@ -14,7 +14,7 @@ public class Inventory : ISaveable {
     public class InventoryContents : EditableDictionary<InventoryItem, int> { }
 
     [SerializeField]
-    public InventoryContents items = new InventoryContents();
+    private InventoryContents items = new InventoryContents();
 
 
    
@@ -30,7 +30,7 @@ public class Inventory : ISaveable {
    /// <param name="item"> The item to add</param>
    /// <param name="number"> The amount of it to add</param>
    /// <returns> The amount that was actually added to inventory</returns>
-    public int AddItem(InventoryItem item, int number) {
+    public int AddItems(InventoryItem item, int number) {
         for (int i = 1; i <= number; i++) {
             if (!AddItem(item)) { return i; }
         }
@@ -81,26 +81,51 @@ public class Inventory : ISaveable {
 
 
     //TODO: ?????
-    public Dictionary<InventoryItem, int> Contents() {
-        Dictionary<InventoryItem, int> ret = new Dictionary<InventoryItem, int>();
-
-        foreach (var k in items.Keys) {
-            ret.Add(k, items[k]);
-        }
-        
-        return ret;
+    public IDictionary<InventoryItem, int> Contents() {
+        return items;
 
     }
 
     public XmlNode SaveToFile(XmlDocument doc) {
-        //TODO finish
-        return doc.CreateElement("a");
-        throw new NotImplementedException();
+        XmlElement root = doc.CreateElement("inventory");
+        XmlElement itemsNode = doc.CreateElement("items");
+        root.AppendChild(itemsNode);
+
+        foreach (KeyValuePair<InventoryItem,int> kvp in items) {
+            Debug.Log("saving "+kvp.Key.systemName);
+            XmlElement entry = doc.CreateElement("entry");
+            itemsNode.AppendChild(entry);
+
+            XmlElement item = doc.CreateElement("item");
+            item.InnerText = kvp.Key.systemName;
+            entry.AppendChild(item);
+
+            XmlElement num = doc.CreateElement("number");
+            num.InnerText = kvp.Value.ToString();
+            entry.AppendChild(num);
+        }
+
+
+        return root;
     }
 
     public void LoadFromFile(XmlNode node) {
-        //TODO finish
-        return;
-        throw new NotImplementedException();
+        items.Clear();
+        XmlElement root = node["inventory"];
+        XmlElement itemsNode = root["items"];
+
+        foreach (XmlElement entry in itemsNode) {
+            XmlElement itemNode = entry["item"];
+            XmlElement numNode = entry["number"];
+
+
+            InventoryItem item = DataManager.GetItemBySystemName(itemNode.InnerText);
+            int number = int.Parse(numNode.InnerText); //TODO make safer with TryParse
+            int added = AddItems(item, number);
+            if (added!=number) { 
+                //TODO the save was modified or corrupted. There may be a problem.
+            }
+            
+        }
     }
 }

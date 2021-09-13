@@ -34,9 +34,9 @@ public class DialogueEvent : MapScript {
         _inkStory = new Story(inkAsset.text);
 
         //bind some getter functions
-        _inkStory.BindExternalFunction("getInt", (string key) => DataManager.instance.GetInt(key));
-        _inkStory.BindExternalFunction("getStr", (string key) => DataManager.instance.GetString(key));
-        _inkStory.BindExternalFunction("getBol", (string key) => DataManager.instance.GetBool(key));
+        _inkStory.BindExternalFunction("getInt", (string key) => DataManager.GetInt(key));
+        _inkStory.BindExternalFunction("getStr", (string key) => DataManager.GetString(key));
+        _inkStory.BindExternalFunction("getBol", (string key) => DataManager.GetBool(key));
         _inkStory.BindExternalFunction("getBattleResult", () => (int)BattleManager.GetResultOfLastBattle());
     }
 
@@ -100,19 +100,19 @@ public class DialogueEvent : MapScript {
                         string key = args[1];
                         //TODO: make safer for debugging purposes
                         int val = int.Parse(args[2]);
-                        DataManager.instance.SetInt(key, val);
+                        DataManager.SetInt(key, val);
 
                     } else if (function == "$SETSTR") {
                         string key = args[1];
                         //TODO: make safer for debugging purposes
                         string val = args[2];
-                        DataManager.instance.SetString(key, val);
+                        DataManager.SetString(key, val);
 
                     } else if (function == "$SETBOL") {
                         string key = args[1];
                         //TODO: make safer for debugging purposes
                         bool val = bool.Parse(args[2]);
-                        DataManager.instance.SetBool(key, val);
+                        DataManager.SetBool(key, val);
                     }
                     else if (function == "$BATTLE")
                     {

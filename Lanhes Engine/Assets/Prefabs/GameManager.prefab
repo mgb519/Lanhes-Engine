@@ -324,7 +324,7 @@ MonoBehaviour:
     - Key: didbar
       Value: 7
     - Key: yabadaba
-      Value: 12
+      Value: 400
   stringData:
     array:
     - Key: name
@@ -333,6 +333,7 @@ MonoBehaviour:
       Value: yes
   boolData:
     array: []
+  itemDatabase: {fileID: 11400000, guid: e16c9cefa8fbd8d40a4446e75bc1bbc6, type: 2}
 --- !u!114 &1825160770870204550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +363,7 @@ MonoBehaviour:
       items:
         array:
         - Key: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
-          Value: 12
+          Value: 200
     avatar: {fileID: 6416550481888765071, guid: fbbc859538824cb4ea23671577ab33b3,
       type: 3}
   - inventory:

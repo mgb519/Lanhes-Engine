@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175e5705f62abb04bbc97239562a9d00, type: 3}
   m_Name: Currency
   m_EditorClassIdentifier: 
-  name: Gold
+  systemName: money
+  readableName: Dollars
   maxStack: 999999
-  icon: {fileID: 0}

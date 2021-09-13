@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175e5705f62abb04bbc97239562a9d00, type: 3}
   m_Name: Iron Ingot
   m_EditorClassIdentifier: 
-  name: Iron Ingot
+  systemName: ingot_iron
+  readableName: Iron Ingot
   maxStack: 64
-  icon: {fileID: 0}

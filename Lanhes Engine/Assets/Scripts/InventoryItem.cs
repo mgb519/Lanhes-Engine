@@ -6,28 +6,15 @@ using UnityEngine.UI;
 
 //[CreateAssetMenu(fileName = "New Item" ,menuName ="Inventory Item")]
 public abstract class InventoryItem : ScriptableObject,ISelectable {
-    new public string name;
-
+    public string systemName;
+    public string readableName;
     public int maxStack;
 
-    //TODO: is this strictly necessary for the engine? maybe this should be in derived objects instead? not all games need an icon.
-    public Sprite icon;
-
-    public List<Tags> tags;
-
-    public SelectionButton Render() {
+    public virtual SelectionButton Render() { //TODO your game *will* override this
         SelectionButton button = GameObject.Instantiate(WindowManager.BaseButton());
-        button.GetComponentInChildren<Text>().text = name;
+        button.GetComponentInChildren<Text>().text = readableName;
         button.dat = this;
         return button;
     }
 
-    public enum Tags {
-        KeyItem,
-        Material,
-        Armour,
-        WondrousItem,
-        Weapon
-
-    }
 }

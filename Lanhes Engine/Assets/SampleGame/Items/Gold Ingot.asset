@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175e5705f62abb04bbc97239562a9d00, type: 3}
   m_Name: Gold Ingot
   m_EditorClassIdentifier: 
-  name: Golden Ingot
+  systemName: ingot_gold
+  readableName: Gold Ingot
   maxStack: 64
-  icon: {fileID: 0}

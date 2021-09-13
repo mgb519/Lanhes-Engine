@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175e5705f62abb04bbc97239562a9d00, type: 3}
   m_Name: Silver Ingot
   m_EditorClassIdentifier: 
-  name: Silver Ingot
+  systemName: ingot_silver
+  readableName: Silver Ingot
   maxStack: 64
-  icon: {fileID: 0}

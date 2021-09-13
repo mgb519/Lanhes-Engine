@@ -24,13 +24,28 @@ public class Inventory : ISaveable {
         return 0;
     }
 
+   /// <summary>
+   /// Adds the given amount of the given item to the inventory
+   /// </summary>
+   /// <param name="item"> The item to add</param>
+   /// <param name="number"> The amount of it to add</param>
+   /// <returns> The amount that was actually added to inventory</returns>
+    public int AddItem(InventoryItem item, int number) {
+        for (int i = 1; i <= number; i++) {
+            if (!AddItem(item)) { return i; }
+        }
+        return number;
+    }
+
+
+
     /// <summary>
     /// Adds 1 of the passed item to the inventory
     /// </summary>
     /// <param name="item">The item to add</param>
     /// <returns>True if the item was added, False if it could not be</returns>
     public bool AddItem(InventoryItem item) {
-        //note: you may want to override if we want to impose a maximum capacity restriction
+        //note: you may want to override if we want to impose a maximum total capacity restriction
         if (items.ContainsKey(item)) {
             if (items[item] >= item.maxStack) {
                 return false;

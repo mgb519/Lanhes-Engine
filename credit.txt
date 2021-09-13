@@ -1,5 +1,6 @@
 Code licensed from others:
 
-Fredrik Ludigsven (Steinbitglis), Serializabe Dictionary, http://wiki.unity3d.com/index.php/SerializableDictionary, MIT license
+Fredrik Ludigsven (Steinbitglis), Serializabe Dictionary, http://wiki.unity3d.com/index.php/SerializableDictionary, MIT license (included LICENSE)
 
-Inkle Ltd, Ink, https://github.com/inkle/ink-unity-integration, MIT license
+Inkle Ltd, Ink, https://github.com/inkle/ink-unity-integration, MIT license (included LICENSE)
+

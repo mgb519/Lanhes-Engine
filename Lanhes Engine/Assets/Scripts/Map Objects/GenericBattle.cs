@@ -4,12 +4,12 @@ using UnityEngine;
 /// <summary>
 /// Runs an instance of the general case of battle, with a victory resulting in rewards and a loss resulting in game over. Should be overriden by games with more battle result states.
 /// </summary>
-public class GenericBattle : MapScript
+public class GenericBattle : MonoBehaviour,MapScript
 {
     //TODO this uses no MonoBehaviour methods, so why does it have the extra weight? A friend of mine had this exact problem, I'll ask him when I can get ahold of him...
     [SerializeField]
     private IOpponentGroup enemies;
-    public override void Action() {
+    public void Action() {
         StartCoroutine(Body());
     }
 

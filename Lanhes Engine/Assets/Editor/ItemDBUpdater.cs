@@ -10,11 +10,11 @@ class MyAllPostprocessor : AssetPostprocessor
 {
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) {
         bool dirtied = false;
-        const string path = "Assets/ItemDatabase.asset";
-        ItemDatabase db = AssetDatabase.LoadAssetAtPath<ItemDatabase>(path);
+        const string PATH = "Assets/ItemDatabase.asset";
+        ItemDatabase db = AssetDatabase.LoadAssetAtPath<ItemDatabase>(PATH);
         if (db == null) {
             db =ScriptableObject.CreateInstance<ItemDatabase>();
-            AssetDatabase.CreateAsset(db, path);
+            AssetDatabase.CreateAsset(db, PATH);
         }
 
 
@@ -55,7 +55,7 @@ class MyAllPostprocessor : AssetPostprocessor
 
         for (int i = 0; i < movedAssets.Length; i++) {
             //Debug.Log("Moved Asset: " + movedAssets[i] + " from: " + movedFromAssetPaths[i]);
-            //This shouldn't be an issue since the ItemDatabase already has a reference to the asset
+            //This shouldn't be an issue since the ItemDatabase already has a reference to the asset           
         }
         if (dirtied) {
             EditorUtility.SetDirty(db);            

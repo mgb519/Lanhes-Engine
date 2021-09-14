@@ -104,11 +104,11 @@ public class DataManager : MonoBehaviour, ISaveable
 
 
     //[System.Serializable]
-    public class InkStates : EditableDictionary<(int, string), string> { } //TODO couldn't this just be ISaveable, and saved with the databases? On the other hand, this isn't stricty a DB so maybe don't place them together.
+    public class NPCStates : EditableDictionary<(int, string), string> { } //TODO couldn't this just be ISaveable, and saved with the databases? On the other hand, this isn't stricty a DB so maybe don't place them together.
 
 
     //[SerializeField]
-    private InkStates inkStates = new InkStates();
+    private NPCStates npcStates = new NPCStates();
 
 
 
@@ -195,12 +195,13 @@ public class DataManager : MonoBehaviour, ISaveable
     /// <summary>
     /// Collect dialogues in this scene and hold them in memory
     /// </summary>
-    public void RememberDialogues() {
-        DialogueEvent[] dialogueEvents = FindObjectsOfType<DialogueEvent>();
+    public void RememberNPCStates() {
+        //Get all NPCTraitSerialiser; i.e all objects that have an entrypoint to persistent data
+        NPCTraitSerialiser[] dialogueEvents = FindObjectsOfType<NPCTraitSerialiser>();
         int currentSceneId = SceneManager.GetActiveScene().buildIndex;
-        foreach (DialogueEvent e in dialogueEvents) {
-            string json = e.Save();
-            inkStates.Add((currentSceneId, e.name), json);
+        foreach (NPCTraitSerialiser e in dialogueEvents) {
+            string saveString = e.Save();
+            npcStates.Add((currentSceneId, e.name), saveString);
         }
 
     }
@@ -208,27 +209,26 @@ public class DataManager : MonoBehaviour, ISaveable
     /// <summary>
     /// Find dialogues that are held in memory and flush them into the scene. They will no longer be held in memory, but will be remembered when we leave the scene.
     /// </summary>
-    public void RestoreDialogues() {
+    public void RestoreNPCStates() {
         int sceneId = SceneManager.GetActiveScene().buildIndex;
         //get all npc names in this scene that have a remembered JSON
-        ICollection<(int, string)> keys = inkStates.Keys;
+        ICollection<(int, string)> keys = npcStates.Keys;
         foreach ((int, string) key in keys) {
             if (key.Item1 != sceneId) { continue; } //if this NPC is not in the current scene, do not flush it
 
-            GameObject npc = GameObject.Find(key.Item2);
-
-            DialogueEvent e = npc.GetComponent<DialogueEvent>();
-            e.Load(inkStates[key]);
-            inkStates.Remove(key);
+            GameObject npc = GameObject.Find(key.Item2);//TODO: what if no NPC was found? In that case, it implies we've spawned an NPC at runtime, which will break the whole thing...
+            NPCTraitSerialiser e = npc.GetComponent<NPCTraitSerialiser>();
+            e.Load(npcStates[key]);
+            npcStates.Remove(key);
         }
 
     }
 
 
     /// <summary>
-    /// Flush dialogues in memory to file, as well is dialogues in scene.
+    /// Flush dialogues in memory to file, as well as dialogues in scene.
     /// </summary>
-    private XmlNode SaveDialogues(XmlDocument doc) {
+    private XmlNode SaveNPCStates(XmlDocument doc) {
         //save Ink dialogues
 
         XmlNode root = doc.CreateElement("inks");
@@ -238,29 +238,30 @@ public class DataManager : MonoBehaviour, ISaveable
 
 
         //TODO: you should not remember Inks that have not been interacted with
-        //FIXME lots of shared code between this and saving rememebered dialogues
-        DialogueEvent[] dialogueEvents = FindObjectsOfType<DialogueEvent>();
+        //FIXME lots of shared code between this and saving rememebered dialogues, and with remembering in the first place. Maybe call Remember and Flush to reduce code reuse
+        //TODO rename the node names now that Ink is not the sole source of persistence
+        NPCTraitSerialiser[] dialogueEvents = FindObjectsOfType<NPCTraitSerialiser>();
         string currentSceneId = SceneManager.GetActiveScene().buildIndex.ToString();
-        foreach (DialogueEvent e in dialogueEvents) {
-            string json = e.Save();
-            XmlElement inkNode = doc.CreateElement("ink");
-            root.AppendChild(inkNode);
+        foreach (NPCTraitSerialiser e in dialogueEvents) {
+            string saveString = e.Save();
+            XmlElement saveStringNode = doc.CreateElement("ink");
+            root.AppendChild(saveStringNode);
 
-            inkNode.SetAttribute("scene", currentSceneId);
-            inkNode.SetAttribute("name", e.name);
+            saveStringNode.SetAttribute("scene", currentSceneId);
+            saveStringNode.SetAttribute("name", e.name);
 
-            inkNode.InnerText = json;
+            saveStringNode.InnerText = saveString;
         }
 
         //store all remembered extra-scene dialogues
-        foreach ((int, string) key in inkStates.Keys) {
+        foreach ((int, string) key in npcStates.Keys) {
             XmlElement inkNode = doc.CreateElement("ink");
             root.AppendChild(inkNode);
 
             inkNode.SetAttribute("scene", key.Item1.ToString());
             inkNode.SetAttribute("name", key.Item2);
 
-            inkNode.InnerText = inkStates[key];
+            inkNode.InnerText = npcStates[key];
 
         }
 
@@ -273,18 +274,17 @@ public class DataManager : MonoBehaviour, ISaveable
     /// <summary>
     /// Load all dialogues from file and place them in the Ink memory
     /// </summary>
-    private void LoadDialogues(XmlNode node) {
-        //load Ink dialogues
-        inkStates.Clear();
+    private void LoadNPCStates(XmlNode node) {
+        npcStates.Clear();
 
-        XmlNode inksNode = node["inks"];
+        XmlNode saveStringNode = node["inks"];
 
-        foreach (XmlNode entry in inksNode.ChildNodes) {
+        foreach (XmlNode entry in saveStringNode) {
             int sceneId = int.Parse(entry.Attributes["scene"].Value);
             string npcId = entry.Attributes["name"].Value;
-            string json = entry.InnerText;
+            string saveString = entry.InnerText;
 
-            inkStates.Add((sceneId, npcId), json);
+            npcStates.Add((sceneId, npcId), saveString);
         }
 
 
@@ -322,6 +322,7 @@ public class DataManager : MonoBehaviour, ISaveable
             managerHolderNode.AppendChild(entry);
         }
 
+
         //save NPC positions
         XmlElement npcHolderNode = doc.CreateElement("npcs");
         ret.AppendChild(npcHolderNode);
@@ -353,7 +354,7 @@ public class DataManager : MonoBehaviour, ISaveable
         XmlElement dialoguesHolderNode = doc.CreateElement("dialogues");
         ret.AppendChild(dialoguesHolderNode);
 
-        dialoguesHolderNode.AppendChild(SaveDialogues(doc));
+        dialoguesHolderNode.AppendChild(SaveNPCStates(doc));
 
         return ret;
     }
@@ -407,8 +408,8 @@ public class DataManager : MonoBehaviour, ISaveable
 
 
         //load Ink state
-        LoadDialogues(dataNode["dialogues"]);
-        RestoreDialogues();
+        LoadNPCStates(dataNode["dialogues"]);
+        RestoreNPCStates();
         isLoading = false;
         //throw new NotImplementedException();
         Debug.Log("Finished load body");

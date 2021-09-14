@@ -5,7 +5,7 @@ using Ink.Runtime;
 using System;
 
 
-public class DialogueEvent : MapScript {
+public class DialogueEvent : NPCTrait, MapScript {
 
   
     GameObject player { get {
@@ -41,7 +41,7 @@ public class DialogueEvent : MapScript {
     }
 
 
-    public override void Action() {
+    public void Action() {
     
         StartCoroutine(HandleScript());
     }
@@ -167,12 +167,12 @@ public class DialogueEvent : MapScript {
 
 
     //We do not save the shops or enemyParties variables, since they do not change.
-    public string Save()
+    public override string Save()
     {
         return _inkStory.state.ToJson();
     }
 
-    public void Load(string json) {
-        _inkStory.state.LoadJson(json);
+    public override void Load(string saveString) {
+        _inkStory.state.LoadJson(saveString);
     }
 }

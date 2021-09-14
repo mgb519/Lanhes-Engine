@@ -44,7 +44,7 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
         //show loading screen
         loadingGroup.gameObject.SetActive(true);
 
-        DataManager.instance.RememberDialogues();
+        DataManager.instance.RememberNPCStates();
         instance.StartCoroutine(instance.LoadScene(newScene, spawnPositionName));
     }
 
@@ -67,7 +67,7 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
 
 
         //now we have loaded the new scene, restore remembered dialogues in this scene
-        DataManager.instance.RestoreDialogues();
+        DataManager.instance.RestoreNPCStates();
 
         //remove the loading screen
         loadingGroup.gameObject.SetActive(false);

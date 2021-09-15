@@ -12,8 +12,7 @@ public abstract class PawnMovementController : MonoBehaviour {
     new private Rigidbody rigidbody;
     private Vector3 lastDirection;
 
-    [SerializeField]
-    private float useDistance;
+
 
     // Start is called before the first frame update
     void Start() {
@@ -32,6 +31,7 @@ public abstract class PawnMovementController : MonoBehaviour {
             Vector3 inp = GetInput();
             inp.y = 0;
             Vector3 dir = inp.normalized;
+            Debug.Log(dir);
             //TODO: snappng to grid option
             if (dir.magnitude > 0) {
                 lastDirection = dir;
@@ -46,21 +46,6 @@ public abstract class PawnMovementController : MonoBehaviour {
             anim.SetInteger("Horizontal", Mathf.RoundToInt(dir.x));
             anim.SetInteger("Vertical", Mathf.RoundToInt(dir.z));
             anim.speed = anim.GetInteger("Horizontal") == 0 && anim.GetInteger("Vertical") == 0 ? 0 : 1;
-
-
-            //raycast for use
-            //TODO should this be moved up to the concrete class?
-            if (Input.GetButtonDown("Use")) {
-                RaycastHit hitInfo;
-                if (Physics.Raycast(transform.position,lastDirection,out hitInfo,useDistance)) {
-                    UseTrigger trigger = hitInfo.collider.gameObject.GetComponent<UseTrigger>();
-                    if (trigger != null) {
-                        trigger.Used();
-                    }
-                }
-            }
-            
-
                         
         }
         else {

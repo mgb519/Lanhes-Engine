@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6416550481888765069}
   - component: {fileID: 6416550481888765068}
   - component: {fileID: 6416550481888765072}
+  - component: {fileID: 3086262656954978307}
   m_Layer: 8
   m_Name: PlayerController
   m_TagString: Player
@@ -64,6 +65,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -137,14 +139,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6416550481888765065}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abd4765c309813c44a7057d1d4d20d3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8305d2017b4cc9841a0a51162af8121b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  useDistance: 1
   blocked: 0
+  useDistance: 2
 --- !u!95 &6416550481888765072
 Animator:
   serializedVersion: 3
@@ -164,6 +166,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3086262656954978307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416550481888765065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e2ee7dbecce0904a8ba0f6cb0129d53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  blocked: 0
+  useDistance: 2
+  snapDistance: 0.1
 --- !u!1 &6416550482334398990
 GameObject:
   m_ObjectHideFlags: 0

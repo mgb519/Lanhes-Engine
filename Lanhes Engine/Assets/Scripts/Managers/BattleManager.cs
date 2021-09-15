@@ -19,13 +19,6 @@ public class BattleManager : MonoBehaviour, ISaveable
 
     private BattleResult lastResult; //TODO: maybe this should be restored? It *shouldn't need to*, I think, but maybe just for safety?
 
-    private GameObject playerCam; //FIXME this is cached to get around how Unity's getComponent works; we need to reactivate a deactivated object when returning to the scene (the camera), but we cannot do this, because GetComponent does not get deactivated gameObjects
-                                  // see-> 
-                                  /*
-                                     //FIXME: THIS DOESN'T WORK! becuase GetComponent only gets ACTIVE objects, but we just disabled the object with the camera. I guess we need to cache the gameObject or something.
-                                      Camera camera = player.GetComponentInChildren<Camera>();
-                                      camera.gameObject.SetActive(true);
-                                  */
     void Awake()
     {
         if (instance == null)
@@ -55,8 +48,7 @@ public class BattleManager : MonoBehaviour, ISaveable
         //disable the player's camera, since the battle scene will have a camera of its own
         GameObject player = PartyManager.playerInThisScene.gameObject;
         Camera camera = player.GetComponentInChildren<Camera>();
-        instance.playerCam = camera.gameObject;
-        instance.playerCam.SetActive(false);
+        camera.gameObject.SetActive(false);
 
         //load in the new scene
         SceneManager.LoadSceneAsync(instance.battleScene, LoadSceneMode.Additive);
@@ -70,17 +62,11 @@ public class BattleManager : MonoBehaviour, ISaveable
     /// </summary>
     public static void EndBattle(BattleResult result)
     {
-        //TODO      
-
         //restore the player camera
         GameObject player = PartyManager.playerInThisScene.gameObject;
 
-        /*
-        //FIXME: THIS DOESN'T WORK! becuase GetComponent only gets ACTIVE objects, but we just disabled the object with the camera. I guess we need to cache the gameObject or something.
-        Camera camera = player.GetComponentInChildren<Camera>();
+        Camera camera = player.GetComponentInChildren<Camera>(true);
         camera.gameObject.SetActive(true);
-        */
-        instance.playerCam.SetActive(true);
         
         //communicate state of last battle (i.e for puposes of ink)
         instance.lastResult = result;

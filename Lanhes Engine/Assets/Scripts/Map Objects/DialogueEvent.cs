@@ -71,6 +71,8 @@ public class DialogueEvent : NPCTrait, MapScript {
                         yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                     } else if (function == "$NPCWALK") {
                         //NPC walks to positon
+
+                        //TODO what if some other event triggers while the NPC is walking? This leaves that option open...
                         string npcName = args[1];   
                         GameObject g = GameObject.Find(npcName);
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", did not find NPC " + npcName); break; }
@@ -82,10 +84,10 @@ public class DialogueEvent : NPCTrait, MapScript {
                         Vector3 w = new Vector3(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4])); 
                         overridenNPCs.Add(controller);
                         controller.SetWaypoint(w);
-                        player.GetComponent<PlayerPawnMovement>().blocked = true;
+                        player.GetComponent<PlayerPawnMovementController>().blocked = true;
                         //TODO: getting the Y ever so slightly wrong can result in this never being triggered, as the agent cannot actually move freely on Y.
                         yield return new WaitUntil(() => controller.ReachedWaypoint());
-                        player.GetComponent<PlayerPawnMovement>().blocked = false;  //TODO: do we want a movement to be run asynchronously? i.e we would move to the next line as the NPC moves
+                        player.GetComponent<PlayerPawnMovementController>().blocked = false;  //TODO: do we want a movement to be run asynchronously? i.e we would move to the next line as the NPC moves
                         controller.FreeWaypoint();  //TODO presumably, we may want the NPC to stay in pace. maybe then we shouldn't free the waypoint? In this case, the waypoint needs to be freed up at *some* point. Except for cases where we alter patrol paths?
                         overridenNPCs.Remove(controller); //TODO is this correct? unsure what overrdien NPCs variable was for
                     } else if (function == "$NPCTELE") {

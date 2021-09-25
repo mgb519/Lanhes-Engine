@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface MapScript 
+[System.Serializable]
+public abstract class MapScript :MonoBehaviour
 {
-    public void Action(); //Starts the script. Called by a trigger
+    public abstract void Action(); //Starts the script. Called by a trigger
 
 
 }

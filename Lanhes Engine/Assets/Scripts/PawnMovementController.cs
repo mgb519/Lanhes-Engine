@@ -31,7 +31,6 @@ public abstract class PawnMovementController : MonoBehaviour {
             Vector3 inp = GetInput();
             inp.y = 0;
             Vector3 dir = inp.normalized;
-            Debug.Log(dir);
             //TODO: snappng to grid option
             if (dir.magnitude > 0) {
                 lastDirection = dir;

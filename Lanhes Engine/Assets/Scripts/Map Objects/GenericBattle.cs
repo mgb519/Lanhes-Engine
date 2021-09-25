@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 /// <summary>
 /// Runs an instance of the general case of battle, with a victory resulting in rewards and a loss resulting in game over. Should be overriden by games with more battle result states.
 /// </summary>
-public class GenericBattle : MonoBehaviour,MapScript
+public class GenericBattle : MapScript
 {
-    //TODO this uses no MonoBehaviour methods, so why does it have the extra weight? A friend of mine had this exact problem, I'll ask him when I can get ahold of him...
+
+    [Header("Don't use this! This is for testing purposes only. Make your own implmentation for your own game!")]
+
     [SerializeField]
     private IOpponentGroup enemies;
-    public void Action() {
+    public override void Action() {
         StartCoroutine(Body());
     }
 

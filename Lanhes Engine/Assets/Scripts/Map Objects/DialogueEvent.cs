@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 using System;
+using Newtonsoft.Json.Linq;
 
+public class DialogueEvent : MapScript, NPCTrait
+{
 
-public class DialogueEvent : NPCTrait, MapScript {
-
-  
-    GameObject player { get {
-           return PartyManager.playerInThisScene.gameObject;
-    } }
+    GameObject player {
+        get {
+            return PartyManager.playerInThisScene.gameObject;
+        }
+    }
 
     [SerializeField]
     private ShopData[] shops;
@@ -41,8 +43,7 @@ public class DialogueEvent : NPCTrait, MapScript {
     }
 
 
-    public void Action() {
-    
+    public override void Action() {
         StartCoroutine(HandleScript());
     }
 
@@ -53,10 +54,10 @@ public class DialogueEvent : NPCTrait, MapScript {
                 string command = _inkStory.Continue();
                 //Debug.Log(command);
                 if (!command.StartsWith("$")) {
-                    Debug.Log("Showing dialogue"+command);
+                    Debug.Log("Showing dialogue" + command);
                     //this is a dialogue
                     //TODO: get name and picture, etc
-                    WindowManager.CreateStringWindow(command,null);
+                    WindowManager.CreateStringWindow(command, null);
                     yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                 } else {
                     // parse command
@@ -67,13 +68,13 @@ public class DialogueEvent : NPCTrait, MapScript {
                     if (function == "$SHOP") {
                         //TODO: make safer for debugging purposes; this will fail if int.Parse fails. Although that may be a good thing, it's a clear indicator of a malformed script.
                         int index = int.Parse(args[1]);
-                        WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, PartyManager.GetParty().inventory,null);
+                        WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, PartyManager.GetParty().inventory, null);
                         yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                     } else if (function == "$NPCWALK") {
                         //NPC walks to positon
 
                         //TODO what if some other event triggers while the NPC is walking? This leaves that option open...
-                        string npcName = args[1];   
+                        string npcName = args[1];
                         GameObject g = GameObject.Find(npcName);
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", did not find NPC " + npcName); break; }
                         WaypointFollowerMovementController controller = g.GetComponent<WaypointFollowerMovementController>();
@@ -81,7 +82,7 @@ public class DialogueEvent : NPCTrait, MapScript {
                         //TODO: I suppose the player has a different scripted movement fucntion, they are special after all
                         //TODO: or maybe waypoint following is a behavoir that other pawn movement controllers should implement; i.e an interface
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", NPC " + npcName + " can't be directed"); break; }
-                        Vector3 w = new Vector3(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4])); 
+                        Vector3 w = new Vector3(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4]));
                         overridenNPCs.Add(controller);
                         controller.SetWaypoint(w);
                         player.GetComponent<PlayerPawnMovementController>().blocked = true;
@@ -115,9 +116,7 @@ public class DialogueEvent : NPCTrait, MapScript {
                         //TODO: make safer for debugging purposes
                         bool val = bool.Parse(args[2]);
                         DataManager.SetBool(key, val);
-                    }
-                    else if (function == "$BATTLE")
-                    {
+                    } else if (function == "$BATTLE") {
                         Debug.Log("starting battle...");
                         /*
                         int index = int.Parse(args[1]);
@@ -132,8 +131,7 @@ public class DialogueEvent : NPCTrait, MapScript {
                         string compare = BattleManager.BattleResultAsString(BattleManager.GetResultOfLastBattle());
                         Choice result = paths.Find(x => x.text == compare);
                         _inkStory.ChooseChoiceIndex(result.index);
-                    }
-                    else {
+                    } else {
                         //function not found!
                         Debug.LogWarning("Function " + function + " not found, script " + inkAsset.name);
                     }
@@ -146,7 +144,7 @@ public class DialogueEvent : NPCTrait, MapScript {
                 List<string> choicesAsString = new List<string>();
                 foreach (Choice c in choices) { choicesAsString.Add(c.text); }
 
-                SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString,null);
+                SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString, null);
                 yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
                 string selected = ((SelectableString)(s.selected)).data;
                 //TODO: sure this could be optimised
@@ -154,7 +152,7 @@ public class DialogueEvent : NPCTrait, MapScript {
                 _inkStory.ChooseChoiceIndex(index);
 
             } else {
-                Debug.Log("Finished event "+inkAsset.name);
+                Debug.Log("Finished event " + inkAsset.name);
                 //reached and of script, return to the beginning for the next time the player triggers it
                 _inkStory.ChoosePathString("head");
                 break;
@@ -167,14 +165,39 @@ public class DialogueEvent : NPCTrait, MapScript {
 
     }
 
+    #region boilerplate
+    /// <summary>
+    /// This is boilerplate required for every class that inherits NPCTrait
+    /// </summary>
 
-    //We do not save the shops or enemyParties variables, since they do not change.
-    public override string Save()
-    {
-        return _inkStory.state.ToJson();
+    [SerializeField]
+    private string uniqueID;
+    public string UniqueID => uniqueID;
+    public void OnValidate() {
+        NPCTrait[] traits = GetComponents<NPCTrait>();
+        foreach (NPCTrait trait in traits) {
+            if (trait != this) {
+                if (trait.UniqueID == this.UniqueID) {
+                    Debug.LogError("Multiple NPCTraits have the same name: " + UniqueID + " \n on object " + this.name + ".");
+                }
+            }
+        }
+
+        NPCTraitSerialiser serialiser = GetComponent<NPCTraitSerialiser>();
+        if (serialiser == null) {
+            Debug.LogError("NPC object "+this.name+" has no NPCTraitSerialiser!");
+        }
     }
 
-    public override void Load(string saveString) {
-        _inkStory.state.LoadJson(saveString);
+    #endregion boilerplate
+
+    //We do not save the shops or enemyParties variables, since they do not change.
+ 
+    public JObject Save() {
+        return JObject.Parse(_inkStory.state.ToJson());
+    }
+
+    public void Load(JObject saveString) {
+        _inkStory.state.LoadJson(saveString.ToString());        
     }
 }

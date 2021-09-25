@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MapTransition : MonoBehaviour, MapScript
+public class MapTransition :  MapScript
 {
     public string sceneToLoad;
     public string entrypoint;
-    public void Action() {
+    public override void Action() {
         GameSceneManager.StartLoadScene(sceneToLoad, entrypoint);
     }
 }

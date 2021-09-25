@@ -4,6 +4,6 @@ using UnityEngine;
 
 abstract public class Trigger : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField,SerializeReference]
     internal MapScript scriptToCall;
 }

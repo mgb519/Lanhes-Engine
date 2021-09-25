@@ -13,25 +13,11 @@ public class WaypointFollowerMovementController : PawnMovementController
     private Vector3 overrideWaypoint;
     private bool overriden = false;
 
-    private NavMeshAgent navMeshAgent = null;
-
-    public void Awake()
-    {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        //TODO maybe just add the agent at runtime rather than editor time
-        navMeshAgent.updatePosition = false;
-        navMeshAgent.updateRotation = false;
-        navMeshAgent.speed = this.moveSpeed;
-        navMeshAgent.angularSpeed = 360000f;//Mathf.Infinity;
-        navMeshAgent.autoRepath = true;
-        navMeshAgent.autoBraking = true;
-        navMeshAgent.acceleration = this.moveSpeed * 3;//this is the sensitivity of the players controls
-        //base.Awake();
-    }
-
+   
 
     internal override Vector3 GetInput()
     {
+        //TODO
         if (!overriden)
         {
             if (waypoints.Count == 0) { return Vector3.zero; }
@@ -43,7 +29,7 @@ public class WaypointFollowerMovementController : PawnMovementController
                 waypoints.Enqueue(next);
                 next = waypoints.Peek();
             }
-            navMeshAgent.SetDestination(next);
+            //navMeshAgent.SetDestination(next);
 
 
         }
@@ -58,6 +44,8 @@ public class WaypointFollowerMovementController : PawnMovementController
 
     private Vector3 GetInputToPosition()
     {
+
+        /*
         navMeshAgent.nextPosition = transform.position;
         Vector3 d = navMeshAgent.desiredVelocity;
         if ((transform.position-navMeshAgent.destination).sqrMagnitude <= moveSpeed * moveSpeed * Time.deltaTime) {
@@ -70,15 +58,18 @@ public class WaypointFollowerMovementController : PawnMovementController
         }
 
 
-        return d.normalized;
-       
+        return d.normalized;*/
+        //TODO
+        return Vector3.zero;
+
     }
 
     public void SetWaypoint(Vector3 waypoint)
     {
+        //TODO
         overriden = true;
         overrideWaypoint = waypoint;
-        navMeshAgent.SetDestination(waypoint);
+        //navMeshAgent.SetDestination(waypoint);
     }
 
     public bool ReachedWaypoint(Vector3 waypoint)
@@ -91,11 +82,14 @@ public class WaypointFollowerMovementController : PawnMovementController
     //called by cutscene
     public bool ReachedWaypoint()
     {
-        return ReachedWaypoint(navMeshAgent.destination);
+
+        //TODO
+        //return ReachedWaypoint(navMeshAgent.destination);
+        return true;
     }
 
     public void FreeWaypoint()
-    {
+    {/*
         overriden = false;
         if (waypoints.Count >= 1)
         {
@@ -104,6 +98,10 @@ public class WaypointFollowerMovementController : PawnMovementController
         else {
             navMeshAgent.ResetPath();
         }
+        *?
+        *///TODO
+        overriden = false;
+
 
     }
 

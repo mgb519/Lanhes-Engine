@@ -252,6 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shops: []
   inkAsset: {fileID: 4900000, guid: dce2a4ee79cf823c883a5559fee20307, type: 3}
+  uniqueID: aaa
 --- !u!65 &349303508
 BoxCollider:
   m_ObjectHideFlags: 0

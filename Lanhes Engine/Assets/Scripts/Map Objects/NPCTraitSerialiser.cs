@@ -20,6 +20,7 @@ public class NPCTraitSerialiser : MonoBehaviour
         foreach (NPCTrait trait in traits) {
             string uid = trait.UniqueID;
             JObject content = trait.Save();
+            Debug.Log("saving "+uid+ " "+content);
             output.Add(uid, content);
         }
         return output.ToString();//TODO this is pretty-printed. I do not strictly want that.
@@ -33,7 +34,7 @@ public class NPCTraitSerialiser : MonoBehaviour
             NPCTrait matched = traits.Where(item => item.UniqueID == uid).First();            
             
             JObject content = child.Value.ToObject<JObject>();
-
+            matched.Load(content);
         }
     }
 

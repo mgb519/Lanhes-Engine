@@ -27,9 +27,6 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     private Button saveButton;
 
 
-    //TODO this should not exist, get this statically
-    public InventoryItem goldItem;
-
     private bool saving = true;
 
     void Awake() {
@@ -117,7 +114,7 @@ public class ExampleSlotlessSaveMenu : SaveMenu
         //TODO shouldn't we be getting the data through the XML document maybe, rather than direct data access?
         string saveName = saveNameField.text==null?"no notes":saveNameField.text;
         file.WriteLine(saveName);
-        int gold = PartyManager.GetParty().inventory.HowManyOfItem(goldItem);//TODO get Gold statically
+        int gold = PartyManager.GetParty().inventory.HowManyOfItem(DataManager.GetItemBySystemName("money"));
         file.WriteLine("Money: "+gold.ToString());
 
     }

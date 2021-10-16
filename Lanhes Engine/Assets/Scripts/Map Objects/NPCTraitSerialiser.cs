@@ -37,4 +37,18 @@ public class NPCTraitSerialiser : MonoBehaviour
         }
     }
 
+
+
+    public void OnValidate() {
+        NPCTraitSerialiser[] npcs = GameObject.FindObjectsOfType<NPCTraitSerialiser>();
+        foreach (NPCTraitSerialiser npc in npcs) {
+            if (npc != this) {
+                if (npc.name == this.name) {
+                    Debug.LogError("Multiple NPCTraitSerializwers have the same name: "+ this.name + ".");
+                }
+            }
+        }
+
+    }
+
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json.Linq;
 
 
 public class BattleManager : MonoBehaviour, ISaveable
@@ -87,15 +88,13 @@ public class BattleManager : MonoBehaviour, ISaveable
         return instance.inBattle;
     }
 
-    public XmlNode SaveToFile(XmlDocument doc)
+    public JObject SaveToFile()
     {
-        XmlElement ret = doc.CreateElement("battle");
-
-
+        JObject ret = new JObject();
         return ret;
     }
 
-    public void LoadFromFile(XmlNode node)
+    public void LoadFromFile(JObject node)
     {
         //nothing is saved, so nothing is loaded!
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
@@ -82,15 +83,15 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
         return isLoading;
     }
 
-    public XmlNode SaveToFile(XmlDocument doc)
+    public JObject SaveToFile()
     {
-        XmlElement ret = doc.CreateElement("gamescene");
+        JObject ret = new JObject();
 
 
         return ret;
     }
 
-    public void LoadFromFile(XmlNode node)
+    public void LoadFromFile(JObject node)
     {
         //nothing is saved, so nothing is loaded!
     }

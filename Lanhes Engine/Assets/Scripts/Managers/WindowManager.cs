@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
@@ -115,14 +116,13 @@ public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need 
         return window;
     }
 
-    public XmlNode SaveToFile(XmlDocument doc) {
-        XmlElement ret = doc.CreateElement("windows");
-
+    public JObject SaveToFile() {
+        JObject ret = new JObject();
 
         return ret;
     }
 
-    public void LoadFromFile(XmlNode node) {
+    public void LoadFromFile(JObject node) {
         //nothing is saved, so nothing is loaded!
     }
 }

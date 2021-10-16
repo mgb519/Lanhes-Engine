@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Xml;
+using Newtonsoft.Json.Linq;
 
 [Serializable]
-public class Inventory : ISaveable {
-
-
-
+public class Inventory : ISaveable
+{
 
     [Serializable]
     public class InventoryContents : EditableDictionary<InventoryItem, int> { }
@@ -17,19 +16,19 @@ public class Inventory : ISaveable {
     private InventoryContents items = new InventoryContents();
 
 
-   
+
 
     public int HowManyOfItem(InventoryItem item) {
         if (items.ContainsKey(item)) { return items[item]; }
         return 0;
     }
 
-   /// <summary>
-   /// Adds the given amount of the given item to the inventory
-   /// </summary>
-   /// <param name="item"> The item to add</param>
-   /// <param name="number"> The amount of it to add</param>
-   /// <returns> The amount that was actually added to inventory</returns>
+    /// <summary>
+    /// Adds the given amount of the given item to the inventory
+    /// </summary>
+    /// <param name="item"> The item to add</param>
+    /// <param name="number"> The amount of it to add</param>
+    /// <returns> The amount that was actually added to inventory</returns>
     public int AddItems(InventoryItem item, int number) {
         for (int i = 1; i <= number; i++) {
             if (!AddItem(item)) { return i; }
@@ -86,46 +85,34 @@ public class Inventory : ISaveable {
 
     }
 
-    public XmlNode SaveToFile(XmlDocument doc) {
-        XmlElement root = doc.CreateElement("inventory");
-        XmlElement itemsNode = doc.CreateElement("items");
-        root.AppendChild(itemsNode);
+    public JObject SaveToFile() {
+        JObject root = new JObject();
 
         foreach (KeyValuePair<InventoryItem,int> kvp in items) {
-            Debug.Log("saving "+kvp.Key.systemName);
-            XmlElement entry = doc.CreateElement("entry");
-            itemsNode.AppendChild(entry);
-
-            XmlElement item = doc.CreateElement("item");
-            item.InnerText = kvp.Key.systemName;
-            entry.AppendChild(item);
-
-            XmlElement num = doc.CreateElement("number");
-            num.InnerText = kvp.Value.ToString();
-            entry.AppendChild(num);
+            root.Add(kvp.Key.systemName, kvp.Value);
         }
-
 
         return root;
     }
 
-    public void LoadFromFile(XmlNode node) {
+    public void LoadFromFile(JObject node) {
         items.Clear();
-        XmlElement root = node["inventory"];
-        XmlElement itemsNode = root["items"];
-
-        foreach (XmlElement entry in itemsNode) {
-            XmlElement itemNode = entry["item"];
-            XmlElement numNode = entry["number"];
 
 
-            InventoryItem item = DataManager.GetItemBySystemName(itemNode.InnerText);
-            int number = int.Parse(numNode.InnerText); //TODO make safer with TryParse
+        //load from the node
+        JObject ret = node;
+        foreach (JProperty entry in ret.Properties()) {
+            string key = entry.Name;
+            JToken value = entry.Value;
+
+            InventoryItem item = DataManager.GetItemBySystemName(key);
+            int number = value.ToObject<int>();
             int added = AddItems(item, number);
-            if (added!=number) { 
+            if (added != number) {
                 //TODO the save was modified or corrupted. There may be a problem.
             }
-            
         }
+
+
     }
 }

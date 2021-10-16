@@ -45,7 +45,7 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
             Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit)) {
-                Debug.Log(hit.point);
+                //Debug.Log(hit.point);
                 //TODO show player where they clicked
                 UseTrigger useTrigger = hit.transform.GetComponent<UseTrigger>();
                 if (useTrigger != null) {

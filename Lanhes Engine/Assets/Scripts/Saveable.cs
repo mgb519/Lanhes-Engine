@@ -1,11 +1,10 @@
-﻿
-using System.Xml;
+﻿using Newtonsoft.Json.Linq;
 public interface ISaveable
 {
     //Do not like how I have to pass around doc just so that I can call CreateElement
-    XmlNode SaveToFile(XmlDocument doc);
+    JObject SaveToFile();
 
 
-    void LoadFromFile(XmlNode node);
+    void LoadFromFile(JObject node);
 }
 

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.Linq;
@@ -20,10 +19,10 @@ public class NPCTraitSerialiser : MonoBehaviour
         foreach (NPCTrait trait in traits) {
             string uid = trait.UniqueID;
             JObject content = trait.Save();
-            Debug.Log("saving "+uid+ " "+content);
+            //Debug.Log("saving "+uid+ " "+content);
             output.Add(uid, content);
         }
-        return output.ToString();//TODO this is pretty-printed. I do not strictly want that.
+        return output.ToString(Newtonsoft.Json.Formatting.None);
     }
 
     internal void Load(string v) {
@@ -33,7 +32,7 @@ public class NPCTraitSerialiser : MonoBehaviour
             string uid = child.Name;
             NPCTrait matched = traits.Where(item => item.UniqueID == uid).First();            
             
-            JObject content = child.Value.ToObject<JObject>();
+            JObject content = (JObject)(child.Value);
             matched.Load(content);
         }
     }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 using System.IO;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 public abstract class SaveMenu : MenuWindow
 {
     public abstract void LoadMode();
@@ -16,10 +18,10 @@ public abstract class SaveMenu : MenuWindow
 
         StreamReader file = new StreamReader(path);
 
-        XmlDocument doc = new XmlDocument();
         //skip the header, then feed the rest of the file to the XmlDocument for loading
         SkipHeader(ref file);
-        doc.Load(file);
+
+        JObject doc = (JObject)JToken.ReadFrom((new JsonTextReader(file)));
         //XmlNode root = doc.FirstChild;
         DataManager.instance.LoadFromFile(doc);
 
@@ -30,14 +32,12 @@ public abstract class SaveMenu : MenuWindow
     internal void SaveGame(string path) {
         StreamWriter file = new StreamWriter(path);
 
-        XmlDocument doc = new XmlDocument();
-        XmlNode root = DataManager.instance.SaveToFile(doc);
-        doc.AppendChild(root);
+        JObject root = DataManager.instance.SaveToFile();
 
-
+        
         //write the header, then  write the complete XML save document
         SaveHeader(ref file);
-        doc.Save(file);
+        root.WriteTo(new JsonTextWriter(file));
 
         file.Close();
     }

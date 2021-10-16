@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json.Linq;
 
 
 //keeps a list of the parties, each of which has its own inventory
@@ -25,15 +26,11 @@ public class PartyManager : MonoBehaviour, ISaveable
 
 
 
-    void Awake()
-    {
-        if (instance == null)
-        {
+    void Awake() {
+        if (instance == null) {
             instance = this;
             DontDestroyOnLoad(gameObject);
-        }
-        else if (instance != this)
-        {
+        } else if (instance != this) {
             Destroy(gameObject);
         }
     }
@@ -42,11 +39,9 @@ public class PartyManager : MonoBehaviour, ISaveable
     /// Sets the current party to the one at index id, and spawns it into the scene at an arbitrary point. Position should be handled by a later call, such as the load function.
     /// </summary>
     /// <param name="id">index of the party being spawned in</param>
-    public static void SpawnPlayer(int id)
-    {
+    public static void SpawnPlayer(int id) {
         //Debug.Log("Spawning player by ID");
-        if (playerInThisScene != null)
-        {
+        if (playerInThisScene != null) {
             //a player already exists, do not spawn a new one. TODO maybe delete it and create a new one? idk anymore. Can this even happen?
             return;
         }
@@ -59,8 +54,7 @@ public class PartyManager : MonoBehaviour, ISaveable
         //Destroy any spawners in the level; if we let them live, then they will spawn in a party. This is a bad thing; we've just spawned in the correct one!
         //FIXME this isn't necessary anymore since they have no behaviour. Maybe use a Tag instead?
         PlayerSpawnMarker[] spawners = GameObject.FindObjectsOfType<PlayerSpawnMarker>();
-        foreach (PlayerSpawnMarker spawner in spawners)
-        {
+        foreach (PlayerSpawnMarker spawner in spawners) {
             Destroy(spawner);
         }
     }
@@ -69,12 +63,10 @@ public class PartyManager : MonoBehaviour, ISaveable
     /// Spawn the currently set player party in the current scene at the speceficied spawn point.
     /// </summary>
     /// <param name="marker">The name of the spawn point marker in the new scene.</param>
-    public static void SpawnPlayer(string marker)
-    {
+    public static void SpawnPlayer(string marker) {
         //Debug.Log("Spawning player by marker");
 
-        if (playerInThisScene != null)
-        {
+        if (playerInThisScene != null) {
             //Debug.Log("Aborting spawning by marker");
             //a player already exists, do not spawn a new one. TODO maybe delete it and create a new one? idk anymore. Can this even happen?
             return;
@@ -91,32 +83,27 @@ public class PartyManager : MonoBehaviour, ISaveable
     }
 
 
-    public static Party GetParty()
-    {
+    public static Party GetParty() {
         return partyThisScene;
     }
 
-    public XmlNode SaveToFile(XmlDocument doc)
-    {
+    public JObject SaveToFile() {
 
-        XmlElement ret = doc.CreateElement("partyman");
-        XmlElement partiesNode = doc.CreateElement("parties");
-        ret.AppendChild(partiesNode);
-        for (int i = 0; i < parties.Length; i++)
-        {
+        JObject node = new JObject();
+        JObject partiesNode = new JObject();
+        node.Add("parties", partiesNode);
+        for (int i = 0; i < parties.Length; i++) {
             Party party = parties[i];
-            XmlElement partyNode = doc.CreateElement("party");
-            partiesNode.AppendChild(partyNode);
-            partyNode.SetAttribute("idx", i.ToString());
-            partyNode.SetAttribute("active", (party == partyThisScene).ToString());
-            partyNode.AppendChild(party.SaveToFile(doc));
+            JObject partyNode = new JObject();
+            partiesNode.Add(i.ToString(), partyNode);
+            partyNode.Add("active",party == partyThisScene);
+            partyNode.Add("party", party.SaveToFile());
         }
 
-        return ret;
+        return node;
     }
 
-    public void LoadFromFile(XmlNode node)
-    {
+    public void LoadFromFile(JObject node) {
 
         //dispose of the player party
         //Destroy(playerInThisScene.gameObject);
@@ -124,24 +111,21 @@ public class PartyManager : MonoBehaviour, ISaveable
         //The player party is already destroyed by virtue of a NEW SCENE BEING LOADED
 
 
-
-        XmlNode baseNode = node["partyman"];
-        XmlNode partiesNode = baseNode["parties"];
+        JObject partiesNode = (JObject)(node.Property("parties").Value);
         int partyidx = -1;
 
-        
-       
-        foreach (XmlElement element in partiesNode.ChildNodes)
-        {
-            int index = int.Parse(element.GetAttribute("idx"));//TODO secure this
-            bool active = Boolean.Parse(element.GetAttribute("active"));//TODO secure this
+        foreach (JProperty element in partiesNode.Properties()) {
+            int index = int.Parse(element.Name);//TODO secure this
+
+            JObject partyNode = (JObject)(element.Value);
+
+            bool active = partyNode.Property("active").Value.ToObject<bool>();
 
             //Load the party
-            parties[index].LoadFromFile(element);
+            parties[index].LoadFromFile((JObject)(partyNode.Property("party").Value));
 
             //set active party is this is the active party
-            if (active)
-            {
+            if (active) {
                 //TODO what if multiple actives?
                 //that's just an edited save genius
 
@@ -151,12 +135,9 @@ public class PartyManager : MonoBehaviour, ISaveable
 
         }
 
-        if (partyidx != -1)
-        {
+        if (partyidx != -1) {
             SpawnPlayer(partyidx);
-        }
-        else
-        {
+        } else {
 
             //There is no active party!
             //This can't happen though.
@@ -165,7 +146,7 @@ public class PartyManager : MonoBehaviour, ISaveable
         }
     }
 
-   
+
 }
 
 [System.Serializable]
@@ -175,22 +156,18 @@ public class Party : ISaveable
     public PlayerController avatar;
     //TODO: characters in party
 
-    public void LoadFromFile(XmlNode node)
-    {
-        XmlNode partyNode = node["party"];
-        XmlNode inventoryNode = partyNode["inventory"];
+    public void LoadFromFile(JObject node) {
+
+        JObject inventoryNode = (JObject)(node.Property("inventory").Value);
         inventory.LoadFromFile(inventoryNode);
 
         //We don't need to load avatars as those are static
     }
 
-    public XmlNode SaveToFile(XmlDocument doc)
-    {
-        XmlNode ret = doc.CreateElement("party");
+    public JObject SaveToFile() {
+        JObject ret = new JObject();
 
-        XmlNode inventoryNode = doc.CreateElement("inventory");
-        ret.AppendChild(inventoryNode);
-        inventoryNode.AppendChild(inventory.SaveToFile(doc));
+        ret.Add("inventory", inventory.SaveToFile());
         //we don't need to save the avatars, they shouldn't change.
         //TODO But some games may want the avatar to change... They'll have to transfer the inventory to a new party with the new avatar, it seems.
 

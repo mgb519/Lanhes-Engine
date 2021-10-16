@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json.Linq;
+using System.Linq;
 //using SerializableDictionary;
 
 //TODO this class is getting a bit chunky
@@ -14,41 +15,31 @@ public class DataManager : MonoBehaviour, ISaveable
     [System.Serializable]
     public abstract class Database<TV> : EditableDictionary<string, TV>, ISaveable
     {
-        void ISaveable.LoadFromFile(XmlNode node) {
+        void ISaveable.LoadFromFile(JObject node) {
             //clear the DB
             this.Clear();
             //load from the node
-            XmlNode dbNode = node["db"];
-            foreach (XmlNode entry in dbNode.ChildNodes) {
-                XmlNode keyNode = entry["key"];
-                XmlNode valueNode = entry["value"];
-                this.Add(keyNode.InnerText, StringToValue(valueNode.InnerText));
+            JObject ret = node;
+            foreach (JProperty entry in ret.Properties()) {
+                string key = entry.Name;
+                JToken value = entry.Value;
+                this.Add(key, TokenToValue(value));
             }
         }
 
-        internal abstract TV StringToValue(string text);
+        internal abstract TV TokenToValue(JToken text);
 
-        XmlNode ISaveable.SaveToFile(XmlDocument doc) {
-            XmlElement ret = doc.CreateElement("db");
+        JObject ISaveable.SaveToFile() {
+            JObject ret = new JObject();
 
             foreach (string key in this.Keys) {
-                XmlElement entry = doc.CreateElement("entry");
-                ret.AppendChild(entry);
-
-                XmlElement k = doc.CreateElement("key");
-                entry.AppendChild(k);
-                //TODO absolutely disgusting, why are we using InnerText? 
-                k.InnerText = key;
-
-                XmlElement v = doc.CreateElement("value");
-                entry.AppendChild(v);
-                v.InnerText = ValueToString(this[key]);
+                ret.Add(key, ValueToToken(this[key]));
             }
 
             return ret;
         }
 
-        internal abstract string ValueToString(TV value);
+        internal abstract JToken ValueToToken(TV value);
     };
 
 
@@ -57,13 +48,13 @@ public class DataManager : MonoBehaviour, ISaveable
     [System.Serializable]
     public class IntDatabase : Database<int>
     {
-        internal override int StringToValue(string text) {
-            //TODO use TryParse and then give a nice error message
-            return int.Parse(text);
+        internal override int TokenToValue(JToken text) {
+            //TODO test for nulls... except that just means the save is modded.
+            return text.ToObject<int>();
         }
 
-        internal override string ValueToString(int value) {
-            return value.ToString();
+        internal override JToken ValueToToken(int value) {
+            return value;
         }
     };
 
@@ -73,11 +64,11 @@ public class DataManager : MonoBehaviour, ISaveable
     [System.Serializable]
     public class StringDatabase : Database<string>
     {
-        internal override string StringToValue(string text) {
-            return text;
+        internal override string TokenToValue(JToken text) {
+            return text.ToObject<string>();
         }
 
-        internal override string ValueToString(string value) {
+        internal override JToken ValueToToken(string value) {
             return value;
         }
     }
@@ -89,13 +80,13 @@ public class DataManager : MonoBehaviour, ISaveable
     [System.Serializable]
     public class BoolDatabase : Database<bool>
     {
-        internal override bool StringToValue(string text) {
-            return Boolean.Parse(text);
+        internal override bool TokenToValue(JToken text) {
+            return text.ToObject<bool>();
         }
 
-        internal override string ValueToString(bool value) {
+        internal override JToken ValueToToken(bool value) {
 
-            return value.ToString();
+            return value;
         }
     }
 
@@ -181,7 +172,7 @@ public class DataManager : MonoBehaviour, ISaveable
         if (item != null) {
             return item;
         } else {
-            Debug.LogWarning("Item "+ systemName + " not found, you must have an error in a script");
+            Debug.LogWarning("Item " + systemName + " not found, you must have an error in a script");
             throw new Exception();
         }
 
@@ -228,43 +219,34 @@ public class DataManager : MonoBehaviour, ISaveable
     /// <summary>
     /// Flush dialogues in memory to file, as well as dialogues in scene.
     /// </summary>
-    private XmlNode SaveNPCStates(XmlDocument doc) {
+    private JObject SaveNPCStates() {
         //save Ink dialogues
 
-        XmlNode root = doc.CreateElement("inks");
+        JObject root = new JObject();
 
-        //Get all DialogueEvents in scene, serialise thier JSON
+        //Take NPC states in this scene and update the memories to reflect them
+        RememberNPCStates();
 
-
-
-        //TODO: you should not remember Inks that have not been interacted with
-        //FIXME lots of shared code between this and saving rememebered dialogues, and with remembering in the first place. Maybe call Remember and Flush to reduce code reuse
-        //TODO rename the node names now that Ink is not the sole source of persistence
-        NPCTraitSerialiser[] dialogueEvents = FindObjectsOfType<NPCTraitSerialiser>();
-        string currentSceneId = SceneManager.GetActiveScene().buildIndex.ToString();
-        foreach (NPCTraitSerialiser e in dialogueEvents) {
-            string saveString = e.Save();
-            XmlElement saveStringNode = doc.CreateElement("ink");
-            root.AppendChild(saveStringNode);
-
-            saveStringNode.SetAttribute("scene", currentSceneId);
-            saveStringNode.SetAttribute("name", e.name);
-
-            saveStringNode.InnerText = saveString;
-        }
-
-        //store all remembered extra-scene dialogues
+        //store all  NPC states
         foreach ((int, string) key in npcStates.Keys) {
-            XmlElement inkNode = doc.CreateElement("ink");
-            root.AppendChild(inkNode);
+            //JObject content = new JObject();
 
-            inkNode.SetAttribute("scene", key.Item1.ToString());
-            inkNode.SetAttribute("name", key.Item2);
+            string sceneid = key.Item1.ToString();
+            string npcid = key.Item2;
+            Debug.Log("npc id = " + npcid);
 
-            inkNode.InnerText = npcStates[key];
+            if (!root.Properties().Where(prop => prop.Name == sceneid).Any()) {
+                root.Add(sceneid, new JObject());
+            }
+            JObject sceneProperty = (JObject)(root.Property(sceneid).Value);
+            sceneProperty.Add(npcid, npcStates[key]);
+            Debug.Log(npcStates[key]);
+            Debug.Log(sceneProperty.ToString());
 
         }
-
+        //Flush the NPC states back out of memories
+        RestoreNPCStates();
+        Debug.Log(root);
         return root;
 
 
@@ -274,141 +256,115 @@ public class DataManager : MonoBehaviour, ISaveable
     /// <summary>
     /// Load all dialogues from file and place them in the Ink memory
     /// </summary>
-    private void LoadNPCStates(XmlNode node) {
+    private void LoadNPCStates(JObject node) {
         npcStates.Clear();
 
-        XmlNode saveStringNode = node["inks"];
+        foreach (JProperty entry in node.Properties()) {
+            int sceneId = int.Parse(entry.Name);
 
-        foreach (XmlNode entry in saveStringNode) {
-            int sceneId = int.Parse(entry.Attributes["scene"].Value);
-            string npcId = entry.Attributes["name"].Value;
-            string saveString = entry.InnerText;
-
-            npcStates.Add((sceneId, npcId), saveString);
+            JObject inner = (JObject)(entry.Value);
+            foreach (JProperty l2entry in inner.Properties()) {
+                string npcId = l2entry.Name;
+                npcStates.Add((sceneId, npcId), l2entry.Value.ToObject<string>());
+            }
         }
-
-
     }
 
 
-    //TODO How about we use JSON instead huh? JSONhelper *exists*
-    public XmlNode SaveToFile(XmlDocument doc) {
+    public JObject SaveToFile() {
+        JObject root = new JObject();
 
-
-        XmlElement ret = doc.CreateElement("data");
-
-
-        //Save the scene we are in
-        XmlElement sceneId = doc.CreateElement("scene");
-        ret.AppendChild(sceneId);
-        sceneId.InnerText = SceneManager.GetActiveScene().name;
-
+        //store the scene we are in
+        root.Add("scene", SceneManager.GetActiveScene().name); //TODO this could be an integer...
 
         //store DBs
+        JObject dbs = new JObject();
+        root.Add("dbs", dbs);
         foreach ((string, ISaveable) dbData in databases) {
-            XmlElement entry = doc.CreateElement(dbData.Item1);
-            ret.AppendChild(entry);
-            entry.AppendChild(dbData.Item2.SaveToFile(doc));
+            dbs.Add(dbData.Item1, dbData.Item2.SaveToFile());
         }
 
         //call saves of other managers
-        XmlElement managerHolderNode = doc.CreateElement("managers");
-        ret.AppendChild(managerHolderNode);
-        foreach ((string, ISaveable) manData in managers) {
-            XmlElement entry = doc.CreateElement(manData.Item1);
-            managerHolderNode.AppendChild(entry);
-            entry.AppendChild(manData.Item2.SaveToFile(doc));
-
-            managerHolderNode.AppendChild(entry);
+        JObject managersHolder = new JObject();
+        root.Add("managers", managersHolder);
+        foreach ((string, ISaveable) managerData in managers) {
+            managersHolder.Add(managerData.Item1, managerData.Item2.SaveToFile());
         }
 
-
         //save NPC positions
-        XmlElement npcHolderNode = doc.CreateElement("npcs");
-        ret.AppendChild(npcHolderNode);
+        JObject npcHolder = new JObject();
+        root.Add("npcs", npcHolder);
+
         //Get all NPCs that can move; i.e they have pawn movement.
         PawnMovementController[] npcs = FindObjectsOfType<PawnMovementController>();
         foreach (PawnMovementController n in npcs) {
-            XmlElement npcNode = doc.CreateElement("npc");
-            npcHolderNode.AppendChild(npcNode);
-
+            JObject npcNode = new JObject();
             GameObject npc = n.gameObject;
-            npcNode.SetAttribute("name", npc.name); //TODO: this requires that NPCs have unique editor names.
+            npcHolder.Add(npc.name, npcNode);//TODO: this requires that NPCs have unique editor names.
 
-            XmlElement x = doc.CreateElement("x");
-            npcNode.AppendChild(x);
-            x.InnerText = npc.transform.position.x.ToString();
-
-            XmlElement y = doc.CreateElement("y");
-            npcNode.AppendChild(y);
-            y.InnerText = npc.transform.position.y.ToString();
-
-            XmlElement z = doc.CreateElement("z");
-            npcNode.AppendChild(z);
-            z.InnerText = npc.transform.position.z.ToString();
+            npcNode.Add("x", npc.transform.position.x);
+            npcNode.Add("y", npc.transform.position.y);
+            npcNode.Add("z", npc.transform.position.z);
 
             //TODO: NPC rotation? will I need that?
         }
 
         //save dialogues
-        XmlElement dialoguesHolderNode = doc.CreateElement("dialogues");
-        ret.AppendChild(dialoguesHolderNode);
+        root.Add("dialogues", SaveNPCStates());
 
-        dialoguesHolderNode.AppendChild(SaveNPCStates(doc));
-
-        return ret;
+        return root;
     }
 
-    public IEnumerator LoadBody(XmlNode node) {
+    public IEnumerator LoadBody(JObject root) {
 
         isLoading = true;
 
-        XmlElement dataNode = node["data"];
-
-
-        //restore DBs
-        foreach ((string, ISaveable) dbData in databases) {
-            XmlElement dbNode = dataNode[dbData.Item1];
-            dbData.Item2.LoadFromFile(dbNode);
-        }
 
 
         //load the scene id and transition to that scene
-        string sceneId = dataNode["scene"].InnerText;
+        string sceneId = root.Property("scene").Value.ToObject<string>();
         GameSceneManager.StartLoadScene(sceneId);
 
         yield return new WaitUntil(() => !GameSceneManager.IsLoading());
 
-        Debug.Log("loaded scene");
+
+
+        //restore DBs
+        JObject dbs = root.Property("dbs").Value.ToObject<JObject>();
+        foreach ((string, ISaveable) dbData in databases) {
+            JObject dbNode = (JObject)(dbs.Property(dbData.Item1).Value);
+            dbData.Item2.LoadFromFile(dbNode);
+        }
+
 
         //load other managers
-        XmlElement managerHolderNode = dataNode["managers"];
+        JObject managersHolder = (JObject)(root.Property("managers").Value);
         foreach ((string, ISaveable) m in managers) {
-            XmlElement managerNode = managerHolderNode[m.Item1];
+            JObject managerNode = (JObject)(managersHolder.Property(m.Item1).Value);
             m.Item2.LoadFromFile(managerNode);
         }
         //player has been spawned correctly when loading PartyManager, so it exists in-scene.
 
         //load NPC positions
-        XmlNode npcHolder = dataNode["npcs"];
-        foreach (XmlNode npcNode in npcHolder.ChildNodes) {
-            string name = npcNode.Attributes["name"].Value;
-
+        JObject npcs = (JObject)(root.Property("npcs").Value);
+        foreach (JProperty npcNode in npcs.Properties()) {
+            string name = npcNode.Name;
             GameObject npc = GameObject.Find(name);
             if (npc == null) {
                 Debug.LogError("NPC " + name + " not found!");
                 continue;
             }
-            float x = float.Parse(npcNode["x"].InnerText);
-            float y = float.Parse(npcNode["y"].InnerText);
-            float z = float.Parse(npcNode["z"].InnerText);
+            JObject npcInnerNode = (JObject)(npcNode.Value);
+            float x = npcInnerNode.Property("x").Value.ToObject<float>();
+            float y = npcInnerNode.Property("y").Value.ToObject<float>();
+            float z = npcInnerNode.Property("z").Value.ToObject<float>();
             //FIXME: player is not positioned correctly, and always returns to spawn point
             npc.transform.position = new Vector3(x, y, z);
         }
 
 
         //load Ink state
-        LoadNPCStates(dataNode["dialogues"]);
+        LoadNPCStates((JObject)(root.Property("dialogues").Value));
         RestoreNPCStates();
         isLoading = false;
         //throw new NotImplementedException();
@@ -417,7 +373,7 @@ public class DataManager : MonoBehaviour, ISaveable
     }
 
 
-    public void LoadFromFile(XmlNode node) {
+    public void LoadFromFile(JObject node) {
         Debug.Log("starting load");
         StartCoroutine(LoadBody(node));
     }

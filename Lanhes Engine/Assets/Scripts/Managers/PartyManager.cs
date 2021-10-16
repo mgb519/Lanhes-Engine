@@ -51,12 +51,6 @@ public class PartyManager : MonoBehaviour, ISaveable
         playerInThisScene = Instantiate(partyThisScene.avatar, instance.transform.position, instance.transform.rotation);
         playerInThisScene.gameObject.name = "Player";
 
-        //Destroy any spawners in the level; if we let them live, then they will spawn in a party. This is a bad thing; we've just spawned in the correct one!
-        //FIXME this isn't necessary anymore since they have no behaviour. Maybe use a Tag instead?
-        PlayerSpawnMarker[] spawners = GameObject.FindObjectsOfType<PlayerSpawnMarker>();
-        foreach (PlayerSpawnMarker spawner in spawners) {
-            Destroy(spawner);
-        }
     }
 
     /// <summary>

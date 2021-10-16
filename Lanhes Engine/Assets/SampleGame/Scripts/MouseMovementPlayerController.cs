@@ -9,11 +9,14 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
     private Vector3 target;
     private UseTrigger useTarget;
 
+    bool reached = true;
+
     [SerializeField]
     private float snapDistance;
     internal override Vector3 GetPlayerInput() {
         UpdateWaypoint();
 
+        if (reached) { return Vector3.zero; }
 
         //walk towards target
         Vector3 offset = target - transform.position;
@@ -24,13 +27,15 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
             if (distance <= useDistance) {
                 useTarget.Used();
                 useTarget = null;
-                return Vector3.zero;
+                reached = true;
+                return Vector3.zero;                
             } else {
                 return offset;
             }
         } else {
             if (distance <= snapDistance) {
                 transform.position = target;
+                reached = true;
                 return Vector3.zero;
             } else {
                 return offset;
@@ -55,6 +60,8 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
                     useTarget = null;
                     target = hit.point;
                 }
+
+                reached = false;
             }
         }
     }

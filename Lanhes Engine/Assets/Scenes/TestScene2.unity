@@ -476,6 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptToCall: {fileID: 430951382}
+  labelString: Generic Battle
 --- !u!1 &633108854
 GameObject:
   m_ObjectHideFlags: 0

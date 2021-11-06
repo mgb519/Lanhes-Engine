@@ -307,6 +307,8 @@ MonoBehaviour:
     type: 3}
   saveMenu: {fileID: 8810723461470386711, guid: d2276e5a6b2fd2442af55332f1f49967,
     type: 3}
+  usableLabel: {fileID: 2950842950752984209, guid: abd44623557dfd94b82e1014ab8584aa,
+    type: 3}
 --- !u!114 &4991302870453160485
 MonoBehaviour:
   m_ObjectHideFlags: 0

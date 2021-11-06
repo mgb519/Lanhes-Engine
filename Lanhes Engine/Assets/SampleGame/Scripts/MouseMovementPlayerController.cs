@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MouseMovementPlayerController : PlayerPawnMovementController
 {
+    //TODO reimplment the stuff getting shortest distance between objects
+
 
     private Vector3 target;
     private UseTrigger useTarget;
@@ -28,7 +30,7 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
                 useTarget.Used();
                 useTarget = null;
                 reached = true;
-                return Vector3.zero;                
+                return Vector3.zero;
             } else {
                 return offset;
             }
@@ -45,24 +47,34 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
     }
 
     private void UpdateWaypoint() {
-        if (Input.GetMouseButtonDown(0)) {
-            Camera currentCamera = transform.GetComponentInChildren<Camera>();
-            Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit)) {
-                //Debug.Log(hit.point);
-                //TODO show player where they clicked
-                UseTrigger useTrigger = hit.transform.GetComponent<UseTrigger>();
-                if (useTrigger != null) {
+        Camera currentCamera = transform.GetComponentInChildren<Camera>();
+        Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) {
+            //Debug.Log(hit.point);
+            UseTrigger useTrigger = hit.transform.GetComponent<UseTrigger>();
+
+            if (useTrigger != null) {
+                if (Input.GetMouseButtonDown(0)) {
+                    //TODO show player where they clicked
                     useTarget = useTrigger;
                     target = hit.transform.position;
-                } else {
-                    useTarget = null;
-                    target = hit.point;
+                    reached = false;
                 }
 
-                reached = false;
+                useTrigger.RequestLabel();
+            } else {
+                if (Input.GetMouseButtonDown(0)) {
+                    print("lick");
+                    //TODO show player where they clicked
+                    useTarget = null;
+                    target = hit.point;
+                    Debug.Log(target);
+                    reached = false;
+                }
             }
+
+            
         }
     }
 }

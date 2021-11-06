@@ -23,6 +23,9 @@ public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need 
 
 
 
+    public UsableLabel usableLabel;
+
+
     //TODO: should this be here? since it's also  used by PC script to know if they can continue
     public bool ContinuePlay() {
         return baseWindow == null;
@@ -125,4 +128,13 @@ public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need 
     public void LoadFromFile(JObject node) {
         //nothing is saved, so nothing is loaded!
     }
+
+
+    public static UsableLabel CreateUsableLabel(UseTrigger caller) {
+        UsableLabel lab = Instantiate(instance.usableLabel);
+        lab.SetOwner(caller);
+
+        return lab;
+    }
+
 }

@@ -20,13 +20,15 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
 
         if (reached) { return Vector3.zero; }
 
-        //walk towards target
+
         Vector3 offset = target - transform.position;
-        float distance = offset.magnitude;
 
 
         if (useTarget != null) {
-            if (distance <= useDistance) {
+            Vector3 closestPoint = useTarget.GetComponent<Collider>().ClosestPoint(transform.position);
+            float distance = (closestPoint - transform.position).sqrMagnitude;
+            if (distance <= useDistance*useDistance) {
+                Debug.Log("Using " + useTarget.name);
                 useTarget.Used();
                 useTarget = null;
                 reached = true;
@@ -35,6 +37,8 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
                 return offset;
             }
         } else {
+            //walk towards target
+            float distance = offset.magnitude;
             if (distance <= snapDistance) {
                 transform.position = target;
                 reached = true;
@@ -65,7 +69,7 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
                 useTrigger.RequestLabel();
             } else {
                 if (Input.GetMouseButtonDown(0)) {
-                    print("lick");
+                    print("click");
                     //TODO show player where they clicked
                     useTarget = null;
                     target = hit.point;

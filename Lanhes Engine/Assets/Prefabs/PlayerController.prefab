@@ -164,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   blocked: 0
-  useDistance: 2
+  useDistance: 0.1
   snapDistance: 0.1
 --- !u!1 &6416550482334398990
 GameObject:

@@ -13,23 +13,19 @@ public class WaypointFollowerMovementController : PawnMovementController
     private Vector3 overrideWaypoint;
     private bool overriden = false;
 
-   
 
-    internal override Vector3 GetInput()
-    {
-        //TODO
-        if (!overriden)
-        {
+
+    internal override Vector3 GetInput() {
+
+        if (!overriden) {
             if (waypoints.Count == 0) { return Vector3.zero; }
             //patrol along path
             Vector3 next = waypoints.Peek();
-            while (ReachedWaypoint(next))
-            {
+            while (ReachedWaypoint(next)) {
                 next = waypoints.Dequeue();
                 waypoints.Enqueue(next);
                 next = waypoints.Peek();
             }
-            //navMeshAgent.SetDestination(next);
 
 
         }
@@ -42,67 +38,42 @@ public class WaypointFollowerMovementController : PawnMovementController
 
 
 
-    private Vector3 GetInputToPosition()
-    {
-
-        /*
-        navMeshAgent.nextPosition = transform.position;
-        Vector3 d = navMeshAgent.desiredVelocity;
-        if ((transform.position-navMeshAgent.destination).sqrMagnitude <= moveSpeed * moveSpeed * Time.deltaTime) {
+    private Vector3 GetInputToPosition() {
+        //TODO this snap can be pretty ugly
+        if ((transform.position - GetCurrentWaypoint()).sqrMagnitude <= moveSpeed * moveSpeed * Time.deltaTime) {
             //if we can reach in one frame, snap to it, this should remove jitter
             //TODO this is not the cleanest of solutions, since we will not be animating for one frame, but it gets us to the desitination. Not a priority to fix, merely wrong.
             //TODO the snap is visible, fix that
-            transform.position = navMeshAgent.destination;
-            navMeshAgent.nextPosition = transform.position;
+            transform.position = GetCurrentWaypoint();
+            //navMeshAgent.nextPosition = transform.position;
             return Vector3.zero;
         }
 
-
-        return d.normalized;*/
-        //TODO
-        return Vector3.zero;
+        return ( GetCurrentWaypoint()- transform.position); //don't need to normalise since that is done later anyway
 
     }
 
-    public void SetWaypoint(Vector3 waypoint)
-    {
-        //TODO
+    public void SetWaypoint(Vector3 waypoint) {
         overriden = true;
         overrideWaypoint = waypoint;
-        //navMeshAgent.SetDestination(waypoint);
     }
 
-    public bool ReachedWaypoint(Vector3 waypoint)
-    {     
-        //Debug.Log((transform.position - waypoint).sqrMagnitude);
+    public bool ReachedWaypoint(Vector3 waypoint) {
         return (transform.position - waypoint).sqrMagnitude <= Mathf.Epsilon;
     }
 
 
     //called by cutscene
-    public bool ReachedWaypoint()
-    {
-
-        //TODO
-        //return ReachedWaypoint(navMeshAgent.destination);
-        return true;
+    public bool ReachedWaypoint() {
+        return ReachedWaypoint(GetCurrentWaypoint());
     }
 
-    public void FreeWaypoint()
-    {/*
-        overriden = false;
-        if (waypoints.Count >= 1)
-        {
-            navMeshAgent.SetDestination(waypoints.Peek());
-        }
-        else {
-            navMeshAgent.ResetPath();
-        }
-        *?
-        *///TODO
-        overriden = false;
-
-
+    public void FreeWaypoint() { 
+        overriden = false; 
     }
 
+
+    public Vector3 GetCurrentWaypoint() {
+        return overriden ? overrideWaypoint : waypoints.Peek();
+    }
 }

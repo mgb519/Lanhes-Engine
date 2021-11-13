@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
-    
+public class PlayerController : MonoBehaviour
+{
+
     // Start is called before the first frame update
 
     // Update is called once per frame
     void Update() {
         if (WindowManager.instance.ContinuePlay()) {
-            if(WindowManager.instance.ContinuePlay() && !GameSceneManager.IsLoading() && !DataManager.IsLoading() && !BattleManager.InBattle()) {
-                if (Input.GetButtonDown("Pause"))
-                {
+            if (WindowManager.instance.ContinuePlay() && !GameSceneManager.IsLoading() && !DataManager.IsLoading() && !BattleManager.InBattle()) {
+                if (Input.GetButtonDown("Pause") || Input.GetMouseButtonDown(1)) {
                     WindowManager.CreatePauseWindow();
                 }
             }

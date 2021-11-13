@@ -15,6 +15,10 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
 
     [SerializeField]
     private float snapDistance;
+
+
+    [SerializeField]
+    private GameObject worldCursor;
     internal override Vector3 GetPlayerInput() {
         UpdateWaypoint();
 
@@ -70,10 +74,10 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
             } else {
                 if (Input.GetMouseButtonDown(0)) {
                     print("click");
-                    //TODO show player where they clicked
                     useTarget = null;
                     target = hit.point;
-                    Debug.Log(target);
+                    GameObject cursor = Instantiate(worldCursor);
+                    cursor.transform.position = target;
                     reached = false;
                 }
             }

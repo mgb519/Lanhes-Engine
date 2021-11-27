@@ -51,18 +51,9 @@ public class BattleManager : MonoBehaviour, ISaveable
         //pause the game world
         instance.inBattle = true;
 
-        //disable the player's camera, since the battle scene will have a camera of its own
-        GameObject player = PartyManager.playerInThisScene.gameObject;
-        Camera camera = player.GetComponentInChildren<Camera>();
-        camera.gameObject.SetActive(false);
-
-
-
+       
         //load in the new scene
         instance.StartCoroutine(instance.LoadInBattle(enemies));
-
-
-
     }
 
 
@@ -85,21 +76,12 @@ public class BattleManager : MonoBehaviour, ISaveable
     /// Called by the battle scene when the battle ends. Disposes of the battle scen and restores control to the overworld.
     /// </summary>
     public static void EndBattle(BattleResult result)
-    {
-        //restore the player camera
-        GameObject player = PartyManager.playerInThisScene.gameObject;
-
-        Camera camera = player.GetComponentInChildren<Camera>(true); //TODO won't this result in there being multiple cameras in scene, since we begin unload after this?
-        camera.gameObject.SetActive(true);
-        
+    {             
         //communicate state of last battle (i.e for puposes of ink)
         instance.lastResult = result;
 
         //dispose of the battle scene
         instance.StartCoroutine(instance.UnloadBattle());
-
-
-
         instance.inBattle = false;
     }
 

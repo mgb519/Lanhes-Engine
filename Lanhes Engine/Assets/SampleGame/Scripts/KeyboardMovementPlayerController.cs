@@ -23,4 +23,12 @@ public class KeyboardMovementPlayerController : PlayerPawnMovementController
 
         return dir;
     }
+
+
+
+    public override void HaltMovement() {
+        //does nothing here lol
+        return;
+    }
+
 }

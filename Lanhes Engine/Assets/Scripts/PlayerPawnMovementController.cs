@@ -29,5 +29,7 @@ public abstract class PlayerPawnMovementController : PawnMovementController
     }
 
 
+    abstract public void HaltMovement();
+
     internal abstract Vector3 GetPlayerInput();
 }

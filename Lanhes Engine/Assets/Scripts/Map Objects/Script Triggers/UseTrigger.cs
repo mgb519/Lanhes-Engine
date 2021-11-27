@@ -13,7 +13,7 @@ public class UseTrigger : Trigger
     private bool mousedOver = false;
     private bool displayLabel = false;
     public void Used() {
-        scriptToCall.Action();
+        Action();
     }
 
     internal void RequestLabel() {

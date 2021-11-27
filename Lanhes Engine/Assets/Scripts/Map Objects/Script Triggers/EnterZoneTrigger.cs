@@ -10,7 +10,7 @@ public class EnterZoneTrigger : Trigger
 
     public void OnTriggerEnter(Collider collision) {
         if (collision.gameObject == PartyManager.playerInThisScene.gameObject) {
-            scriptToCall.Action();
+            Action();
         }
     }
 }

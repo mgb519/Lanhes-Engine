@@ -82,4 +82,13 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
             
         }
     }
+
+
+
+
+    public override void HaltMovement() {
+        reached = true;
+        return;
+    }
+
 }

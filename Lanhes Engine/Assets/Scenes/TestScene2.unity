@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptToCall: {fileID: 349303507}
+  haltsPlayerMovement: 1
 --- !u!114 &349303513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,6 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptToCall: {fileID: 430951382}
+  haltsPlayerMovement: 1
   labelString: Generic Battle
 --- !u!1 &633108854
 GameObject:
@@ -601,6 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptToCall: {fileID: 633108855}
+  haltsPlayerMovement: 1
 --- !u!1 &1154672786
 GameObject:
   m_ObjectHideFlags: 0

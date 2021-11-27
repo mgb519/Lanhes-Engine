@@ -179,10 +179,9 @@ public class DataManager : MonoBehaviour, ISaveable
     }
 
 
-    //TODO What about dialogues that aren't in Ink? I guess just don't have those then. Maybe we can have an interface we look for, and a custom saving mechanism tha DialogueEvent implements?
     //TODO Method for culling dialogues that wont appear again (i.e chapters that you have passed)
 
-    //TODO this should be called when transitioning scenes too, so that Inks are held in memory to flush
+    //this is be called when transitioning scenes, so that Inks are held in memory to flush
     /// <summary>
     /// Collect dialogues in this scene and hold them in memory
     /// </summary>

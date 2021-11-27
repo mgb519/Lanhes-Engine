@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Loading
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -366,7 +366,7 @@ MonoBehaviour:
         array:
         - Key: {fileID: 11400000, guid: bdef118401d25554796aae3539cddf60, type: 2}
           Value: 200
-    avatar: {fileID: 6416550481888765071, guid: fbbc859538824cb4ea23671577ab33b3,
+    avatar: {fileID: 4841074295843135160, guid: fbbc859538824cb4ea23671577ab33b3,
       type: 3}
   - inventory:
       items:
@@ -472,7 +472,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0%
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

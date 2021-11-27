@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6416550481888765070}
-  - component: {fileID: 6416550481888765071}
   - component: {fileID: 6416550481888765064}
   - component: {fileID: 6416550481888765066}
   - component: {fileID: 6416550481888765069}
   - component: {fileID: 6416550481888765072}
   - component: {fileID: 3086262656954978307}
+  - component: {fileID: 4841074295843135160}
   m_Layer: 8
   m_Name: PlayerController
   m_TagString: Player
@@ -37,18 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6416550481888765071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6416550481888765065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69469d887e94a494781c18a8fa2d0086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &6416550481888765064
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -168,6 +156,18 @@ MonoBehaviour:
   closeEnoughDist: 0.05
   worldCursor: {fileID: 1889822604495147314, guid: 3f0c45773dfe45c4baf19ea6263c72a1,
     type: 3}
+--- !u!114 &4841074295843135160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416550481888765065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69469d887e94a494781c18a8fa2d0086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6416550482334398990
 GameObject:
   m_ObjectHideFlags: 0

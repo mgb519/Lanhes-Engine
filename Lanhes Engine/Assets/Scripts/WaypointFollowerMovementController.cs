@@ -14,6 +14,8 @@ public class WaypointFollowerMovementController : PawnMovementController
     private bool overriden = false;
 
 
+    [SerializeField]
+    private float closeEnoughDist;
 
     internal override Vector3 GetInput() {
 
@@ -40,14 +42,14 @@ public class WaypointFollowerMovementController : PawnMovementController
 
     private Vector3 GetInputToPosition() {
         //TODO this snap can be pretty ugly
-        if ((transform.position - GetCurrentWaypoint()).sqrMagnitude <= moveSpeed * moveSpeed * Time.deltaTime) {
-            //if we can reach in one frame, snap to it, this should remove jitter
-            //TODO this is not the cleanest of solutions, since we will not be animating for one frame, but it gets us to the desitination. Not a priority to fix, merely wrong.
-            //TODO the snap is visible, fix that
-            transform.position = GetCurrentWaypoint();
-            //navMeshAgent.nextPosition = transform.position;
-            return Vector3.zero;
-        }
+        //if ((transform.position - GetCurrentWaypoint()).sqrMagnitude <= closeEnoughDist * closeEnoughDist) {
+        //    //if we can reach in one frame, snap to it, this should remove jitter
+        //    //TODO this is not the cleanest of solutions, since we will not be animating for one frame, but it gets us to the desitination. Not a priority to fix, merely wrong.
+        //    //TODO the snap is visible, fix that
+        //    transform.position = GetCurrentWaypoint();
+        //    //navMeshAgent.nextPosition = transform.position;
+        //    return Vector3.zero;
+        //}
 
         return ( GetCurrentWaypoint()- transform.position); //don't need to normalise since that is done later anyway
 
@@ -59,7 +61,7 @@ public class WaypointFollowerMovementController : PawnMovementController
     }
 
     public bool ReachedWaypoint(Vector3 waypoint) {
-        return (transform.position - waypoint).sqrMagnitude <= Mathf.Epsilon;
+        return (transform.position - GetCurrentWaypoint()).sqrMagnitude <= closeEnoughDist * closeEnoughDist;
     }
 
 

@@ -5,16 +5,13 @@ using UnityEngine;
 
 public class MouseMovementPlayerController : PlayerPawnMovementController
 {
-    //TODO reimplment the stuff getting shortest distance between objects
-
-
     private Vector3 target;
     private UseTrigger useTarget;
 
     bool reached = true;
 
     [SerializeField]
-    private float snapDistance;
+    private float closeEnoughDist;
 
 
     [SerializeField]
@@ -42,9 +39,9 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
             }
         } else {
             //walk towards target
-            float distance = offset.magnitude;
-            if (distance <= snapDistance) {
-                transform.position = target;
+            float distance = offset.sqrMagnitude;
+            if (distance <= closeEnoughDist*closeEnoughDist) {
+                //transform.position = target;
                 reached = true;
                 return Vector3.zero;
             } else {
@@ -64,7 +61,7 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
 
             if (useTrigger != null) {
                 if (Input.GetMouseButtonDown(0)) {
-                    //TODO show player where they clicked
+                    //TODO show player where they clicked?
                     useTarget = useTrigger;
                     target = hit.transform.position;
                     reached = false;

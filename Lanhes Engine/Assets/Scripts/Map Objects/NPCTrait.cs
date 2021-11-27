@@ -11,10 +11,6 @@ using Newtonsoft.Json.Linq;
 /// </summary>
 public interface NPCTrait
 {
-    //TODO
-
-
-
     [SerializeField]
     public string UniqueID { get; }
 

@@ -80,6 +80,7 @@ public class DialogueEvent : MapScript, NPCTrait
                         WaypointFollowerMovementController controller = g.GetComponent<WaypointFollowerMovementController>();
                         //TODO: what about the player?
                         //TODO: I suppose the player has a different scripted movement fucntion, they are special after all
+                        //TODO: implement a way to override the players movement
                         //TODO: or maybe waypoint following is a behavoir that other pawn movement controllers should implement; i.e an interface
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", NPC " + npcName + " can't be directed"); break; }
                         Vector3 w = new Vector3(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4]));

@@ -5,6 +5,9 @@
 
 ->head
 ==head==
+
+$NPCWALK TestNPC 20.0 0.0 13.4
+$NPCWALK TestNPC 20.0 0.0 9.0
 $NPCWALK TestNPC 9.0 0.0 9.0
 
 Hello there!

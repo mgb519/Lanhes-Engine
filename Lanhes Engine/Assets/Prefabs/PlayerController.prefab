@@ -165,7 +165,7 @@ MonoBehaviour:
   moveSpeed: 5
   blocked: 0
   useDistance: 0.1
-  snapDistance: 0.1
+  closeEnoughDist: 0.05
   worldCursor: {fileID: 1889822604495147314, guid: 3f0c45773dfe45c4baf19ea6263c72a1,
     type: 3}
 --- !u!1 &6416550482334398990

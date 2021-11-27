@@ -20,12 +20,17 @@ public class BattleManager : MonoBehaviour, ISaveable
 
     private BattleResult lastResult; //TODO: maybe this should be restored? It *shouldn't need to*, I think, but maybe just for safety?
 
+    [SerializeField]
+    private LoadingScreen battleLoadingScreen;
+
+
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            battleLoadingScreen.gameObject.SetActive(false); //We don't need a loading screen on startup
         }
         else if (instance != this)
         {
@@ -51,10 +56,28 @@ public class BattleManager : MonoBehaviour, ISaveable
         Camera camera = player.GetComponentInChildren<Camera>();
         camera.gameObject.SetActive(false);
 
+
+
         //load in the new scene
-        SceneManager.LoadSceneAsync(instance.battleScene, LoadSceneMode.Additive);
+        instance.StartCoroutine(instance.LoadInBattle(enemies));
+
+
+
+    }
+
+
+    private IEnumerator LoadInBattle(IOpponentGroup enemies) {
+        //put a loading screen up
+        instance.battleLoadingScreen.gameObject.SetActive(true);
+        AsyncOperation op = SceneManager.LoadSceneAsync(instance.battleScene, LoadSceneMode.Additive);
+        while (!op.isDone) {
+            battleLoadingScreen.UpdateProgress(op.progress);
+            yield return null;
+        }
+
+        instance.battleLoadingScreen.gameObject.SetActive(false);
+
         //TODO we can have some frames with no camera, it seems, probably since we deactivate the player cam first.
-        //TODO put a loading screen up
 
     }
 
@@ -66,20 +89,32 @@ public class BattleManager : MonoBehaviour, ISaveable
         //restore the player camera
         GameObject player = PartyManager.playerInThisScene.gameObject;
 
-        Camera camera = player.GetComponentInChildren<Camera>(true);
+        Camera camera = player.GetComponentInChildren<Camera>(true); //TODO won't this result in there being multiple cameras in scene, since we begin unload after this?
         camera.gameObject.SetActive(true);
         
         //communicate state of last battle (i.e for puposes of ink)
         instance.lastResult = result;
 
         //dispose of the battle scene
-        SceneManager.UnloadSceneAsync(instance.battleScene);
-        //TODO put loading screen up until the scene fully unloads
+        instance.StartCoroutine(instance.UnloadBattle());
 
 
 
         instance.inBattle = false;
+    }
 
+
+
+    private IEnumerator UnloadBattle() {
+        //put a loading screen up
+        instance.battleLoadingScreen.gameObject.SetActive(true);
+        AsyncOperation op = SceneManager.UnloadSceneAsync(instance.battleScene);
+        while (!op.isDone) {
+            battleLoadingScreen.UpdateProgress(op.progress);
+            yield return null;
+        }
+
+        instance.battleLoadingScreen.gameObject.SetActive(false);
 
     }
 

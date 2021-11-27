@@ -12,8 +12,8 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
     static gameState GameState;
 
 
-
-    private static LoadingScreen loadingGroup;
+    [SerializeField]
+    private LoadingScreen loadingGroup;
 
     private static bool isLoading;
 
@@ -23,7 +23,6 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            loadingGroup = transform.GetChild(0).GetComponent<LoadingScreen>(); //TODO more robust method for getting the loading screen!
             loadingGroup.gameObject.SetActive(false); //We don't need a loading screen on startup
         }
         else if (instance != this)
@@ -43,7 +42,7 @@ public class GameSceneManager : MonoBehaviour, ISaveable //TODO: does this need 
         //hoover up this scene's dialogues and store them in the inter-scene memory
 
         //show loading screen
-        loadingGroup.gameObject.SetActive(true);
+        instance.loadingGroup.gameObject.SetActive(true);
 
         DataManager.instance.RememberNPCStates();
         instance.StartCoroutine(instance.LoadScene(newScene, spawnPositionName));

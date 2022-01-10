@@ -43,8 +43,6 @@ class MyAllPostprocessor : AssetPostprocessor
             }
         }
         foreach (string assetPath in deletedAssets) {
-            //Debug.Log("Deleted Asset: " + assetPath);
-            //TODO I have no fucking clue how *this* works Surely the asset is gone, I can't access it
             InventoryItem item = AssetDatabase.LoadAssetAtPath<InventoryItem>(assetPath);
             if (item != null) {
                 bool s = db.items.Remove(item);

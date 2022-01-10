@@ -4,17 +4,19 @@ using UnityEngine;
 
 abstract public class Trigger : MonoBehaviour
 {
-    [SerializeField,SerializeReference]
+    [SerializeField, SerializeReference]
     private MapScript scriptToCall;
 
     [SerializeField]
-    private bool haltsPlayerMovement=true;
-
+    private bool haltsPlayerMovement = true;
 
     public void Action() {
-        if (haltsPlayerMovement) {
-            PartyManager.playerInThisScene.GetComponent<PlayerPawnMovementController>().HaltMovement();
+        if (!PartyManager.playerInThisScene.IsEventRunning()) {
+            if (haltsPlayerMovement) {
+                PartyManager.playerInThisScene.GetComponent<PlayerPawnMovementController>().HaltMovement();
+            }
+
+            StartCoroutine(scriptToCall.Call());
         }
-        scriptToCall.Action();
     }
 }

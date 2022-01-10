@@ -7,7 +7,8 @@ public class MapTransition :  MapScript
 {
     public string sceneToLoad;
     public string entrypoint;
-    public override void Action() {
+    public override IEnumerator Action() {
         GameSceneManager.StartLoadScene(sceneToLoad, entrypoint);
+        yield break;
     }
 }

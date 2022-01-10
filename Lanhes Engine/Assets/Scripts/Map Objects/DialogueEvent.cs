@@ -4,6 +4,7 @@ using UnityEngine;
 using Ink.Runtime;
 using System;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 public class DialogueEvent : MapScript, NPCTrait
 {
@@ -25,8 +26,8 @@ public class DialogueEvent : MapScript, NPCTrait
     // The ink story that we're wrapping
     Story _inkStory;
 
-    //FIXME: what does this do again? Do we save and restore it or something?
-    private List<WaypointFollowerMovementController> overridenNPCs = new List<WaypointFollowerMovementController>();
+
+    private HashSet<PawnMovementController> overridenNPCs = new HashSet<PawnMovementController>();
 
 
     //TODO: we need to reset the Ink story to its head node when the event is over generally
@@ -43,33 +44,35 @@ public class DialogueEvent : MapScript, NPCTrait
     }
 
 
-    public override void Action() {
-        StartCoroutine(HandleScript());
+    public override IEnumerator Action() {
+        yield return HandleScript();
     }
 
     IEnumerator HandleScript() {
+        Debug.Log("entered script");
         while (true) {
             if (_inkStory.canContinue) {
                 //fetch the next window
                 string command = _inkStory.Continue();
                 //Debug.Log(command);
                 if (!command.StartsWith("$")) {
-                    Debug.Log("Showing dialogue" + command);
+                    Debug.Log("Showing dialogue:" + command);
                     //this is a dialogue
                     //TODO: get name and picture, etc
                     WindowManager.CreateStringWindow(command, null);
-                    yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
+                    yield return new WaitUntil(() => WindowManager.ContinuePlay());
                 } else {
                     // parse command
                     //TODO: this won't really like strings with spaces as arguments..
                     //TODO: maybe split by comma?
+                    command = command.Trim();
                     string[] args = command.Split(' ');
                     string function = args[0];
                     if (function == "$SHOP") {
                         //TODO: make safer for debugging purposes; this will fail if int.Parse fails. Although that may be a good thing, it's a clear indicator of a malformed script.
                         int index = int.Parse(args[1]);
                         WindowManager.CreateShopWindow(shops[index].buyPrices, shops[index].sellPrices, PartyManager.GetParty().inventory, null);
-                        yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
+                        yield return new WaitUntil(() => WindowManager.ContinuePlay());
                     } else if (function == "$NPCWALK") {
                         //NPC walks to positon
 
@@ -77,21 +80,24 @@ public class DialogueEvent : MapScript, NPCTrait
                         string npcName = args[1];
                         GameObject g = GameObject.Find(npcName);
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", did not find NPC " + npcName); break; }
-                        WaypointFollowerMovementController controller = g.GetComponent<WaypointFollowerMovementController>();
-                        //TODO: what about the player?
-                        //TODO: I suppose the player has a different scripted movement fucntion, they are special after all
-                        //TODO: implement a way to override the players movement
-                        //TODO: or maybe waypoint following is a behavoir that other pawn movement controllers should implement; i.e an interface
+                        PawnMovementController controller = g.GetComponent<PawnMovementController>();                        
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", NPC " + npcName + " can't be directed"); break; }
                         Vector3 w = new Vector3(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4]));
                         overridenNPCs.Add(controller);
-                        controller.SetWaypoint(w);
-                        player.GetComponent<PlayerPawnMovementController>().blocked = true;
+                        controller.AddWaypoint(w);
+                        Debug.Log("told "+npcName + "to move to "+ w.ToString());
+                        
+
+                    } else if (function == "$WAIT") {
+                        //we wait for all NPCs that are currently being directed to finish thier movement.
+
                         //TODO: getting the Y ever so slightly wrong can result in this never being triggered, as the agent cannot actually move freely on Y.
-                        yield return new WaitUntil(() => controller.ReachedWaypoint());
-                        player.GetComponent<PlayerPawnMovementController>().blocked = false;  //TODO: do we want a movement to be run asynchronously? i.e we would move to the next line as the NPC moves
-                        controller.FreeWaypoint();  //TODO presumably, we may want the NPC to stay in pace. maybe then we shouldn't free the waypoint? In this case, the waypoint needs to be freed up at *some* point. Except for cases where we alter patrol paths?
-                        overridenNPCs.Remove(controller); //TODO is this correct? unsure what overrdien NPCs variable was for
+                        yield return new WaitUntil(() => overridenNPCs.All(x=> x.ClearedPath()));
+                        foreach (PawnMovementController controller in overridenNPCs) {
+                            controller.Release();  //TODO presumably, we may want the NPC to stay in pace. maybe then we shouldn't free the waypoint, in case its normal AI takes hold? In this case, the waypoint needs to be freed up at *some* point. Except for cases where we alter patrol paths?
+                        }
+                        overridenNPCs.Clear();
+
                     } else if (function == "$NPCTELE") {
                         //NPC is teleported to location
                         string npcName = args[1];
@@ -146,7 +152,7 @@ public class DialogueEvent : MapScript, NPCTrait
                 foreach (Choice c in choices) { choicesAsString.Add(c.text); }
 
                 SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString, null);
-                yield return new WaitUntil(() => WindowManager.instance.ContinuePlay());
+                yield return new WaitUntil(() => WindowManager.ContinuePlay());
                 string selected = ((SelectableString)(s.selected)).data;
                 //TODO: sure this could be optimised
                 int index = choices.Find(x => x.text == selected).index;

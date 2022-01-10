@@ -76,7 +76,6 @@ public class PartyManager : MonoBehaviour, ISaveable
 
     }
 
-
     public static Party GetParty() {
         return partyThisScene;
     }
@@ -121,7 +120,8 @@ public class PartyManager : MonoBehaviour, ISaveable
             //set active party is this is the active party
             if (active) {
                 //TODO what if multiple actives?
-                //that's just an edited save genius
+                //that's just an edited save genius.
+                //How do we respond to that?
 
                 partyidx = index;
 

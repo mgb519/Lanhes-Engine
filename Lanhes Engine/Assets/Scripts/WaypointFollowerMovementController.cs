@@ -9,35 +9,27 @@ public class WaypointFollowerMovementController : PawnMovementController
     //TODO actually TEST the waypoint behaviour.
     public Queue<Vector3> waypoints = new Queue<Vector3>();//TODO show in editor
 
-    private Vector3 overrideWaypoint;
-    private bool overriden = false;
-
-
-    [SerializeField]
-    private float closeEnoughDist;
+   
 
     internal override Vector3 GetInput() {
 
         if (!overriden) {
             if (waypoints.Count == 0) { return Vector3.zero; }
             //patrol along path
-            Vector3 next = waypoints.Peek();
-            while (ReachedWaypoint(next)) {
-                next = waypoints.Dequeue();
-                waypoints.Enqueue(next);
-                next = waypoints.Peek();
+            while (ReachedWaypoint(GetCurrentWaypoint())) {
+                waypoints.Enqueue(waypoints.Dequeue());
             }
-
-
+        } else {
+            while (overrideWaypoints.Count > 0 && ReachedWaypoint(GetCurrentWaypoint())) {
+                overrideWaypoints.Dequeue();
+            }
         }
 
+        if (overrideWaypoints.Count == 0 && waypoints.Count == 0) { return Vector3.zero; }
 
         return GetInputToPosition();
 
     }
-
-
-
 
     private Vector3 GetInputToPosition() {
         //TODO this snap can be pretty ugly
@@ -50,31 +42,12 @@ public class WaypointFollowerMovementController : PawnMovementController
         //    return Vector3.zero;
         //}
 
-        return ( GetCurrentWaypoint()- transform.position); //don't need to normalise since that is done later anyway
+        return (GetCurrentWaypoint() - transform.position); //don't need to normalise since that is done later anyway
 
     }
 
-    public void SetWaypoint(Vector3 waypoint) {
-        overriden = true;
-        overrideWaypoint = waypoint;
-    }
 
-    public bool ReachedWaypoint(Vector3 waypoint) {
-        return (transform.position - GetCurrentWaypoint()).sqrMagnitude <= closeEnoughDist * closeEnoughDist;
-    }
-
-
-    //called by cutscene
-    public bool ReachedWaypoint() {
-        return ReachedWaypoint(GetCurrentWaypoint());
-    }
-
-    public void FreeWaypoint() { 
-        overriden = false; 
-    }
-
-
-    public Vector3 GetCurrentWaypoint() {
-        return overriden ? overrideWaypoint : waypoints.Peek();
+    protected override Vector3 GetCurrentWaypoint() {
+        return overriden ? overrideWaypoints.Peek() : waypoints.Peek();
     }
 }

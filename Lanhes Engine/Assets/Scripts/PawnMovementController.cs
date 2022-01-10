@@ -4,7 +4,8 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
-public abstract class PawnMovementController : MonoBehaviour {
+public abstract class PawnMovementController : MonoBehaviour
+{
 
     public float moveSpeed; //how many tiles do you move in 1s?
 
@@ -12,6 +13,13 @@ public abstract class PawnMovementController : MonoBehaviour {
     new private Rigidbody rigidbody;
     private Vector3 lastDirection;
 
+
+    protected Queue<Vector3> overrideWaypoints = new Queue<Vector3>();
+    protected bool overriden = false;
+
+
+    [SerializeField]
+    protected float closeEnoughDist;
 
 
     // Start is called before the first frame update
@@ -25,8 +33,7 @@ public abstract class PawnMovementController : MonoBehaviour {
 
     // Update is called once per frame
     public void Update() {
-        if (WindowManager.instance.ContinuePlay() && !GameSceneManager.IsLoading() && !DataManager.IsLoading() && !BattleManager.InBattle())
-        {
+        if (WindowManager.ContinuePlay() && !GameSceneManager.IsLoading() && !DataManager.IsLoading() && !BattleManager.InBattle()) {
             //TODO: perhaps this should be got as a vector2? I *presume* we won't have Y axis movement, but the navmesh seems to assume we *can*.
             Vector3 inp = GetInput();
             inp.y = 0;
@@ -45,9 +52,8 @@ public abstract class PawnMovementController : MonoBehaviour {
             anim.SetInteger("Horizontal", Mathf.RoundToInt(dir.x));
             anim.SetInteger("Vertical", Mathf.RoundToInt(dir.z));
             anim.speed = anim.GetInteger("Horizontal") == 0 && anim.GetInteger("Vertical") == 0 ? 0 : 1;
-                        
-        }
-        else {
+
+        } else {
             rigidbody.velocity = Vector3.zero;
             anim.speed = 0;
         }
@@ -60,5 +66,29 @@ public abstract class PawnMovementController : MonoBehaviour {
     /// </summary>
     /// <returns> Vector representing the direction the pawn moves in.</returns>
     internal abstract Vector3 GetInput();
+
+
+    public void AddWaypoint(Vector3 waypoint) {
+        overriden = true;
+        overrideWaypoints.Enqueue(waypoint);
+    }
+    //called by cutscene
+    public bool ClearedPath() {
+        return overrideWaypoints.Count == 0;
+    }
+
+    public void Release() {
+        overriden = false;
+        overrideWaypoints.Clear();
+    }
+
+
+    protected bool ReachedWaypoint(Vector3 waypoint) {
+        return (transform.position - GetCurrentWaypoint()).sqrMagnitude <= closeEnoughDist * closeEnoughDist;
+    }
+    protected virtual Vector3 GetCurrentWaypoint() {
+        return overrideWaypoints.Peek();
+    }
+
 
 }

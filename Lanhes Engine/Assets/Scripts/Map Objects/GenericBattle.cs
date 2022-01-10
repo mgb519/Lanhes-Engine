@@ -12,8 +12,8 @@ public class GenericBattle : MapScript
 
     [SerializeField]
     private IOpponentGroup enemies;
-    public override void Action() {
-        StartCoroutine(Body());
+    public override IEnumerator Action() {
+        yield return Body();
     }
 
 

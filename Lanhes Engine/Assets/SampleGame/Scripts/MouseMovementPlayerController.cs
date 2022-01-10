@@ -10,8 +10,8 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
 
     bool reached = true;
 
-    [SerializeField]
-    private float closeEnoughDist;
+    //[SerializeField]
+    //private float closeEnoughDist;
 
 
     [SerializeField]

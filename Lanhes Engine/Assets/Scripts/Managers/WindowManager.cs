@@ -27,8 +27,8 @@ public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need 
 
 
     //TODO: should this be here? since it's also  used by PC script to know if they can continue
-    public bool ContinuePlay() {
-        return baseWindow == null;
+    public static bool ContinuePlay() {
+        return instance.baseWindow == null;
     }
 
     public void WindowClosed() {
@@ -87,6 +87,7 @@ public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need 
         return CreateSelection(processed, creator);
     }
 
+
     public static SelectionWindow CreateSelection(List<ISelectable> list, MenuWindow creator) {
         SelectionWindow window = CreateWindow(instance.selectionWindow, creator);
         window.Refresh(list, window.ReturnAndClose);
@@ -118,6 +119,14 @@ public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need 
         window.SaveMode();
         return window;
     }
+
+    //TODO should this be a specialised version, not a generic selection window? Esp. since that could allow us to put a text bit sying what the selection is for. But that could be done for ALL selection windows
+    public static SelectionWindow CreateConfirmDialog(MenuWindow creator) {
+        List<ISelectable> processed = new List<ISelectable>() { new SelectableBool(true), new SelectableBool(false) };
+
+        return CreateSelection(processed, creator);
+    }
+
 
     public JObject SaveToFile() {
         JObject ret = new JObject();

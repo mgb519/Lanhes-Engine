@@ -22,7 +22,7 @@ public class ExampleSlottedSaveMenu : SaveMenu
     }
 
     internal override void SaveHeader(ref StreamWriter file) {
-        //TODO shouldn't we be getting the data through the XML document maybe, rather than direct data access?  
+        //TODO shouldn't we be getting the data through the JSON document maybe, rather than direct data access?  
         int gold = PartyManager.GetParty().inventory.HowManyOfItem(DataManager.GetItemBySystemName("money"));
         file.WriteLine("Money: " + gold.ToString());
     }
@@ -32,18 +32,28 @@ public class ExampleSlottedSaveMenu : SaveMenu
     }
 
     public void SaveSelected(string path) {
-        if (isSaving) {
-            //save over the selected slot
 
-            //TODO confirmation dialog
-            SaveGame(path);
-        } else {
-            //load the selected slot
+        StartCoroutine(SaveSelectedBody(path));
+        
+    }
 
-            //TODO confirmation dialogue
-            LoadGame(path);
-            CollapseMenu();
+    public IEnumerator SaveSelectedBody(string path) {
+        SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(null); //todo this should be this, not null
+        while (!WindowManager.ContinuePlay()) {
+            yield return null;
         }
+
+        if (((SelectableBool)(confirmiationDialog.selected)).data) {
+            if (isSaving) {
+                //save over the selected slot
+                SaveGame(path);
+            } else {
+                //load the selected slot
+                LoadGame(path);
+                CollapseMenu();
+            }
+        }
+
     }
 
 }

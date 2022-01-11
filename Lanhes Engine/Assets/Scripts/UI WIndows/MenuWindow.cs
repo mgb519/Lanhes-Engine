@@ -49,12 +49,6 @@ public class MenuWindow : MonoBehaviour {
             WindowManager.instance.WindowClosed();
         }
     }
-
-    //public void Awake() {
-    //    //pause the game
-    //    Time.timeScale = 0;
-    //}
-
     private bool CheckLastSelection() {
         Debug.Log(lastSelection);
         return lastSelection != null;

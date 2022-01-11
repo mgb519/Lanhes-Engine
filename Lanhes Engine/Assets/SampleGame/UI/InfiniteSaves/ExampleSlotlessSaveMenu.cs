@@ -36,22 +36,33 @@ public class ExampleSlotlessSaveMenu : SaveMenu
         RefreshList();
     }
 
-
     public void SaveSelected(string path) {
-        if (saving) {
-            //save over the selected slot
 
-            //TODO confirmation dialog
-            SaveGame(path);
-            RefreshList();
-        } else {
-            //load the selected slot
+        StartCoroutine(SaveSelectedBody(path));
 
-            //TODO confirmation dialogue
-            LoadGame(path);
-            CollapseMenu();
-        }
     }
+
+    public IEnumerator SaveSelectedBody(string path) {
+        //TODO maybe don't need a confirm if you're creating a new save
+        SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(null);
+        while (!WindowManager.ContinuePlay()) {
+            yield return null;
+        }
+
+        if (((SelectableBool)(confirmiationDialog.selected)).data) {
+            if (saving) {
+                //save over the selected slot
+                SaveGame(path);
+                RefreshList();
+            } else {
+                //load the selected slot
+                LoadGame(path);
+                CollapseMenu();
+            }
+        }
+
+    }
+  
 
 
     public void SaveNew() {
@@ -111,7 +122,7 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     }
 
     internal override void SaveHeader(ref StreamWriter file) {
-        //TODO shouldn't we be getting the data through the XML document maybe, rather than direct data access?
+        //TODO shouldn't we be getting the data through the JSON document maybe, rather than direct data access?
         string saveName = saveNameField.text==null?"no notes":saveNameField.text;
         file.WriteLine(saveName);
         int gold = PartyManager.GetParty().inventory.HowManyOfItem(DataManager.GetItemBySystemName("money"));

@@ -11,14 +11,18 @@ public partial class SelectionWindow : MenuWindow {
 
     public ISelectable selected;
 
+
+    [SerializeField]
+    private Transform content;
     public void Refresh(List<ISelectable> elements, HandleSelection selectionHandler) {
         for (int i = 0; i < elements.Count; i++) {
             ISelectable current = elements[i];
             SelectionButton b = current.Render();
-            b.gameObject.transform.SetParent(GameObject.Find("Content").transform, false);
+            b.gameObject.transform.SetParent(content, false); 
         }
         onSelected = selectionHandler;
     }
+
 
 
     public void HandleItem(ISelectable lastElement) {

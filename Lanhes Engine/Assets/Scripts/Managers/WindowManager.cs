@@ -6,7 +6,8 @@ using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need to be Saveable?
+public class WindowManager : MonoBehaviour, ISaveable
+{  //FIXME does this need to be Saveable?
 
     public static WindowManager instance = null;
 
@@ -79,18 +80,18 @@ public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need 
 
     }
 
-    public static SelectionWindow CreateStringSelection(List<string> list, MenuWindow creator) {
+    public static SelectionWindow CreateStringSelection(List<string> list, MenuWindow creator, string prompt) {
         List<ISelectable> processed = new List<ISelectable>();
         foreach (string s in list) {
             processed.Add(new SelectableString(s));
         }
-        return CreateSelection(processed, creator);
+        return CreateSelection(processed, creator, prompt);
     }
 
 
-    public static SelectionWindow CreateSelection(List<ISelectable> list, MenuWindow creator) {
+    public static SelectionWindow CreateSelection(List<ISelectable> list, MenuWindow creator, string prompt) {
         SelectionWindow window = CreateWindow(instance.selectionWindow, creator);
-        window.Refresh(list, window.ReturnAndClose);
+        window.Refresh(list, window.ReturnAndClose, prompt);
         return window;
     }
 
@@ -121,10 +122,10 @@ public class WindowManager : MonoBehaviour, ISaveable {  //FIXME does this need 
     }
 
     //TODO should this be a specialised version, not a generic selection window? Esp. since that could allow us to put a text bit sying what the selection is for. But that could be done for ALL selection windows
-    public static SelectionWindow CreateConfirmDialog(MenuWindow creator) {
+    public static SelectionWindow CreateConfirmDialog(MenuWindow creator, string prompt) {
         List<ISelectable> processed = new List<ISelectable>() { new SelectableBool(true), new SelectableBool(false) };
 
-        return CreateSelection(processed, creator);
+        return CreateSelection(processed, creator, prompt);
     }
 
 

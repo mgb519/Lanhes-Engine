@@ -51,9 +51,9 @@ public class DialogueEvent : MapScript, NPCTrait
     IEnumerator HandleScript() {
         Debug.Log("entered script");
         while (true) {
+            string command = _inkStory.Continue();
             if (_inkStory.canContinue) {
                 //fetch the next window
-                string command = _inkStory.Continue();
                 //Debug.Log(command);
                 if (!command.StartsWith("$")) {
                     Debug.Log("Showing dialogue:" + command);
@@ -145,13 +145,14 @@ public class DialogueEvent : MapScript, NPCTrait
                 }
 
             } else if (_inkStory.currentChoices.Count > 0) {
+                string prompt = command;
                 //we have a choice window
                 //TODO: ths currently only works for string selection, as that is how Ink works normally. Figure out a syntax for other selections
                 List<Choice> choices = _inkStory.currentChoices;
                 List<string> choicesAsString = new List<string>();
                 foreach (Choice c in choices) { choicesAsString.Add(c.text); }
 
-                SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString, null);
+                SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString, null,prompt); //TODO some way of getting a prompt from Ink
                 yield return new WaitUntil(() => WindowManager.ContinuePlay());
                 string selected = ((SelectableString)(s.selected)).data;
                 //TODO: sure this could be optimised

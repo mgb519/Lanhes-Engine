@@ -19,8 +19,10 @@ Hello there!
 //comment
 This is a dialogue!
 I'm going to make you choose between Foo and Bar!
+
 -> foobarbaz
 === foobarbaz ===
+Foo, or Bar?
 +	[Foo]
 	You chose Foo!
 +	[Bar]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public partial class SelectionWindow : MenuWindow {
 
@@ -14,13 +15,17 @@ public partial class SelectionWindow : MenuWindow {
 
     [SerializeField]
     private Transform content;
-    public void Refresh(List<ISelectable> elements, HandleSelection selectionHandler) {
+
+    [SerializeField]
+    private TextMeshProUGUI promptBox;
+    public void Refresh(List<ISelectable> elements, HandleSelection selectionHandler, string prompt) {
         for (int i = 0; i < elements.Count; i++) {
             ISelectable current = elements[i];
             SelectionButton b = current.Render();
             b.gameObject.transform.SetParent(content, false); 
         }
         onSelected = selectionHandler;
+        promptBox.text = prompt;
     }
 
 

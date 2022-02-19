@@ -43,13 +43,16 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     }
 
     public IEnumerator SaveSelectedBody(string path) {
-        //TODO maybe don't need a confirm if you're creating a new save
-        SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(null);
-        while (!WindowManager.ContinuePlay()) {
-            yield return null;
+        bool ok = true;
+        if (System.IO.File.Exists(path)) {
+            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "Overwrite save?"); //TODO translation
+            while (!WindowManager.ContinuePlay()) {
+                yield return null;
+            }
+            ok = ((SelectableBool)(confirmiationDialog.selected)).data;
         }
 
-        if (((SelectableBool)(confirmiationDialog.selected)).data) {
+        if (ok) {
             if (saving) {
                 //save over the selected slot
                 SaveGame(path);

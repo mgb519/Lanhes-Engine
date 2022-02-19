@@ -34,16 +34,21 @@ public class ExampleSlottedSaveMenu : SaveMenu
     public void SaveSelected(string path) {
 
         StartCoroutine(SaveSelectedBody(path));
-        
+
     }
 
     public IEnumerator SaveSelectedBody(string path) {
-        SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(null); //todo this should be this, not null
-        while (!WindowManager.ContinuePlay()) {
-            yield return null;
+
+        bool ok = true;
+        if (System.IO.File.Exists(path)) {
+            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "Overwrite save?"); //TODO translation
+            while (!WindowManager.ContinuePlay()) {
+                yield return null;
+            }
+            ok = ((SelectableBool)(confirmiationDialog.selected)).data;
         }
 
-        if (((SelectableBool)(confirmiationDialog.selected)).data) {
+        if (ok) {
             if (isSaving) {
                 //save over the selected slot
                 SaveGame(path);

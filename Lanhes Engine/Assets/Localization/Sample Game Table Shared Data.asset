@@ -14,7 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TableCollectionName: Sample Game Table
   m_TableCollectionNameGuidString: 77e07cb1d003b7445be5ffe3b0edffa6
-  m_Entries: []
+  m_Entries:
+  - m_Id: 7587923210457088
+    m_Key: OVERWRITE_SAVE_CONFIRM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7590816940478464
+    m_Key: SYSTEM_YES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7590835659657216
+    m_Key: SYSTEM_NO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7592711423709184
+    m_Key: TESTDIALOGUE_01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7592884891734016
+    m_Key: TESTDIALOGUE_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7595627165437952
+    m_Key: TESTDIALOGUE_R_01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7595645049950208
+    m_Key: TESTDIALOGUE_R_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7595645658124288
+    m_Key: TESTDIALOGUE_R_03
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

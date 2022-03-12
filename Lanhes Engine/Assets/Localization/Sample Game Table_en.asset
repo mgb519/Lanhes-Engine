@@ -17,6 +17,38 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 77e07cb1d003b7445be5ffe3b0edffa6, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 7587923210457088
+    m_Localized: Overwrite this save?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7590816940478464
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7590835659657216
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7592711423709184
+    m_Localized: Hello there!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7592884891734016
+    m_Localized: This is a dialogue!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7595627165437952
+    m_Localized: Foo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7595645049950208
+    m_Localized: Bar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7595645658124288
+    m_Localized: Baz
+    m_Metadata:
+      m_Items: []
   references:
     version: 1

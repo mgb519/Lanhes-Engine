@@ -23,6 +23,7 @@ public class ExampleSlottedSaveMenu : SaveMenu
 
     internal override void SaveHeader(ref StreamWriter file) {
         //TODO shouldn't we be getting the data through the JSON document maybe, rather than direct data access?  
+        //TODO also needs localisation
         int gold = PartyManager.GetParty().inventory.HowManyOfItem(DataManager.GetItemBySystemName("money"));
         file.WriteLine("Money: " + gold.ToString());
     }
@@ -41,7 +42,7 @@ public class ExampleSlottedSaveMenu : SaveMenu
 
         bool ok = true;
         if (System.IO.File.Exists(path)) {
-            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "Overwrite save?"); //TODO translation
+            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "OVERWRITE_SAVE_CONFIRM"); 
             while (!WindowManager.ContinuePlay()) {
                 yield return null;
             }

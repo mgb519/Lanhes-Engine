@@ -17,6 +17,18 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 77e07cb1d003b7445be5ffe3b0edffa6, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 7587923210457088
+    m_Localized: Overwrite this save? (CN)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7590816940478464
+    m_Localized: Yes(CN)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7590835659657216
+    m_Localized: No(CN)
+    m_Metadata:
+      m_Items: []
   references:
     version: 1

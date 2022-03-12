@@ -45,7 +45,7 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     public IEnumerator SaveSelectedBody(string path) {
         bool ok = true;
         if (System.IO.File.Exists(path)) {
-            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "Overwrite save?"); //TODO translation
+            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "OVERWRITE_SAVE_CONFIRM");
             while (!WindowManager.ContinuePlay()) {
                 yield return null;
             }
@@ -126,6 +126,7 @@ public class ExampleSlotlessSaveMenu : SaveMenu
 
     internal override void SaveHeader(ref StreamWriter file) {
         //TODO shouldn't we be getting the data through the JSON document maybe, rather than direct data access?
+        //TODO localise
         string saveName = saveNameField.text==null?"no notes":saveNameField.text;
         file.WriteLine(saveName);
         int gold = PartyManager.GetParty().inventory.HowManyOfItem(DataManager.GetItemBySystemName("money"));

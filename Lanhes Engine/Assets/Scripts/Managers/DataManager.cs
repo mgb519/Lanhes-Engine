@@ -102,6 +102,9 @@ public class DataManager : MonoBehaviour, ISaveable
     private NPCStates npcStates = new NPCStates();
 
 
+    //[SerializeField]
+
+
 
     //TODO maybe this field shouldn't be here of all places, this component is getting crowded already
     [SerializeField]
@@ -368,6 +371,8 @@ public class DataManager : MonoBehaviour, ISaveable
         isLoading = false;
         //throw new NotImplementedException();
         Debug.Log("Finished load body");
+
+        
 
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Localization.Settings;
 
 public partial class SelectionWindow : MenuWindow {
 
@@ -25,7 +26,7 @@ public partial class SelectionWindow : MenuWindow {
             b.gameObject.transform.SetParent(content, false); 
         }
         onSelected = selectionHandler;
-        promptBox.text = prompt;
+        promptBox.text = LocalizationSettings.StringDatabase.GetLocalizedString(prompt);
     }
 
 

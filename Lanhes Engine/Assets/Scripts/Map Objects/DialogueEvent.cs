@@ -59,7 +59,7 @@ public class DialogueEvent : MapScript, NPCTrait
                     Debug.Log("Showing dialogue:" + command);
                     //this is a dialogue
                     //TODO: get name and picture, etc
-                    WindowManager.CreateStringWindow(command, null);
+                    WindowManager.CreateStringWindow(command.Trim(), null);
                     yield return new WaitUntil(() => WindowManager.ContinuePlay());
                 } else {
                     // parse command

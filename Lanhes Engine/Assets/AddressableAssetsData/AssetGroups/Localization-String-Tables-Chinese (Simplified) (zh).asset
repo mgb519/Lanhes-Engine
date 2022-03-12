@@ -16,7 +16,13 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 8a33dfa9102f8494c900bccc82b93405
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: c90287cffff5996469e202900bc587a2
+    m_Address: Sample Game Table_zh
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh
+    - Preload
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 320a733dfed8cca4bbb5d38dd35e2e43, type: 2}
   m_SchemaSet:

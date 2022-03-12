@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Localization.Settings;
 
 public class SelectableBool : ISelectable
 {
@@ -11,7 +12,7 @@ public class SelectableBool : ISelectable
 
     public SelectionButton Render() {
         SelectionButton button = WindowManager.BaseButton();
-        button.GetComponentInChildren<TextMeshProUGUI>().text = data? "Yes":"No"; //TODO localisation, how to implment here? 
+        button.GetComponentInChildren<TextMeshProUGUI>().text = LocalizationSettings.StringDatabase.GetLocalizedString(data ? "SYSTEM_YES" : "SYSTEM_NO");//TODO Async version...? 
         button.dat = this;
         return button;
     }

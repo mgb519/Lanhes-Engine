@@ -15,21 +15,21 @@ $WAIT
 $NPCWALK Player 7.5 0.0 7.0
 $NPCWALK Player 7.5 0.0 9.0
 $WAIT
-Hello there!
+TESTDIALOGUE_01
 //comment
-This is a dialogue!
+TESTDIALOGUE_02
 I'm going to make you choose between Foo and Bar!
 
 -> foobarbaz
 === foobarbaz ===
 Foo, or Bar?
-+	[Foo]
++	[TESTDIALOGUE_R_01]
 	You chose Foo!
-+	[Bar]
++	[TESTDIALOGUE_R_02]
 	You chose Bar!
 	$SETINT didbar {getInt("didbar")+1}
-	This is the {getInt("didbar")} time you've chose Bar, by the way.
-*	[Baz]
+	TESTDIALOGUE_07
+*	[TESTDIALOGUE_R_03]
 	What? That wasn't an option!
 	Choose something else!
 	-> foobarbaz

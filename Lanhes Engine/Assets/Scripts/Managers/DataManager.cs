@@ -5,7 +5,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json.Linq;
 using System.Linq;
-//using SerializableDictionary;
+//using SerializableDictionary
+using UnityEngine.Localization.SmartFormat.Extensions;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
+using UnityEngine.Localization.Settings;
 
 //TODO this class is getting a bit chunky
 [RequireComponent(typeof(GameSceneManager)), RequireComponent(typeof(PartyManager)), RequireComponent(typeof(WindowManager)), RequireComponent(typeof(BattleManager))]
@@ -112,6 +115,8 @@ public class DataManager : MonoBehaviour, ISaveable
 
 
 
+    private PersistentVariablesSource variables = LocalizationSettings.StringDatabase.SmartFormatter.GetSourceExtension<PersistentVariablesSource>(); //get access to our static global variable table
+
     //TODO: would prefer a more concrete type than ISaveable this this is just used for saving anyway so no biggie rn
     private static (string, ISaveable)[] databases;
     private static (string, ISaveable)[] managers;
@@ -134,15 +139,15 @@ public class DataManager : MonoBehaviour, ISaveable
         }
     }
 
-    public static int GetInt(string key) { return GetVal(key, instance.intData); }
+    public static int GetInt(string key) { return GetVal<int,IntVariable>(key, instance.intData); }
     public static void SetInt(string key, int newValue) { SetVal(key, newValue, instance.intData); }
 
 
-    public static string GetString(string key) { return GetVal<string>(key, instance.stringData); }
+    public static string GetString(string key) { return GetVal<string,StringVariable>(key, instance.stringData); }
     public static void SetString(string key, string newValue) { SetVal<string>(key, newValue, instance.stringData); }
 
 
-    public static bool GetBool(string key) { return GetVal<bool>(key, instance.boolData); }
+    public static bool GetBool(string key) { return GetVal<bool,BoolVariable>(key, instance.boolData); }
     public static void SetBool(string key, bool newValue) { SetVal<bool>(key, newValue, instance.boolData); }
 
 
@@ -159,9 +164,17 @@ public class DataManager : MonoBehaviour, ISaveable
     }
 
     //TODO: should be initialise the entry if it doesn't exist instead? or give a default value?
-    private static T GetVal<T>(string key, IDictionary<string, T> dict) {
+    private static T GetVal<T,VT>(string key, IDictionary<string, T> dict) where VT: Variable<T>, IVariableValueChanged, IVariable, new() {
         if (dict.ContainsKey(key)) {
-            return dict[key];
+            T value = dict[key];
+            if (instance.variables["global"].ContainsKey(key)) {
+                (instance.variables["global"][key] as Variable<T>).Value = value; //place the value in the global variable store in case it is needed for string formatting
+            } else {
+                VT vari = new VT();
+                vari.Value = value;
+                instance.variables["global"].Add(key, vari);
+            }
+                return value;
         } else {
             Debug.LogWarning("Key " + key + " not found in " + typeof(int) + " database!");
             throw new KeyNotFoundException();

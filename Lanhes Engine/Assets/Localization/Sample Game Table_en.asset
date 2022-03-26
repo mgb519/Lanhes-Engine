@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 77e07cb1d003b7445be5ffe3b0edffa6, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - id: 0
   m_TableData:
   - m_Id: 7587923210457088
     m_Localized: Overwrite this save?
@@ -50,5 +51,14 @@ MonoBehaviour:
     m_Localized: Baz
     m_Metadata:
       m_Items: []
+  - m_Id: 7596226778943488
+    m_Localized: This is the {global.didbar} time you've chose Bar, by the way.
+    m_Metadata:
+      m_Items:
+      - id: 0
   references:
     version: 1
+    00000000:
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00d0ca5ebafc1a00

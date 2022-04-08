@@ -56,6 +56,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - id: 0
+  - m_Id: 17375928464887808
+    m_Localized: I'm going to make you choose between Foo and Bar!
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

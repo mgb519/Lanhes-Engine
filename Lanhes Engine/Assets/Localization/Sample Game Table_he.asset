@@ -24,7 +24,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590816940478464
-    m_Localized: "\u05DB\u05DF"
+    m_Localized: "\u200E\u05DB\u05DF"
     m_Metadata:
       m_Items: []
   - m_Id: 7590835659657216
@@ -58,6 +58,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - id: 0
+  - m_Id: 17375928464887808
+    m_Localized: "100 \u05E0\u05E7\u05D5\u05D3\u05D5\u05EA"
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

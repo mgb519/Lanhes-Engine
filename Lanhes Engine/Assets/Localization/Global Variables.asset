@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1e3e22ff9634e441a479f01f905a2f7, type: 3}
   m_Name: Global Variables
   m_EditorClassIdentifier: 
-  m_Variables: []
+  m_Variables:
+  - name: didbar
+    variable:
+      id: 0
   references:
     version: 1
+    00000000:
+      type: {class: IntVariable, ns: UnityEngine.Localization.SmartFormat.PersistentVariables,
+        asm: Unity.Localization}
+      data:
+        m_Value: 7

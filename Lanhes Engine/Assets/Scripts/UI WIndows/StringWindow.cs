@@ -14,7 +14,12 @@ public class StringWindow : MenuWindow {
         TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
 
         string translated = LocalizationSettings.StringDatabase.GetLocalizedString(displayMe);//TODO Async version...?
+        if (LocalizationSettings.SelectedLocale.Metadata.GetMetadata<IsRTL>().isRTL) {
+            translated = RTLTranslation.RTLIfy(translated);
+            text.isRightToLeftText = true;
+        }
         text.text = translated;
+        
     }
 
     //check for the player advancing the screen by pressing input.

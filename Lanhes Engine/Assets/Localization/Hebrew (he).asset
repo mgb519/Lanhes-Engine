@@ -15,10 +15,15 @@ MonoBehaviour:
   m_Identifier:
     m_Code: he
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - id: 0
   m_LocaleName: Hebrew (he)
   m_CustomFormatCultureCode: 
   m_UseCustomFormatter: 0
   m_SortOrder: 0
   references:
     version: 1
+    00000000:
+      type: {class: IsRTL, ns: , asm: Assembly-CSharp}
+      data:
+        isRTL: 1

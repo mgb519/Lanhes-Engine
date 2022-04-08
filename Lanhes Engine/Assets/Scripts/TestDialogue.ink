@@ -18,7 +18,7 @@ $WAIT
 TESTDIALOGUE_01
 //comment
 TESTDIALOGUE_02
-I'm going to make you choose between Foo and Bar!
+TESTDIALOGUE_03
 
 -> foobarbaz
 === foobarbaz ===

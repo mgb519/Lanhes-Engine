@@ -26,7 +26,13 @@ public partial class SelectionWindow : MenuWindow {
             b.gameObject.transform.SetParent(content, false); 
         }
         onSelected = selectionHandler;
-        promptBox.text = LocalizationSettings.StringDatabase.GetLocalizedString(prompt);
+
+        string translated = LocalizationSettings.StringDatabase.GetLocalizedString(prompt);//TODO Async version...?
+        if (LocalizationSettings.SelectedLocale.Metadata.GetMetadata<IsRTL>().isRTL) {
+            translated = RTLTranslation.RTLIfy(translated);
+            promptBox.isRightToLeftText = true;
+        }
+        promptBox.text = translated;
     }
 
 

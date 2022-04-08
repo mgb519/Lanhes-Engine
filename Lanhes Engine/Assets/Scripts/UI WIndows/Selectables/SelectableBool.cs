@@ -12,7 +12,12 @@ public class SelectableBool : ISelectable
 
     public SelectionButton Render() {
         SelectionButton button = WindowManager.BaseButton();
-        button.GetComponentInChildren<TextMeshProUGUI>().text = LocalizationSettings.StringDatabase.GetLocalizedString(data ? "SYSTEM_YES" : "SYSTEM_NO");//TODO Async version...? 
+        string translated = LocalizationSettings.StringDatabase.GetLocalizedString(data ? "SYSTEM_YES" : "SYSTEM_NO");
+        if (LocalizationSettings.SelectedLocale.Metadata.GetMetadata<IsRTL>().isRTL) {
+            translated = RTLTranslation.RTLIfy(translated);
+            button.GetComponentInChildren<TextMeshProUGUI>().isRightToLeftText = true;
+        }
+        button.GetComponentInChildren<TextMeshProUGUI>().text = translated;
         button.dat = this;
         return button;
     }

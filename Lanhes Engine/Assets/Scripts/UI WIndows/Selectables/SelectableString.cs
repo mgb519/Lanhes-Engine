@@ -15,7 +15,12 @@ public class SelectableString :ISelectable
 
     public SelectionButton Render() {
         SelectionButton button = WindowManager.BaseButton();
-        button.GetComponentInChildren<TextMeshProUGUI>().text = LocalizationSettings.StringDatabase.GetLocalizedString(data); 
+        string translated = LocalizationSettings.StringDatabase.GetLocalizedString(data);
+        if (LocalizationSettings.SelectedLocale.Metadata.GetMetadata<IsRTL>().isRTL) {
+            translated = RTLTranslation.RTLIfy(translated);
+            button.GetComponentInChildren<TextMeshProUGUI>().isRightToLeftText = true;
+        }
+        button.GetComponentInChildren<TextMeshProUGUI>().text = translated; 
         button.dat = this;
         return button;
     }

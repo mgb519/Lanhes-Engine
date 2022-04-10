@@ -59,6 +59,50 @@ MonoBehaviour:
     m_Key: New Entry 1
     m_Metadata:
       m_Items: []
+  - m_Id: 17402270623387648
+    m_Key: MapMenuWindow/MapMenuWindow/Panel/UnPauseButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17406709237207040
+    m_Key: MapMenuWindow/MapMenuWindow/Panel/QuitButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18140736667701248
+    m_Key: MapMenuWindow/MapMenuWindow/Panel/SaveButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18141537381306368
+    m_Key: MapMenuWindow/MapMenuWindow/Panel/LoadButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142210453852160
+    m_Key: ShopWindow/ShopWindow/ExitButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142230217412608
+    m_Key: ShopWindow/ShopWindow/SellButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142247451807744
+    m_Key: ShopWindow/ShopWindow/BuyButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142782498197504
+    m_Key: SlottedSaveMenu/SlottedSaveMenu/Panel/Exit/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142950119362560
+    m_Key: ExampleSaveMenuWindow/ExampleSaveMenuWindow/Panel/CloseButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18143172090318848
+    m_Key: ExampleSaveMenuWindow/ExampleSaveMenuWindow/Panel/NewSaveButton/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18143360158715904
+    m_Key: ExampleSaveMenuWindow/ExampleSaveMenuWindow/Panel/Save Name/Text Area/Placeholder
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

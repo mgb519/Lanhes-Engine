@@ -60,6 +60,50 @@ MonoBehaviour:
     m_Localized: I'm going to make you choose between Foo and Bar!
     m_Metadata:
       m_Items: []
+  - m_Id: 17402270623387648
+    m_Localized: Return to Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17406709237207040
+    m_Localized: Exit to Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18140736667701248
+    m_Localized: Save Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18141537381306368
+    m_Localized: Load Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142210453852160
+    m_Localized: Done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142230217412608
+    m_Localized: Sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142247451807744
+    m_Localized: Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142782498197504
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18142950119362560
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18143172090318848
+    m_Localized: New Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18143360158715904
+    m_Localized: Notes
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

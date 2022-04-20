@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Currency
   m_EditorClassIdentifier: 
   systemName: money
-  readableName: Dollars
+  readableNameKey: 
   maxStack: 999999

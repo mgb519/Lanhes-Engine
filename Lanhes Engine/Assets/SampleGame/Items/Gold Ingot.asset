@@ -13,5 +13,15 @@ MonoBehaviour:
   m_Name: Gold Ingot
   m_EditorClassIdentifier: 
   systemName: ingot_gold
-  readableName: Gold Ingot
+  readableName:
+    m_TableReference:
+      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
+    m_TableEntryReference:
+      m_KeyId: 21756146453499904
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   maxStack: 64
+  references:
+    version: 1

@@ -104,6 +104,10 @@ MonoBehaviour:
     m_Localized: Notes
     m_Metadata:
       m_Items: []
+  - m_Id: 21756146453499904
+    m_Localized: Gold Ingot
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

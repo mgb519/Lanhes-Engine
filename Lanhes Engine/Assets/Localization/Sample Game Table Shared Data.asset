@@ -103,6 +103,10 @@ MonoBehaviour:
     m_Key: ExampleSaveMenuWindow/ExampleSaveMenuWindow/Panel/Save Name/Text Area/Placeholder
     m_Metadata:
       m_Items: []
+  - m_Id: 21756146453499904
+    m_Key: Gold Ingot
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

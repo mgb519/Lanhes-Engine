@@ -15,12 +15,11 @@ public class MenuWindow : MonoBehaviour {
     public ISelectable lastSelection = null;
 
 
-    public MenuWindow CreateWindow(MenuWindow other) {
-        MenuWindow subwindow = GameObject.Instantiate(other);
+    public T CreateWindow<T>(T other) where T:MenuWindow {
+        T subwindow = GameObject.Instantiate(other);
         subwindow.creator = this;
         gameObject.SetActive(false);
         return subwindow;
-
     }
 
     public void CloseMenu() {

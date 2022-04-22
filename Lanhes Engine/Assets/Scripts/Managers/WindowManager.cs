@@ -48,14 +48,16 @@ public class WindowManager : MonoBehaviour, ISaveable
 
 
     private static T CreateWindow<T>(T other, MenuWindow creator) where T : MenuWindow {
-        T subwindow = GameObject.Instantiate(other, instance.transform);
+       
 
         if (creator == null) {
+            T subwindow = GameObject.Instantiate(other, instance.transform);
             instance.baseWindow = subwindow;
+            return subwindow;
         } else {
-            subwindow.creator = creator;
+            return creator.CreateWindow(other);
         }
-        return subwindow;
+       
     }
 
 

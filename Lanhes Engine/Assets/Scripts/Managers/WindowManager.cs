@@ -26,6 +26,7 @@ public class WindowManager : MonoBehaviour, ISaveable
 
     public UsableLabel usableLabel;
 
+    public RectTransform hider = null;
 
     //TODO: should this be here? since it's also  used by PC script to know if they can continue
     public static bool ContinuePlay() {
@@ -77,7 +78,7 @@ public class WindowManager : MonoBehaviour, ISaveable
         window.inventory = playerInventory;
         window.Refresh();
 
-        //TODO: NOTE: Do we want the shop to block NPC behavoir too?
+        //TODO: NOTE: Do we want the shop to block NPC behaviour too?
         return window;
 
     }
@@ -149,4 +150,9 @@ public class WindowManager : MonoBehaviour, ISaveable
         return lab;
     }
 
+
+    public static RectTransform CreateHider() {
+        RectTransform hider = Instantiate(instance.hider,instance.transform);
+        return hider;
+    }
 }

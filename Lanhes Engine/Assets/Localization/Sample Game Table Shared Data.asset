@@ -107,6 +107,10 @@ MonoBehaviour:
     m_Key: Gold Ingot
     m_Metadata:
       m_Items: []
+  - m_Id: 27882705795076096
+    m_Key: Options/Options Menu/Volume/Text (TMP)
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

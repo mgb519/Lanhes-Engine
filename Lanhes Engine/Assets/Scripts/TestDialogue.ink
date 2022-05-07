@@ -22,7 +22,7 @@ TESTDIALOGUE_03
 
 -> foobarbaz
 === foobarbaz ===
-Foo, or Bar?
+$PROMPT Foo, or Bar?
 +	[TESTDIALOGUE_R_01]
 	You chose Foo!
 +	[TESTDIALOGUE_R_02]

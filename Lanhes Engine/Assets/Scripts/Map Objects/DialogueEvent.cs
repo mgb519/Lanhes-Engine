@@ -49,10 +49,11 @@ public class DialogueEvent : MapScript, NPCTrait
     }
 
     IEnumerator HandleScript() {
+        string promptBuffer = "";
         Debug.Log("entered script");
         while (true) {
-            string command = _inkStory.Continue();
             if (_inkStory.canContinue) {
+                string command = _inkStory.Continue();
                 //fetch the next window
                 //Debug.Log(command);
                 if (!command.StartsWith("$")) {
@@ -80,19 +81,19 @@ public class DialogueEvent : MapScript, NPCTrait
                         string npcName = args[1];
                         GameObject g = GameObject.Find(npcName);
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", did not find NPC " + npcName); break; }
-                        PawnMovementController controller = g.GetComponent<PawnMovementController>();                        
+                        PawnMovementController controller = g.GetComponent<PawnMovementController>();
                         if (g == null) { Debug.LogWarning("script " + inkAsset.name + ", NPC " + npcName + " can't be directed"); break; }
                         Vector3 w = new Vector3(float.Parse(args[2]), float.Parse(args[3]), float.Parse(args[4]));
                         overridenNPCs.Add(controller);
                         controller.AddWaypoint(w);
-                        Debug.Log("told "+npcName + "to move to "+ w.ToString());
-                        
+                        Debug.Log("told " + npcName + "to move to " + w.ToString());
+
 
                     } else if (function == "$WAIT") {
                         //we wait for all NPCs that are currently being directed to finish thier movement.
 
                         //TODO: getting the Y ever so slightly wrong can result in this never being triggered, as the agent cannot actually move freely on Y.
-                        yield return new WaitUntil(() => overridenNPCs.All(x=> x.ClearedPath()));
+                        yield return new WaitUntil(() => overridenNPCs.All(x => x.ClearedPath()));
                         foreach (PawnMovementController controller in overridenNPCs) {
                             controller.Release();  //TODO presumably, we may want the NPC to stay in pace. maybe then we shouldn't free the waypoint, in case its normal AI takes hold? In this case, the waypoint needs to be freed up at *some* point. Except for cases where we alter patrol paths?
                         }
@@ -138,6 +139,8 @@ public class DialogueEvent : MapScript, NPCTrait
                         string compare = BattleManager.BattleResultAsString(BattleManager.GetResultOfLastBattle());
                         Choice result = paths.Find(x => x.text == compare);
                         _inkStory.ChooseChoiceIndex(result.index);
+                    } else if (function == "$PROMPT") {
+                        promptBuffer = command.Remove(0,7).TrimStart();
                     } else {
                         //function not found!
                         Debug.LogWarning("Function " + function + " not found, script " + inkAsset.name);
@@ -145,14 +148,13 @@ public class DialogueEvent : MapScript, NPCTrait
                 }
 
             } else if (_inkStory.currentChoices.Count > 0) {
-                string prompt = command;
                 //we have a choice window
                 //TODO: ths currently only works for string selection, as that is how Ink works normally. Figure out a syntax for other selections
                 List<Choice> choices = _inkStory.currentChoices;
                 List<string> choicesAsString = new List<string>();
                 foreach (Choice c in choices) { choicesAsString.Add(c.text); }
 
-                SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString, null,prompt); //TODO some way of getting a prompt from Ink
+                SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString, null, promptBuffer); //TODO some way of getting a prompt from Ink
                 yield return new WaitUntil(() => WindowManager.ContinuePlay());
                 string selected = ((SelectableString)(s.selected)).data;
                 //TODO: sure this could be optimised

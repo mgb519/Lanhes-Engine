@@ -111,6 +111,14 @@ MonoBehaviour:
     m_Key: Options/Options Menu/Volume/Text (TMP)
     m_Metadata:
       m_Items: []
+  - m_Id: 32940793015226368
+    m_Key: Options/Options Menu/Volume(Music)/Text (TMP)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32941215092232192
+    m_Key: Options/Options Menu/Volume(SFX)/Text (TMP)
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

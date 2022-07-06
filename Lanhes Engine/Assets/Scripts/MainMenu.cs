@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Xml;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -23,5 +23,10 @@ public class MainMenu : MonoBehaviour
     {
 
         WindowManager.CreateLoadWindow(null);
+    }
+
+
+    public void Options() {
+        SceneManager.LoadScene("Options");
     }
 }

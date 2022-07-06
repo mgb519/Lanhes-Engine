@@ -562,11 +562,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 494302135492462659, guid: 2fc7c9991dbf8bd4a8434dd04b0f2abf,
-          type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: StartLoadScene
-        m_Mode: 5
+      - m_Target: {fileID: 1655515411}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: Options
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

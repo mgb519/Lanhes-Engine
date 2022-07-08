@@ -115,8 +115,7 @@ public class DataManager : MonoBehaviour, ISaveable
 
 
 
-    private PersistentVariablesSource variables = LocalizationSettings.StringDatabase.SmartFormatter.GetSourceExtension<PersistentVariablesSource>(); //get access to our static global variable table
-
+    private PersistentVariablesSource variables;
     //TODO: would prefer a more concrete type than ISaveable this this is just used for saving anyway so no biggie rn
     private static (string, ISaveable)[] databases;
     private static (string, ISaveable)[] managers;
@@ -134,6 +133,8 @@ public class DataManager : MonoBehaviour, ISaveable
             //register databases so that saveing and loading can see them
             databases = new (string, ISaveable)[] { ("ints", intData), ("strings", stringData), ("bools", boolData) };
             managers = new (string, ISaveable)[] { ("gamescenes", gameObject.GetComponent<GameSceneManager>()), ("parties", gameObject.GetComponent<PartyManager>()), ("windows", gameObject.GetComponent<WindowManager>()), ("battles", gameObject.GetComponent<BattleManager>()) }; //TODO is it even necessary to save some of these? (specifically, looking and window manager and scene manager)
+            variables = LocalizationSettings.StringDatabase.SmartFormatter.GetSourceExtension<PersistentVariablesSource>(); //get access to our static global variable table
+
         } else if (instance != this) {
             Destroy(gameObject);
         }

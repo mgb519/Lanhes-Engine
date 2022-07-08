@@ -70,7 +70,7 @@ public class MouseMovementPlayerController : PlayerPawnMovementController
                 useTrigger.RequestLabel();
             } else {
                 if (Input.GetMouseButtonDown(0)) {
-                    print("click");
+                
                     useTarget = null;
                     target = hit.point;
                     GameObject cursor = Instantiate(worldCursor);

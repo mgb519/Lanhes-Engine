@@ -15,13 +15,13 @@
       "url": "https://package.openupm.com"
     },
     "com.seneral.nodeeditorframework": {
-      "version": "https://github.com/Seneral/Node_Editor_Framework.git#v1.0.3-lts",
+      "version": "https://github.com/Seneral/Node_Editor_Framework.git#v1.0.4-lts",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.seneral.undopro": "1.0.0"
       },
-      "hash": "b31fa9bc5fab9eb1f51dc3e287f6f7eb59b185d8"
+      "hash": "768b0e66dc8be4fc052e1de37cbd9ad060d1d213"
     },
     "com.seneral.undopro": {
       "version": "https://github.com/Seneral/UndoPro.git#v1.0.0-lts",

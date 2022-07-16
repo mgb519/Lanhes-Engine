@@ -2,8 +2,10 @@
   "dependencies": {
     "com.beetlecircus.serializabledictionary": "0.1.2-preview.4",
     "com.inklestudios.ink-unity-integration": "1.0.2",
+    "com.seneral.nodeeditorframework": "https://github.com/Seneral/Node_Editor_Framework.git#v1.0.3-lts",
+    "com.seneral.undopro": "https://github.com/Seneral/UndoPro.git#v1.0.0-lts",
     "com.unity.2d.sprite": "1.0.0",
-    "com.unity.ide.visualstudio": "2.0.12",
+    "com.unity.ide.visualstudio": "2.0.16",
     "com.unity.localization": "1.1.1",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.ugui": "1.0.0",

@@ -27,7 +27,7 @@ public partial class SelectionWindow : MenuWindow {
         }
         onSelected = selectionHandler;
 
-        string translated = LocalizationSettings.StringDatabase.GetLocalizedString(prompt);//TODO Async version...?
+        string translated = prompt;
         if (LocalizationSettings.SelectedLocale.Metadata.GetMetadata<IsRTL>().isRTL) {
             translated = RTLTranslation.RTLIfy(translated);
             promptBox.isRightToLeftText = true;

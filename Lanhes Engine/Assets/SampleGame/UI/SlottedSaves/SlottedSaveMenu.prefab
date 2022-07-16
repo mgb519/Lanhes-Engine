@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &1203934423884224129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8272223890625565654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38bb3871cbcdd44fa8653a1cb03980e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  creator: {fileID: 0}
 --- !u!1 &2723413199427717228
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1949461571949694041}
   - {fileID: 3706673859173716265}
@@ -119,6 +107,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1949461571949694041}
   m_RootOrder: 0
@@ -238,20 +227,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjects:
-  - id: 0
+  - rid: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: TrackedUGuiGraphic, ns: UnityEngine.Localization.PropertyVariants.TrackedObjects,
         asm: Unity.Localization}
       data:
         m_Target: {fileID: 7525477212652496542}
         m_TrackedProperties:
           items:
-          - id: 1
-          - id: 2
+          - rid: 1
+          - rid: 2
         m_UpdateType: 0
-    00000001:
+    - rid: 1
       type: {class: BoolTrackedProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties,
         asm: Unity.Localization}
       data:
@@ -263,7 +253,7 @@ MonoBehaviour:
         - localeIdentifier:
             m_Code: en
           value: 0
-    00000002:
+    - rid: 2
       type: {class: LocalizedStringProperty, ns: UnityEngine.Localization.PropertyVariants.TrackedProperties,
         asm: Unity.Localization}
       data:
@@ -306,6 +296,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2922181171726597117}
   - {fileID: 5266099782569812498}
@@ -412,6 +403,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6392160570654202590}
   m_Father: {fileID: 3676235221089644762}
@@ -636,7 +628,7 @@ PrefabInstance:
     - target: {fileID: 9193028496187642539, guid: 4309ca9f77a736e4191042353a92867b,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5521563559225857643, guid: 4309ca9f77a736e4191042353a92867b, type: 3}
@@ -647,6 +639,31 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 698620164882965653}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1203934423884224129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8272223890625565654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38bb3871cbcdd44fa8653a1cb03980e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: {fileID: 0}
+  overwriteSaveConfirm:
+    m_TableReference:
+      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
+    m_TableEntryReference:
+      m_KeyId: 7587923210457088
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!224 &8420296534015990517 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9037343755132206688, guid: 4309ca9f77a736e4191042353a92867b,

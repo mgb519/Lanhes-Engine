@@ -13,5 +13,16 @@ MonoBehaviour:
   m_Name: Iron Ingot
   m_EditorClassIdentifier: 
   systemName: ingot_iron
-  readableName: Iron Ingot
+  readableName:
+    m_TableReference:
+      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
+    m_TableEntryReference:
+      m_KeyId: 51453007867072512
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   maxStack: 64
+  references:
+    version: 2
+    RefIds: []

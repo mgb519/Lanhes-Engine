@@ -26,6 +26,8 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     [SerializeField]
     private Button saveButton;
 
+    [SerializeField]
+    private UnityEngine.Localization.LocalizedString overwriteSaveConfirm;
 
     private bool saving = true;
 
@@ -45,7 +47,7 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     public IEnumerator SaveSelectedBody(string path) {
         bool ok = true;
         if (System.IO.File.Exists(path)) {
-            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "OVERWRITE_SAVE_CONFIRM");
+            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, overwriteSaveConfirm);
             while (!WindowManager.ContinuePlay()) {
                 yield return null;
             }

@@ -7,6 +7,9 @@ public class ExampleSlottedSaveMenu : SaveMenu
 {
     private bool isSaving = true;
 
+    [SerializeField]
+    private UnityEngine.Localization.LocalizedString overwriteSaveConfirm;
+
     public override void DeleteSave(string path) {
         throw new System.NotImplementedException();
     }
@@ -42,7 +45,7 @@ public class ExampleSlottedSaveMenu : SaveMenu
 
         bool ok = true;
         if (System.IO.File.Exists(path)) {
-            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "OVERWRITE_SAVE_CONFIRM"); 
+            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, overwriteSaveConfirm); 
             while (!WindowManager.ContinuePlay()) {
                 yield return null;
             }

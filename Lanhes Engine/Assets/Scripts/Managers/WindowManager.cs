@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public class WindowManager : MonoBehaviour, ISaveable
@@ -69,6 +70,11 @@ public class WindowManager : MonoBehaviour, ISaveable
         return dialog;
     }
 
+    public static StringWindow CreateStringWindow(UnityEngine.Localization.LocalizedString text, MenuWindow creator) {
+        StringWindow dialog = CreateWindow(instance.stringWindow, creator);
+        dialog.Refresh(text);
+        return dialog;
+    }
 
     public static ShopWindow CreateShopWindow(List<ItemCost> forSale, List<ItemCost> willBuy, Inventory playerInventory, MenuWindow creator) {
         //Debug.Log("Creating shop window");
@@ -131,6 +137,9 @@ public class WindowManager : MonoBehaviour, ISaveable
         return CreateSelection(processed, creator, prompt);
     }
 
+    public static SelectionWindow CreateConfirmDialog(MenuWindow creator, LocalizedString prompt) {
+        return CreateConfirmDialog(creator, prompt.GetLocalizedString());
+    }
 
     public JObject SaveToFile() {
         JObject ret = new JObject();

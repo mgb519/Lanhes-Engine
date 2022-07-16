@@ -119,13 +119,34 @@ MonoBehaviour:
     m_Key: Options/Options Menu/Volume(SFX)/Text (TMP)
     m_Metadata:
       m_Items: []
+  - m_Id: 51453007867072512
+    m_Key: Iron Ingot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51453164788568064
+    m_Key: Silver Ingot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51453264583643136
+    m_Key: Currency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51460864440193024
+    m_Key: gfy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51461298261250048
+    m_Key: New Entry
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    id: 0
+    rid: 0
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
         asm: Unity.Localization}
       data:

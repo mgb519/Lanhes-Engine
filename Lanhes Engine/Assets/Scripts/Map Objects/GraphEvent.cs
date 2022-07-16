@@ -41,10 +41,12 @@ public class GraphEvent : MapScript, NPCTrait
     #endregion boilerplate
 
     public void Load(JObject saveString) {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
+        //TODO
     }
 
     public JObject Save() {
         throw new System.NotImplementedException();
+        //TODO
     }
 }

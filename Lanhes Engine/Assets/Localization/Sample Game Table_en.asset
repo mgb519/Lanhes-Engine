@@ -17,7 +17,7 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 77e07cb1d003b7445be5ffe3b0edffa6, type: 2}
   m_Metadata:
     m_Items:
-    - id: 0
+    - rid: 0
   m_TableData:
   - m_Id: 7587923210457088
     m_Localized: Overwrite this save?
@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Localized: This is the {global.didbar} time you've chose Bar, by the way.
     m_Metadata:
       m_Items:
-      - id: 0
+      - rid: 0
   - m_Id: 17375928464887808
     m_Localized: I'm going to make you choose between Foo and Bar!
     m_Metadata:
@@ -120,9 +120,26 @@ MonoBehaviour:
     m_Localized: Effects
     m_Metadata:
       m_Items: []
+  - m_Id: 51453007867072512
+    m_Localized: Iron Ingot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51453164788568064
+    m_Localized: Silver Ingot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51453264583643136
+    m_Localized: GP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51460864440193024
+    m_Localized: Go fuck yourselves you hacks
+    m_Metadata:
+      m_Items: []
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries: 00d0ca5ebafc1a00

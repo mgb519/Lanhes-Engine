@@ -4,8 +4,10 @@ using UnityEngine;
 using NodeEditorFramework;
 using UnityEngine.Localization;
 using UnityEditor;
+using System;
 
-[Node(false, "Event Scripting/Display String Window")]
+
+[Node(false, "Event Scripting/Display String Window", new Type[] { typeof(EventScriptingCanvas) })]
 public class DisplayStringNode : EventNode
 {
     public override string GetID { get {return "displayStringNode";}}
@@ -17,7 +19,15 @@ public class DisplayStringNode : EventNode
 	//public override Vector2 DefaultSize { get { return new Vector2(550, 400); } }
 	public override bool AutoLayout => true;
 
-    private Vector2 scroll;
+
+	[ValueConnectionKnob("Previous", Direction.In, "NextEvent", NodeSide.Left, 30,MaxConnectionCount=ConnectionCount.Single)]
+	public ValueConnectionKnob prev;
+
+
+
+	[ValueConnectionKnob("Next", Direction.Out, "NextEvent", NodeSide.Right, 30, MaxConnectionCount = ConnectionCount.Single)]
+	public ValueConnectionKnob next;
+
 	public override void NodeGUI() {
 
 		GUILayout.BeginVertical();
@@ -28,16 +38,20 @@ public class DisplayStringNode : EventNode
 		EditorGUILayout.BeginHorizontal();
 
 		GUILayout.Space(10);
-		EditorGUILayout.PropertyField(new UnityEditor.SerializedObject(this).FindProperty("message"), false,new GUILayoutOption[] { });//EditorGUILayout.TextArea(DialogLine, GUILayout.ExpandHeight(true));
-
+		EditorGUILayout.PropertyField(new UnityEditor.SerializedObject(this).FindProperty("message"), false,new GUILayoutOption[] { });
 		GUILayout.Space(10);
 		EditorGUILayout.EndHorizontal();
 		EditorStyles.textField.wordWrap = false;
 		//EditorGUILayout.EndScrollView();
 		GUILayout.Space(10);
 		GUILayout.EndVertical();
-
+		//TODO button to create new string
 	}
 
-
+    public override IEnumerator Execute() {
+		//TODO: get name and picture, etc
+		WindowManager.CreateStringWindow(message, null);
+		yield return new WaitUntil(() => WindowManager.ContinuePlay());
+		yield return ContinueFrom(next);
+    }
 }

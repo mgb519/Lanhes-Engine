@@ -36,7 +36,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7592884891734016
-    m_Localized: This is a dialogue!
+    m_Localized: 'This is a dialogue!
+
+'
     m_Metadata:
       m_Items: []
   - m_Id: 7595627165437952
@@ -118,6 +120,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 32941215092232192
     m_Localized: Effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56556347835731968
+    m_Localized: You chose Foo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56555999725277184
+    m_Localized: Foo, Bar or Baz?
     m_Metadata:
       m_Items: []
   references:

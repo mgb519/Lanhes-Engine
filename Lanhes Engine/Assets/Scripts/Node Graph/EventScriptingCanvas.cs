@@ -8,7 +8,7 @@ using NodeEditorFramework;
 public class EventScriptingCanvas : NodeCanvas
 {
     public override string canvasName { get { return "Event"; } }
-    public string name = "Event";
+    public string Name = "Event";
     public override bool allowRecursion { get { return true; } }
 
     public EventStartNode rootNode;
@@ -26,15 +26,18 @@ public class EventScriptingCanvas : NodeCanvas
         //if (Traversal == null)
         //    Traversal = new GraphTraversal(this);
         //Debug.Log("validating...");
-        if (rootNode == null || nodes.Find((Node n) => n.GetID == EventStartNode.ID) == null) {
+        if (!nodes.Exists((Node n) => n.GetID == EventStartNode.ID)) {
             Debug.Log("Missing a start node, creating...");
             rootNode = Node.Create(EventStartNode.ID, Vector2.zero, this, null, true) as EventStartNode;
+        } else if (rootNode == null) { 
+            rootNode= (EventStartNode)nodes.Find((Node n) => n.GetID == EventStartNode.ID);
         }
     }
 
     public override bool CanAddNode(string nodeID) {
         //Debug.Log ("Check can add node " + nodeID);
         if (nodeID == EventStartNode.ID) {
+            //Debug.Log("Someone is trying to add a Start Node!");
             return !nodes.Exists((Node n) => n.GetID == EventStartNode.ID);
         }
         return true;

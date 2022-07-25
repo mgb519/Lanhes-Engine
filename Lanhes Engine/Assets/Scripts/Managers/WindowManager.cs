@@ -88,18 +88,35 @@ public class WindowManager : MonoBehaviour, ISaveable
 
     }
 
-  
+
+
 
     public static SelectionWindow CreateStringSelection(List<string> list, MenuWindow creator, string prompt) {
         List<ISelectable> processed = new List<ISelectable>();
         foreach (string s in list) {
-            processed.Add(new SelectableString(s));
+            //processed.Add(new SelectableString(s)); //TODO we're breaking this in preperation for dropping support for Ink scripts
+        }
+        return CreateSelection(processed, creator, prompt);
+    }
+
+
+
+    public static SelectionWindow CreateStringSelection(List<LocalizedString> list, MenuWindow creator, LocalizedString prompt) {
+        List<ISelectable> processed = new List<ISelectable>();
+        foreach (LocalizedString s in list) {
+            processed.Add(new SelectableString(s));//TODO do we convert it here, make SelectableString only take LocalizedStrings, or make a new ISelectable type?
         }
         return CreateSelection(processed, creator, prompt);
     }
 
 
     public static SelectionWindow CreateSelection(List<ISelectable> list, MenuWindow creator, string prompt) {
+        SelectionWindow window = CreateWindow(instance.selectionWindow, creator);
+        window.Refresh(list, window.ReturnAndClose, prompt);
+        return window;
+    }
+
+    public static SelectionWindow CreateSelection(List<ISelectable> list, MenuWindow creator, LocalizedString prompt) {
         SelectionWindow window = CreateWindow(instance.selectionWindow, creator);
         window.Refresh(list, window.ReturnAndClose, prompt);
         return window;

@@ -235,7 +235,7 @@ public class DataManager : MonoBehaviour, ISaveable
     /// Flush dialogues in memory to file, as well as dialogues in scene.
     /// </summary>
     private JObject SaveNPCStates() {
-        //save Ink dialogues
+        //save events
 
         JObject root = new JObject();
 

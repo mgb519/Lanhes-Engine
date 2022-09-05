@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9202613976246576125
+--- !u!114 &-8584973561291510470
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,37 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Next
   m_EditorClassIdentifier: 
-  body: {fileID: 187503129048467299}
+  body: {fileID: 7442934383559867686}
   direction: 2
   maxConnectionCount: 0
   styleID: NextEvent
   _connections:
-  - {fileID: -2145874584136291363}
+  - {fileID: 5015026646617955389}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-9007329745973885540
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 2480440536753269064}
-  direction: 2
-  maxConnectionCount: 1
-  styleID: NextEvent
-  _connections:
-  - {fileID: -4804209050672891477}
-  side: 2
-  sidePosition: 367
-  sideOffset: 0
---- !u!114 &-8828576879487769867
+--- !u!114 &-7849266840380107579
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,517 +33,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 843436939331670240}
+  body: {fileID: 5024033021525241472}
   direction: 1
   maxConnectionCount: 1
   styleID: NextEvent
   _connections:
-  - {fileID: 5994386495976555416}
+  - {fileID: -829833341881140798}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-8117289666413913897
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 2480440536753269064}
-  direction: 2
-  maxConnectionCount: 1
-  styleID: NextEvent
-  _connections: []
-  side: 2
-  sidePosition: 539.5
-  sideOffset: 0
---- !u!114 &-6560463982369185974
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 2480440536753269064}
-  direction: 2
-  maxConnectionCount: 1
-  styleID: NextEvent
-  _connections:
-  - {fileID: -6027854884091217206}
-  side: 2
-  sidePosition: 653.5
-  sideOffset: 0
---- !u!114 &-6027854884091217206
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -1871688293147605586}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: NextEvent
-  _connections:
-  - {fileID: -6560463982369185974}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-5456164248202352949
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -1871688293147605586}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: NextEvent
-  _connections:
-  - {fileID: 2299861610092912578}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-4804209050672891477
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -3802428568347219724}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: NextEvent
-  _connections:
-  - {fileID: -9007329745973885540}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-4601323381994873692
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 843436939331670240}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: NextEvent
-  _connections: []
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-4546071210833397582
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -585903381327914297}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: NextEvent
-  _connections:
-  - {fileID: 2307751488903860352}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-4449022138101329530
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
-  m_Name: Display String Node
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 11400000}
-  position: {x: 697.5, y: -216.7}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  prev: {fileID: 5741028148878131969}
-  message:
-    m_TableReference:
-      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
-    m_TableEntryReference:
-      m_KeyId: 7592884891734016
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  next: {fileID: 2307751488903860352}
-  references:
-    version: 1
---- !u!114 &-3802428568347219724
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
-  m_Name: Display String Node
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 11400000}
-  position: {x: 2286.15, y: -150.50002}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  prev: {fileID: -4804209050672891477}
-  message:
-    m_TableReference:
-      m_TableCollectionName: Sample Game Table
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode0/message
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  next: {fileID: -1014237874835106842}
-  references:
-    version: 1
---- !u!114 &-3256776932657738824
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 1025105633351332595}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: NextEvent
-  _connections:
-  - {fileID: 5741028148878131969}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-2145874584136291363
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 1025105633351332595}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: NextEvent
-  _connections:
-  - {fileID: -9202613976246576125}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-1871688293147605586
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
-  m_Name: Display String Node
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 11400000}
-  position: {x: 2358.55, y: 533.2}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  prev: {fileID: -6027854884091217206}
-  message:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  next: {fileID: -5456164248202352949}
-  references:
-    version: 1
---- !u!114 &-1014237874835106842
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -3802428568347219724}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: NextEvent
-  _connections:
-  - {fileID: 7961596461966785566}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-877058735589571694
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 2480440536753269064}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: NextEvent
-  _connections:
-  - {fileID: -52242085406851805}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-585903381327914297
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
-  m_Name: Display String Node
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 11400000}
-  position: {x: 1150, y: -90}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  prev: {fileID: -4546071210833397582}
-  message:
-    m_TableReference:
-      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
-    m_TableEntryReference:
-      m_KeyId: 17375928464887808
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  next: {fileID: -52242085406851805}
-  references:
-    version: 1
---- !u!114 &-52242085406851805
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -585903381327914297}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: NextEvent
-  _connections:
-  - {fileID: -877058735589571694}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d902fe08b7290544bacbb3257987f483, type: 3}
-  m_Name: testNodeCanvas
-  m_EditorClassIdentifier: 
-  editorStates:
-  - {fileID: 1510967580144759544}
-  saveName: testNodeCanvas
-  savePath: Assets\Scripts\Node Graph\testNodeCanvas.asset
-  livesInScene: 0
-  nodes:
-  - {fileID: 187503129048467299}
-  - {fileID: 1025105633351332595}
-  - {fileID: -4449022138101329530}
-  - {fileID: -585903381327914297}
-  - {fileID: -3802428568347219724}
-  - {fileID: 1276796920066488462}
-  - {fileID: 843436939331670240}
-  - {fileID: -1871688293147605586}
-  - {fileID: 4100332611876485318}
-  - {fileID: 2480440536753269064}
-  groups: []
-  Name: Event
-  rootNode: {fileID: 187503129048467299}
---- !u!114 &187503129048467299
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecb80e97f1ab5734ca25ee46523dd334, type: 3}
-  m_Name: Start Node
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 11400000}
-  position: {x: -18.2, y: -225.4}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  next: {fileID: -9202613976246576125}
---- !u!114 &843436939331670240
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
-  m_Name: Display String Node
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 11400000}
-  position: {x: 2380.75, y: 279.95}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  prev: {fileID: -8828576879487769867}
-  message:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  next: {fileID: -4601323381994873692}
-  references:
-    version: 1
---- !u!114 &1025105633351332595
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
-  m_Name: Display String Node
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 11400000}
-  position: {x: 225.2, y: -91.2}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  prev: {fileID: -2145874584136291363}
-  message:
-    m_TableReference:
-      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
-    m_TableEntryReference:
-      m_KeyId: 7592711423709184
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  next: {fileID: -3256776932657738824}
-  references:
-    version: 1
---- !u!114 &1276796920066488462
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
-  m_Name: Display String Node
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 11400000}
-  position: {x: 2777.8499, y: -153.85}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  prev: {fileID: 7961596461966785566}
-  message:
-    m_TableReference:
-      m_TableCollectionName: 
-    m_TableEntryReference:
-      m_KeyId: 0
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  next: {fileID: 4655343988824187321}
-  references:
-    version: 1
---- !u!114 &1510967580144759544
+--- !u!114 &-7271233671308380522
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -578,10 +56,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   parentEditor: {fileID: 0}
-  selectedNode: {fileID: 1276796920066488462}
-  panOffset: {x: -2483.7495, y: -59.650024}
-  zoom: 1.65
---- !u!114 &2299861610092912578
+  selectedNode: {fileID: 0}
+  panOffset: {x: -1952.4193, y: 115.58999}
+  zoom: 1.6
+--- !u!114 &-7067915857465166489
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -593,16 +71,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 4100332611876485318}
+  body: {fileID: 7356838601402022600}
   direction: 1
   maxConnectionCount: 1
   styleID: NextEvent
   _connections:
-  - {fileID: -5456164248202352949}
+  - {fileID: 5027033281710266462}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &2307751488903860352
+--- !u!114 &-6391337606531561885
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -614,16 +92,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Next
   m_EditorClassIdentifier: 
-  body: {fileID: -4449022138101329530}
+  body: {fileID: 5024033021525241472}
   direction: 2
   maxConnectionCount: 0
   styleID: NextEvent
   _connections:
-  - {fileID: -4546071210833397582}
+  - {fileID: -4620276350850169449}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &2480440536753269064
+--- !u!114 &-6302791113610197789
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 7442934383559867686}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: NextEvent
+  _connections:
+  - {fileID: -6182711453879113309}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-6206124583861823563
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
+  m_Name: Display String Node
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 11400000}
+  position: {x: 2695.8599, y: -224.02002}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  prev: {fileID: -698532888485653861}
+  message:
+    m_TableReference:
+      m_TableCollectionName: Sample Game Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode1/message
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  next: {fileID: -5343586342428341297}
+  references:
+    version: 1
+--- !u!114 &-6182711453879113309
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -5281744895693338874}
+  direction: 2
+  maxConnectionCount: 1
+  styleID: NextEvent
+  _connections:
+  - {fileID: -6302791113610197789}
+  side: 2
+  sidePosition: 262
+  sideOffset: 0
+--- !u!114 &-5343586342428341297
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -6206124583861823563}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: NextEvent
+  _connections:
+  - {fileID: 3122126490029012063}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-5281744895693338874
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -636,16 +206,13 @@ MonoBehaviour:
   m_Name: Choice Prompt
   m_EditorClassIdentifier: 
   canvas: {fileID: 11400000}
-  position: {x: 1710, y: -190}
+  position: {x: 1660, y: -90}
   dynamicConnectionPorts:
-  - {fileID: -9007329745973885540}
-  - {fileID: 5994386495976555416}
-  - {fileID: 7112648196916459291}
-  - {fileID: -8117289666413913897}
-  - {fileID: 8373986799526699671}
-  - {fileID: -6560463982369185974}
+  - {fileID: 2751052148053798168}
+  - {fileID: -3721276823974250489}
+  - {fileID: -6182711453879113309}
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  prev: {fileID: -877058735589571694}
+  prev: {fileID: 5496816395079564766}
   prompt:
     m_TableReference:
       m_TableCollectionName: Sample Game Table
@@ -665,54 +232,68 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
+    repeats: 1
   - text:
       m_TableReference:
-        m_TableCollectionName: 
+        m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
       m_TableEntryReference:
-        m_KeyId: 0
+        m_KeyId: 7595645049950208
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
+    repeats: 1
   - text:
       m_TableReference:
-        m_TableCollectionName: 
+        m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
       m_TableEntryReference:
-        m_KeyId: 0
+        m_KeyId: 7595645658124288
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-  - text:
-      m_TableReference:
-        m_TableCollectionName: 
-      m_TableEntryReference:
-        m_KeyId: 0
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-  - text:
-      m_TableReference:
-        m_TableCollectionName: 
-      m_TableEntryReference:
-        m_KeyId: 0
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-  - text:
-      m_TableReference:
-        m_TableCollectionName: 
-      m_TableEntryReference:
-        m_KeyId: 0
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
+    repeats: 0
   references:
     version: 1
---- !u!114 &3100004696373708864
+--- !u!114 &-4836237209575034463
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb80e97f1ab5734ca25ee46523dd334, type: 3}
+  m_Name: Start Node
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 11400000}
+  position: {x: -18.2, y: -225.4}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  next: {fileID: -829833341881140798}
+--- !u!114 &-4620276350850169449
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -1636080441883071342}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: NextEvent
+  _connections:
+  - {fileID: -6391337606531561885}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-3721276823974250489
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -724,15 +305,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Next
   m_EditorClassIdentifier: 
-  body: {fileID: 4100332611876485318}
+  body: {fileID: -5281744895693338874}
   direction: 2
-  maxConnectionCount: 0
+  maxConnectionCount: 1
   styleID: NextEvent
-  _connections: []
+  _connections:
+  - {fileID: -3367275773024722724}
   side: 2
+  sidePosition: 181
+  sideOffset: 0
+--- !u!114 &-3367275773024722724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -1811309421956776897}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: NextEvent
+  _connections:
+  - {fileID: -3721276823974250489}
+  side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &4100332611876485318
+--- !u!114 &-3111445638614244532
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -745,23 +348,52 @@ MonoBehaviour:
   m_Name: Display String Node
   m_EditorClassIdentifier: 
   canvas: {fileID: 11400000}
-  position: {x: 2924.5, y: 496.7}
+  position: {x: 1150, y: -90}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  prev: {fileID: 2299861610092912578}
+  prev: {fileID: 6454225542714829123}
   message:
     m_TableReference:
-      m_TableCollectionName: 
+      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
     m_TableEntryReference:
-      m_KeyId: 0
+      m_KeyId: 17375928464887808
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  next: {fileID: 3100004696373708864}
+  next: {fileID: -1784598818937903208}
   references:
     version: 1
---- !u!114 &4655343988824187321
+--- !u!114 &-1811309421956776897
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
+  m_Name: Display String Node
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 11400000}
+  position: {x: 2962.76, y: 134.51003}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  prev: {fileID: -3367275773024722724}
+  message:
+    m_TableReference:
+      m_TableCollectionName: Sample Game Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode5/message
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  next: {fileID: 5027033281710266462}
+  references:
+    version: 1
+--- !u!114 &-1784598818937903208
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -773,7 +405,224 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Next
   m_EditorClassIdentifier: 
-  body: {fileID: 1276796920066488462}
+  body: {fileID: -3111445638614244532}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: NextEvent
+  _connections:
+  - {fileID: 5496816395079564766}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-1636080441883071342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
+  m_Name: Display String Node
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 11400000}
+  position: {x: 697.5, y: -216.7}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  prev: {fileID: -4620276350850169449}
+  message:
+    m_TableReference:
+      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
+    m_TableEntryReference:
+      m_KeyId: 7592884891734016
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  next: {fileID: 5566558541311113984}
+  references:
+    version: 1
+--- !u!114 &-829833341881140798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -4836237209575034463}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: NextEvent
+  _connections:
+  - {fileID: -7849266840380107579}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-698532888485653861
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -6206124583861823563}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: NextEvent
+  _connections:
+  - {fileID: 2751052148053798168}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d902fe08b7290544bacbb3257987f483, type: 3}
+  m_Name: testNodeCanvas
+  m_EditorClassIdentifier: 
+  editorStates:
+  - {fileID: -7271233671308380522}
+  saveName: testNodeCanvas
+  savePath: Assets\Scripts\Node Graph\testNodeCanvas.asset
+  livesInScene: 0
+  nodes:
+  - {fileID: -4836237209575034463}
+  - {fileID: 5024033021525241472}
+  - {fileID: -1636080441883071342}
+  - {fileID: -3111445638614244532}
+  - {fileID: -6206124583861823563}
+  - {fileID: 7356838601402022600}
+  - {fileID: -1811309421956776897}
+  - {fileID: 7442934383559867686}
+  - {fileID: 1833959333478605588}
+  - {fileID: -5281744895693338874}
+  - {fileID: 4443742813086496283}
+  groups: []
+  Name: Event
+  rootNode: {fileID: -4836237209575034463}
+--- !u!114 &1201807101146618217
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 1833959333478605588}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: NextEvent
+  _connections:
+  - {fileID: 5496816395079564766}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &1833959333478605588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
+  m_Name: Display String Node
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 11400000}
+  position: {x: 2599.15, y: 566.96}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  prev: {fileID: 5015026646617955389}
+  message:
+    m_TableReference:
+      m_TableCollectionName: Sample Game Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode3/message
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  next: {fileID: 1201807101146618217}
+  references:
+    version: 1
+--- !u!114 &2751052148053798168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -5281744895693338874}
+  direction: 2
+  maxConnectionCount: 1
+  styleID: NextEvent
+  _connections:
+  - {fileID: -698532888485653861}
+  side: 2
+  sidePosition: 100
+  sideOffset: 0
+--- !u!114 &3122126490029012063
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 4443742813086496283}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: NextEvent
+  _connections:
+  - {fileID: -5343586342428341297}
+  - {fileID: 8350352671487722879}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &4413761795630804731
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 4443742813086496283}
   direction: 2
   maxConnectionCount: 0
   styleID: NextEvent
@@ -781,7 +630,36 @@ MonoBehaviour:
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &5741028148878131969
+--- !u!114 &4443742813086496283
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
+  m_Name: Display String Node
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 11400000}
+  position: {x: 3958.83, y: -132.18}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  prev: {fileID: 3122126490029012063}
+  message:
+    m_TableReference:
+      m_TableCollectionName: Sample Game Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode4/message
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  next: {fileID: 4413761795630804731}
+  references:
+    version: 1
+--- !u!114 &5015026646617955389
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -793,16 +671,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -4449022138101329530}
+  body: {fileID: 1833959333478605588}
   direction: 1
   maxConnectionCount: 1
   styleID: NextEvent
   _connections:
-  - {fileID: -3256776932657738824}
+  - {fileID: -8584973561291510470}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &5994386495976555416
+--- !u!114 &5024033021525241472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
+  m_Name: Display String Node
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 11400000}
+  position: {x: 225.2, y: -91.2}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  prev: {fileID: -7849266840380107579}
+  message:
+    m_TableReference:
+      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
+    m_TableEntryReference:
+      m_KeyId: 7592711423709184
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  next: {fileID: -6391337606531561885}
+  references:
+    version: 1
+--- !u!114 &5027033281710266462
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -814,36 +721,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Next
   m_EditorClassIdentifier: 
-  body: {fileID: 2480440536753269064}
+  body: {fileID: -1811309421956776897}
   direction: 2
-  maxConnectionCount: 1
+  maxConnectionCount: 0
   styleID: NextEvent
   _connections:
-  - {fileID: -8828576879487769867}
+  - {fileID: -7067915857465166489}
   side: 2
-  sidePosition: 425.5
+  sidePosition: 30
   sideOffset: 0
---- !u!114 &7112648196916459291
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
-  m_Name: Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 2480440536753269064}
-  direction: 2
-  maxConnectionCount: 1
-  styleID: NextEvent
-  _connections: []
-  side: 2
-  sidePosition: 482.5
-  sideOffset: 0
---- !u!114 &7961596461966785566
+--- !u!114 &5496816395079564766
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -855,16 +742,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 1276796920066488462}
+  body: {fileID: -5281744895693338874}
   direction: 1
   maxConnectionCount: 1
   styleID: NextEvent
   _connections:
-  - {fileID: -1014237874835106842}
+  - {fileID: -1784598818937903208}
+  - {fileID: 1201807101146618217}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &8373986799526699671
+--- !u!114 &5566558541311113984
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -876,11 +764,112 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
   m_Name: Next
   m_EditorClassIdentifier: 
-  body: {fileID: 2480440536753269064}
+  body: {fileID: -1636080441883071342}
   direction: 2
+  maxConnectionCount: 0
+  styleID: NextEvent
+  _connections:
+  - {fileID: 6454225542714829123}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &6454225542714829123
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -3111445638614244532}
+  direction: 1
   maxConnectionCount: 1
   styleID: NextEvent
-  _connections: []
+  _connections:
+  - {fileID: 5566558541311113984}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &7356838601402022600
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
+  m_Name: Display String Node
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 11400000}
+  position: {x: 3450, y: 140}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  prev: {fileID: -7067915857465166489}
+  message:
+    m_TableReference:
+      m_TableCollectionName: GUID:77e07cb1d003b7445be5ffe3b0edffa6
+    m_TableEntryReference:
+      m_KeyId: 7596226778943488
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  next: {fileID: 8350352671487722879}
+  references:
+    version: 1
+--- !u!114 &7442934383559867686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41f33ba6296c5648986b676a947fcb7, type: 3}
+  m_Name: Display String Node
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 11400000}
+  position: {x: 2135.0098, y: 553.26}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  prev: {fileID: -6302791113610197789}
+  message:
+    m_TableReference:
+      m_TableCollectionName: Sample Game Table
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode2/message
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  next: {fileID: -8584973561291510470}
+  references:
+    version: 1
+--- !u!114 &8350352671487722879
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017e2c7fd038ecb46b317c1e003f31dc, type: 3}
+  m_Name: Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 7356838601402022600}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: NextEvent
+  _connections:
+  - {fileID: 3122126490029012063}
   side: 2
-  sidePosition: 596.5
+  sidePosition: 30
   sideOffset: 0

@@ -36,11 +36,14 @@ public class ChoiceNode : EventFlowNode
     [SerializeField]
     private List<Choice> _options;
 
+
+    //TODO should this be a struct?
     [Serializable]
     class Choice
     {
         [SerializeField]
         public LocalizedString text;
+        public bool repeats = true;
         //public int NodeOutputIndex;
 
 
@@ -99,7 +102,7 @@ public class ChoiceNode : EventFlowNode
     }
 
 
-    //TODO reodering of options, and allow removing arbitrary options
+    //TODO reodering of options
     private void DrawOptions() {
 
         EditorGUILayout.BeginVertical();
@@ -111,7 +114,11 @@ public class ChoiceNode : EventFlowNode
             EditorGUILayout.BeginVertical();
             //EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(i + ".", GUILayout.MaxWidth(15));
-            DrawLocalizedStringProperty(optionsProp.GetArrayElementAtIndex(i).FindPropertyRelative("text"),ref _options[i].text);
+            SerializedProperty choice = optionsProp.GetArrayElementAtIndex(i);
+            DrawLocalizedStringProperty(choice.FindPropertyRelative("text"), ref option.text);
+
+            option.repeats= EditorGUILayout.Toggle(option.repeats,new GUILayoutOption[] { });
+          
             //option.OptionDisplay = EditorGUILayout.TextArea(option.OptionDisplay, GUILayout.MinWidth(80));
             ((ValueConnectionKnob)dynamicConnectionPorts[i]).SetPosition();
             if (GUILayout.Button("-", GUILayout.Width(20))) {
@@ -124,9 +131,10 @@ public class ChoiceNode : EventFlowNode
             EditorGUILayout.EndVertical();
             //EditorGUILayout.Space();
         }
+
         EditorGUILayout.EndVertical();
 
-
+        thisAsSerialized.ApplyModifiedProperties();
         /*
         int i = 0;
         Debug.Log(_options.Count);
@@ -190,19 +198,38 @@ public class ChoiceNode : EventFlowNode
 
 
 
-    public override IEnumerator Execute() {
+    public override IEnumerator Execute(Dictionary<(EventNode, string), int> canvasData) {
         //we have a choice window
         //TODO: ths currently only works for string selection, as that is how Ink worked. Figure out a method to allow for other slection types..
+        //TODO filter choices with conditions for appearance
         List<Choice> choices = _options;
+        int idx = 0;
+        List<Choice> filter = new List<Choice>();
+        foreach (Choice c in choices) {
+            if (c.repeats || !canvasData.ContainsKey((this, idx.ToString()))) {
+                filter.Add(c);
+            }
+            idx++;
+        }
         List<LocalizedString> choicesAsStrings = new List<LocalizedString>();
-        foreach (Choice c in choices) { choicesAsStrings.Add(c.text); }
+        foreach (Choice c in filter) { choicesAsStrings.Add(c.text); }
 
         SelectionWindow s = WindowManager.CreateStringSelection(choicesAsStrings, null, prompt); //TODO some way of getting a prompt from Ink
         yield return new WaitUntil(() => WindowManager.ContinuePlay());
         LocalizedString selected = ((SelectableString)(s.selected)).data;
+
         //TODO: sure this could be optimised
         int index = _options.FindIndex(x => x.text == selected);
-        ContinueFrom(dynamicConnectionPorts[index]);
+        Debug.Log(_options[index].repeats);
+        //If we chose a dialogue that shouldn't be repeated, grey it out
+        if (!_options[index].repeats) {
+            canvasData.Add((this, index.ToString()),1);
+        }
+
+        Debug.Log(canvasData.Count);
+
+
+        yield return ContinueFrom(dynamicConnectionPorts[index]);
     }
 
 

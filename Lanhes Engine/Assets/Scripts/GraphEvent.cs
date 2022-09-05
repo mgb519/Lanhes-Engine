@@ -8,15 +8,20 @@ public class GraphEvent : MapScript, NPCTrait
 
     [SerializeField]
     private EventScriptingCanvas graph;
+
+
+    private Dictionary<(EventNode,string), int> state = new Dictionary<(EventNode, string), int>();
+
+
     public override IEnumerator Action() {
         EventNode currentNode = graph.rootNode;
-        IEnumerator pc = currentNode.Execute();
+        IEnumerator pc = currentNode.Execute(state);
         do {           
             Debug.Log(pc.Current);
             if (pc.Current is EventNode node) {
                 currentNode = node;
                 Debug.Log("changed node");
-                pc = currentNode.Execute();
+                pc = currentNode.Execute(state);
             } else {
                 yield return pc.Current ;
             }
@@ -58,10 +63,25 @@ public class GraphEvent : MapScript, NPCTrait
     //We do not save the shops or enemyParties variables, since they do not change.
 
     public void Load(JObject saveString) {
-        throw new System.NotImplementedException();
+        state = new Dictionary<(EventNode, string), int>();
+        foreach (KeyValuePair<string,JToken> b in saveString) {
+            string[] compoundKey = b.Key.Split('_');
+            int value = b.Value.ToObject<int>();
+            EventNode keyNode = (EventNode)graph.nodes[int.Parse(compoundKey[0])];
+            string index = compoundKey[1];
+
+            state.Add((keyNode, index), value);
+        }
+
     }
 
     public JObject Save() {
-        throw new System.NotImplementedException();
+
+        JObject top = new JObject();
+        foreach (KeyValuePair<(EventNode,string),int> k in state) {
+            string propkey = graph.nodes.IndexOf(k.Key.Item1).ToString() + "_" + k.Key.Item2.ToString();           
+            top.Add(propkey, k.Value.ToString());
+        }
+        return top;
     }
 }

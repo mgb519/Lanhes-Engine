@@ -52,7 +52,7 @@ public class DisplayStringNode : EventFlowNode
     }
 
 
-    public override IEnumerator Execute() {
+    public override IEnumerator Execute(Dictionary<(EventNode, string), int> canvasData) {
 		//TODO: get name and picture, etc
 		WindowManager.CreateStringWindow(message, null);
 		yield return new WaitUntil(() => WindowManager.ContinuePlay());

@@ -40,25 +40,29 @@ public class ExampleSlottedSaveMenu : SaveMenu
 
     public IEnumerator SaveSelectedBody(string path) {
 
-        bool ok = true;
-        if (System.IO.File.Exists(path)) {
-            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "OVERWRITE_SAVE_CONFIRM"); 
-            while (!WindowManager.ContinuePlay()) {
-                yield return null;
-            }
-            ok = ((SelectableBool)(confirmiationDialog.selected)).data;
-        }
 
-        if (ok) {
-            if (isSaving) {
+
+
+        if (isSaving) {
+            bool ok = true;
+            if (System.IO.File.Exists(path)) {
+                SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "OVERWRITE_SAVE_CONFIRM");
+                while (!WindowManager.ContinuePlay()) {
+                    yield return null;
+                }
+                ok = ((SelectableBool)(confirmiationDialog.selected)).data;
+            }
+            if (ok) {
                 //save over the selected slot
                 SaveGame(path);
-            } else {
-                //load the selected slot
-                LoadGame(path);
-                CollapseMenu();
+
             }
+        } else {
+            //load the selected slot
+            LoadGame(path);
+            CollapseMenu();
         }
+
 
     }
 

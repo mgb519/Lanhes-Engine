@@ -13,7 +13,7 @@ public class EventStartNode : EventNode
     [ValueConnectionKnob("Next", Direction.Out, "NextEvent", NodeSide.Right, 30,MaxConnectionCount =ConnectionCount.Single)]
     public ValueConnectionKnob next;
 
-    public override IEnumerator Execute() {
+    public override IEnumerator Execute(Dictionary<(EventNode, string), int> canvasData) {
         yield return ContinueFrom(next);
     }
 

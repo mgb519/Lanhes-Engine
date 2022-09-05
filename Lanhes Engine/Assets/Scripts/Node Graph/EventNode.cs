@@ -13,7 +13,7 @@ public abstract class EventNode : Node
 {
     [NonSerialized]
     internal SerializedObject thisAsSerialized = null;
-    public abstract IEnumerator Execute();
+    public abstract IEnumerator Execute(Dictionary<(EventNode, string), int> canvasData);
 
     public EventNode ContinueFrom(ConnectionPort v) {
         if (v.connections.Count == 0) { return null; } else { return (EventNode)v.connection(0).body; }
@@ -27,11 +27,11 @@ public abstract class EventNode : Node
     }
 
 
-    internal void DrawLocalizedStringProperty(SerializedProperty prop, ref LocalizedString stringItself) {
+    internal  void DrawLocalizedStringProperty(SerializedProperty prop, ref LocalizedString stringItself) {
         //EditorGUILayout.BeginHorizontal();
         if (!stringItself.IsEmpty) {
             //EditorGUILayout.Space(5);
-            EditorGUILayout.PropertyField(prop, false, new GUILayoutOption[] { });
+            EditorGUILayout.PropertyField(prop, false, new GUILayoutOption[] { });           
 
             //TODO slightly more compact and easy-to-read view of the text that will actuall be displayed...
             //EditorGUILayout.LabelField("\""+stringItself.GetLocalizedString()+"\"", new GUILayoutOption[] { });
@@ -39,7 +39,7 @@ public abstract class EventNode : Node
         } else {
             if (GUILayout.Button("Generate Unique")) {
                 StringTableCollection tableCollection =
-               LocalizationEditorSettings.GetStringTableCollection(LocalizationSettings.StringDatabase.DefaultTable);
+                LocalizationEditorSettings.GetStringTableCollection(LocalizationSettings.StringDatabase.DefaultTable);
 
                 string nodeName = this.GetID;
                 string pathToProp;
@@ -49,14 +49,26 @@ public abstract class EventNode : Node
                     idx++;
                 } while (tableCollection.SharedData.GetEntry(pathToProp) != null);
 
-                Debug.Log(tableCollection);
+                //Debug.Log(tableCollection);
                 var r = tableCollection.SharedData.AddKey(pathToProp);
                 stringItself.TableReference = LocalizationSettings.StringDatabase.DefaultTable;
                 stringItself.TableEntryReference = r.Key;
+
+
+
+
                 EditorUtility.SetDirty(tableCollection);
                 EditorUtility.SetDirty(tableCollection.SharedData);
                 EditorUtility.SetDirty(this);
                 EditorUtility.SetDirty(canvas);
+                //EditorUtility.SetDirty(prop.objectReferenceValue);
+                //EditorUtility.SetDirty(prop.exposedReferenceValue);
+                canvas.Validate();
+                NodeEditorCallbacks.IssueOnLoadCanvas(canvas);
+                canvas.TraverseAll();
+                NodeEditor.RepaintClients();
+
+
             }
         }
         //EditorGUILayout.EndHorizontal();

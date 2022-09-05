@@ -21,7 +21,7 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     private Transform scrollviewContentBox;
 
     [SerializeField]
-    private TMP_InputField saveNameField; 
+    private TMP_InputField saveNameField;
 
     [SerializeField]
     private Button saveButton;
@@ -43,29 +43,33 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     }
 
     public IEnumerator SaveSelectedBody(string path) {
-        bool ok = true;
-        if (System.IO.File.Exists(path)) {
-            SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "OVERWRITE_SAVE_CONFIRM");
-            while (!WindowManager.ContinuePlay()) {
-                yield return null;
-            }
-            ok = ((SelectableBool)(confirmiationDialog.selected)).data;
-        }
 
-        if (ok) {
-            if (saving) {
+
+
+        if (saving) {
+            bool ok = true;
+            if (System.IO.File.Exists(path)) {
+                SelectionWindow confirmiationDialog = WindowManager.CreateConfirmDialog(this, "OVERWRITE_SAVE_CONFIRM");
+                while (!WindowManager.ContinuePlay()) {
+                    yield return null;
+                }
+                ok = ((SelectableBool)(confirmiationDialog.selected)).data;
+            }
+            if (ok) {
                 //save over the selected slot
                 SaveGame(path);
                 RefreshList();
-            } else {
-                //load the selected slot
-                LoadGame(path);
-                CollapseMenu();
+
             }
+        } else {
+            //load the selected slot
+            LoadGame(path);
+            CollapseMenu();
         }
 
+
     }
-  
+
 
 
     public void SaveNew() {
@@ -127,10 +131,10 @@ public class ExampleSlotlessSaveMenu : SaveMenu
     internal override void SaveHeader(ref StreamWriter file) {
         //TODO shouldn't we be getting the data through the JSON document maybe, rather than direct data access?
         //TODO localise
-        string saveName = saveNameField.text==null?"no notes":saveNameField.text;
+        string saveName = saveNameField.text == null ? "no notes" : saveNameField.text;
         file.WriteLine(saveName);
         int gold = PartyManager.GetParty().inventory.HowManyOfItem(DataManager.GetItemBySystemName("money"));
-        file.WriteLine("Money: "+gold.ToString());
+        file.WriteLine("Money: " + gold.ToString());
 
     }
 

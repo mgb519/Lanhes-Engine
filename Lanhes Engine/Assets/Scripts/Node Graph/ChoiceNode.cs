@@ -8,7 +8,6 @@ using UnityEngine.Localization;
 
 
 
-//TODO implment "allow choice to only be selected once" feature link Ink had. This will be saved in GraphEvent I suppose
 [Node(false, "Event Scripting/Choice", new Type[] { typeof(EventScriptingCanvas) })]
 public class ChoiceNode : EventFlowNode
 {
@@ -20,9 +19,14 @@ public class ChoiceNode : EventFlowNode
     public override bool AutoLayout => true;
 
 
-    private ValueConnectionKnobAttribute dynaCreationAttribute
+    private ValueConnectionKnobAttribute dynaBranchCreationAttribute
     = new ValueConnectionKnobAttribute(
         "Next", Direction.Out, "NextEvent", NodeSide.Right);
+
+    private ValueConnectionKnobAttribute dynaConditionCreationAttribute
+    = new ValueConnectionKnobAttribute(
+        "Condition", Direction.In, "Condition", NodeSide.Left);
+
     /*
 
     [ValueConnectionKnob("Next", Direction.Out, "NextEvent", NodeSide.Right, 30, MaxConnectionCount = ConnectionCount.Single)]
@@ -45,8 +49,6 @@ public class ChoiceNode : EventFlowNode
         public LocalizedString text;
         public bool repeats = true;
         //public int NodeOutputIndex;
-
-
     }
     /*
     [CustomPropertyDrawer(typeof(Choice), true)]
@@ -115,17 +117,23 @@ public class ChoiceNode : EventFlowNode
             //EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(i + ".", GUILayout.MaxWidth(15));
             SerializedProperty choice = optionsProp.GetArrayElementAtIndex(i);
+
+            ((ValueConnectionKnob)dynamicConnectionPorts[2 * i]).SetPosition(); //render the outgoing connection
+            ((ValueConnectionKnob)dynamicConnectionPorts[2 * i + 1]).SetPosition(); //render the condition that decides if the choice is shown
+            if (GUILayout.Button("-", GUILayout.Width(20))) {
+                _options.RemoveAt(i);
+                DeleteConnectionPort(2 * i);
+                DeleteConnectionPort(2 * i + 1);
+                i--;
+            }
+
             DrawLocalizedStringProperty(choice.FindPropertyRelative("text"), ref option.text);
 
+            //TODO place a label for the checkbox
             option.repeats= EditorGUILayout.Toggle(option.repeats,new GUILayoutOption[] { });
           
             //option.OptionDisplay = EditorGUILayout.TextArea(option.OptionDisplay, GUILayout.MinWidth(80));
-            ((ValueConnectionKnob)dynamicConnectionPorts[i]).SetPosition();
-            if (GUILayout.Button("-", GUILayout.Width(20))) {
-                _options.RemoveAt(i);
-                DeleteConnectionPort(i);
-                i--;
-            }
+           
 
             //EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
@@ -135,26 +143,7 @@ public class ChoiceNode : EventFlowNode
         EditorGUILayout.EndVertical();
 
         thisAsSerialized.ApplyModifiedProperties();
-        /*
-        int i = 0;
-        Debug.Log(_options.Count);
-        foreach (Choice c in _options) {
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.BeginVertical();
-            Debug.Log(c);
-            //TODO this is incorrect!
-            EditorGUILayout.PropertyField(new UnityEditor.SerializedObject(c).FindProperty("text"), false, new GUILayoutOption[] { });
-            ((ConnectionKnob)dynamicConnectionPorts[i++]).SetPosition();
-
-            EditorGUILayout.Space(5);
-            if (GUILayout.Button("Remove Choice")) {
-                RemoveChoice(c);
-            }
-
-            EditorGUILayout.Space(6);
-            EditorGUILayout.EndVertical();
-            EditorGUILayout.EndHorizontal();
-        }*/
+      
     }
 
     private void AddNewOption() {
@@ -162,7 +151,8 @@ public class ChoiceNode : EventFlowNode
         thisAsSerialized = null;
         optionsProp = null;
 
-        CreateValueConnectionKnob(dynaCreationAttribute);
+        CreateValueConnectionKnob(dynaBranchCreationAttribute);
+        CreateValueConnectionKnob(dynaConditionCreationAttribute);
 
         //option.NodeOutputIndex = dynamicConnectionPorts.Count - 1;
         _options.Add(option);
@@ -206,15 +196,19 @@ public class ChoiceNode : EventFlowNode
         int idx = 0;
         List<Choice> filter = new List<Choice>();
         foreach (Choice c in choices) {
-            if (c.repeats || !canvasData.ContainsKey((this, idx.ToString()))) {
-                filter.Add(c);
+            //if no special condition attached, or the condition evaluates to true, we can select
+                if (dynamicConnectionPorts[2 * idx + 1].connections.Count == 0 || ((ConditionNode)(dynamicConnectionPorts[2 * idx + 1].connections[0].body)).Evaluate(canvasData)) {
+                    if (c.repeats || !canvasData.ContainsKey((this, idx.ToString()))) {
+                        filter.Add(c);
+                    }
+                
             }
             idx++;
         }
         List<LocalizedString> choicesAsStrings = new List<LocalizedString>();
         foreach (Choice c in filter) { choicesAsStrings.Add(c.text); }
 
-        SelectionWindow s = WindowManager.CreateStringSelection(choicesAsStrings, null, prompt); //TODO some way of getting a prompt from Ink
+        SelectionWindow s = WindowManager.CreateStringSelection(choicesAsStrings, null, prompt); 
         yield return new WaitUntil(() => WindowManager.ContinuePlay());
         LocalizedString selected = ((SelectableString)(s.selected)).data;
 
@@ -229,7 +223,7 @@ public class ChoiceNode : EventFlowNode
         Debug.Log(canvasData.Count);
 
 
-        yield return ContinueFrom(dynamicConnectionPorts[index]);
+        yield return ContinueFrom(dynamicConnectionPorts[2*index]);
     }
 
 

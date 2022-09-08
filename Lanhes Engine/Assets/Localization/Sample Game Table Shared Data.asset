@@ -147,14 +147,6 @@ MonoBehaviour:
     m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode4/message
     m_Metadata:
       m_Items: []
-  - m_Id: 71679606579187712
-    m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/choiceNode0/_options.Array.data[2].text
-    m_Metadata:
-      m_Items: []
-  - m_Id: 71679610429558784
-    m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/choiceNode0/_options.Array.data[1].text
-    m_Metadata:
-      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -27,11 +27,11 @@ public abstract class EventNode : Node
     }
 
 
-    internal  void DrawLocalizedStringProperty(SerializedProperty prop, ref LocalizedString stringItself) {
+    internal void DrawLocalizedStringProperty(SerializedProperty prop, ref LocalizedString stringItself) {
         //EditorGUILayout.BeginHorizontal();
         if (!stringItself.IsEmpty) {
             //EditorGUILayout.Space(5);
-            EditorGUILayout.PropertyField(prop, false, new GUILayoutOption[] { });           
+            EditorGUILayout.PropertyField(prop, false, new GUILayoutOption[] { });
 
             //TODO slightly more compact and easy-to-read view of the text that will actuall be displayed...
             //EditorGUILayout.LabelField("\""+stringItself.GetLocalizedString()+"\"", new GUILayoutOption[] { });
@@ -89,4 +89,35 @@ public class NextEventType : ValueConnectionType // : IConnectionTypeDeclaration
     public override string Identifier { get { return "NextEvent"; } }
     public override Type Type { get { return typeof(EventNode); } }
     public override Color Color { get { return Color.cyan; } }
+}
+
+
+
+
+
+public abstract class ConditionNode : Node
+{
+
+    [ValueConnectionKnob("Output", Direction.Out, "Condition", NodeSide.Right, 30, MaxConnectionCount = ConnectionCount.Single)]
+    public ValueConnectionKnob output;
+
+    [NonSerialized]
+    internal SerializedObject thisAsSerialized = null;
+    public abstract bool Evaluate(Dictionary<(EventNode, string), int> canvasData);
+
+    public override void NodeGUI() {
+        //if (thisAsSerialized == null) {
+        thisAsSerialized = new UnityEditor.SerializedObject(this);
+        //}
+    }
+
+}
+
+
+
+public class ConditionType : ValueConnectionType // : IConnectionTypeDeclaration
+{
+    public override string Identifier { get { return "Condition"; } }
+    public override Type Type { get { return typeof(bool); } }
+    public override Color Color { get { return Color.green; } }
 }

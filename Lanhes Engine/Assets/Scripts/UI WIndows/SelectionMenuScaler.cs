@@ -13,14 +13,14 @@ public class SelectionMenuScaler : UIBehaviour
     new void Awake() {
         t = GetComponent<RectTransform>();
         base.Awake();
-        Debug.Log("anchors:" + (t.anchorMin - t.anchorMax).y);
+        //Debug.Log("anchors:" + (t.anchorMin - t.anchorMax).y);
     }
 
     //TODO make sure this is only called when menu is updated...
     public void Update() {
 
         float contentHeight = ContentToGrowWith.sizeDelta.y;
-        Debug.Log("content:" + contentHeight);
+        //Debug.Log("content:" + contentHeight);
         if (contentHeight < t.sizeDelta.y) {
             t.sizeDelta = new Vector2(0, contentHeight);
         } else {

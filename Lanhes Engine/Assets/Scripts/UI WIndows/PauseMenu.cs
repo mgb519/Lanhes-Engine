@@ -14,6 +14,10 @@ public class PauseMenu : MenuWindow
         CloseMenu();
     }
 
+    public void OnDestroy() {
+        UnPause();
+    }
+
     public void LoadFromFile()
     {
         WindowManager.CreateLoadWindow(this);

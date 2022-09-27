@@ -21,9 +21,9 @@ public abstract class EventNode : Node
 
     public override void NodeGUI() {
 
-        //if (thisAsSerialized == null) {
-        thisAsSerialized = new UnityEditor.SerializedObject(this);
-        //}
+        if (thisAsSerialized == null) {
+            thisAsSerialized = new UnityEditor.SerializedObject(this);
+        }
     }
 
 
@@ -106,9 +106,7 @@ public abstract class ConditionNode : Node
     public abstract bool Evaluate(Dictionary<(EventNode, string), int> canvasData);
 
     public override void NodeGUI() {
-        //if (thisAsSerialized == null) {
-        thisAsSerialized = new UnityEditor.SerializedObject(this);
-        //}
+        base.NodeGUI();
     }
 
 }

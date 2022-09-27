@@ -220,7 +220,7 @@ public class ChoiceNode : EventFlowNode
             canvasData.Add((this, index.ToString()),1);
         }
 
-        Debug.Log(canvasData.Count);
+        
 
 
         yield return ContinueFrom(dynamicConnectionPorts[2*index]);

@@ -191,7 +191,7 @@ public class ChoiceNode : EventFlowNode
     public override IEnumerator Execute(Dictionary<(EventNode, string), int> canvasData) {
         //we have a choice window
         //TODO: ths currently only works for string selection, as that is how Ink worked. Figure out a method to allow for other slection types..
-        //TODO filter choices with conditions for appearance
+        //filter choices with conditions for appearance
         List<Choice> choices = _options;
         int idx = 0;
         List<Choice> filter = new List<Choice>();

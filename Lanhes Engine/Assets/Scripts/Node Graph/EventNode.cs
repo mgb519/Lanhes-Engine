@@ -20,6 +20,7 @@ public abstract class EventNode : Node
     }
 
     public override void NodeGUI() {
+        base.NodeGUI();
 
         if (thisAsSerialized == null) {
             thisAsSerialized = new UnityEditor.SerializedObject(this);
@@ -112,10 +113,36 @@ public abstract class ConditionNode : Node
 }
 
 
-
 public class ConditionType : ValueConnectionType // : IConnectionTypeDeclaration
 {
     public override string Identifier { get { return "Condition"; } }
     public override Type Type { get { return typeof(bool); } }
     public override Color Color { get { return Color.green; } }
+}
+
+
+
+
+public abstract class IntNode : Node
+{
+
+    [ValueConnectionKnob("Output", Direction.Out, "Integer", NodeSide.Right, 30, MaxConnectionCount = ConnectionCount.Single)]
+    public ValueConnectionKnob output;
+
+    [NonSerialized]
+    internal SerializedObject thisAsSerialized = null;
+    public abstract int Evaluate(Dictionary<(EventNode, string), int> canvasData);
+
+    public override void NodeGUI() {
+        base.NodeGUI();
+    }
+
+}
+
+
+public class IntTransferType : ValueConnectionType // : IConnectionTypeDeclaration
+{
+    public override string Identifier { get { return "Integer"; } }
+    public override Type Type { get { return typeof(int); } }
+    public override Color Color { get { return Color.red; } }
 }

@@ -119,6 +119,34 @@ MonoBehaviour:
     m_Key: Options/Options Menu/Volume(SFX)/Text (TMP)
     m_Metadata:
       m_Items: []
+  - m_Id: 56555999725277184
+    m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/choiceNode0/prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69565124503588864
+    m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode0/message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69566042276024320
+    m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode1/message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71675555711995904
+    m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode2/message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71675560464142336
+    m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode3/message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71677512958791680
+    m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode5/message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71678344919961600
+    m_Key: Assets\Scripts\Node Graph\testNodeCanvas.asset/displayStringNode4/message
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

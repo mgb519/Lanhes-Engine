@@ -156,7 +156,7 @@ public class DialogueEvent : MapScript, NPCTrait
 
                 SelectionWindow s = WindowManager.CreateStringSelection(choicesAsString, null, promptBuffer); //TODO some way of getting a prompt from Ink
                 yield return new WaitUntil(() => WindowManager.ContinuePlay());
-                string selected = ((SelectableString)(s.selected)).data;
+                string selected = ((SelectableString)(s.selected)).data.GetLocalizedString();
                 //TODO: sure this could be optimised
                 int index = choices.Find(x => x.text == selected).index;
                 _inkStory.ChooseChoiceIndex(index);

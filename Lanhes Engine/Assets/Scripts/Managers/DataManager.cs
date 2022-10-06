@@ -15,9 +15,14 @@ using UnityEngine.Localization.Settings;
 public class DataManager : MonoBehaviour, ISaveable
 {
 
+    public  interface IDatabase:ISaveable {
+        public abstract void DumpToLocalizationStore();
+    }
+
     [System.Serializable]
-    public abstract class Database<TV> : EditableDictionary<string, TV>, ISaveable
+    public abstract class Database<T, VT> : EditableDictionary<string, T>,IDatabase where VT : Variable<T>, IVariableValueChanged, IVariable, new()
     {
+
         void ISaveable.LoadFromFile(JObject node) {
             //clear the DB
             this.Clear();
@@ -26,11 +31,19 @@ public class DataManager : MonoBehaviour, ISaveable
             foreach (JProperty entry in ret.Properties()) {
                 string key = entry.Name;
                 JToken value = entry.Value;
-                this.Add(key, TokenToValue(value));
+                T val = TokenToValue(value);
+                this.Add(key, val);
+
+
+              
+
+
             }
+
+            DumpToLocalizationStore();
         }
 
-        internal abstract TV TokenToValue(JToken text);
+        internal abstract T TokenToValue(JToken text);
 
         JObject ISaveable.SaveToFile() {
             JObject ret = new JObject();
@@ -42,14 +55,33 @@ public class DataManager : MonoBehaviour, ISaveable
             return ret;
         }
 
-        internal abstract JToken ValueToToken(TV value);
+        internal abstract JToken ValueToToken(T value);
+
+
+        public void DumpToLocalizationStore() {
+
+            foreach (KeyValuePair<string, T> kvp in this) {
+                string key = kvp.Key;
+                T val = kvp.Value;
+                //Add to the localization store
+                if (instance.variables["global"].ContainsKey(key)) {
+                    Debug.Log(instance.variables["global"][key]);
+                    (instance.variables["global"][key] as VT).Value = val;
+                } else {
+                    VT vari = new VT();
+                    vari.Value = val;
+                    instance.variables["global"].Add(key, vari);
+                }
+            }
+        }
+
     };
 
 
 
 
     [System.Serializable]
-    public class IntDatabase : Database<int>
+    public class IntDatabase : Database<int, IntVariable>
     {
         internal override int TokenToValue(JToken text) {
             //TODO test for nulls... except that just means the save is modded.
@@ -65,7 +97,7 @@ public class DataManager : MonoBehaviour, ISaveable
     private IntDatabase intData = new IntDatabase();
 
     [System.Serializable]
-    public class StringDatabase : Database<string>
+    public class StringDatabase : Database<string, StringVariable>
     {
         internal override string TokenToValue(JToken text) {
             return text.ToObject<string>();
@@ -81,7 +113,7 @@ public class DataManager : MonoBehaviour, ISaveable
 
 
     [System.Serializable]
-    public class BoolDatabase : Database<bool>
+    public class BoolDatabase : Database<bool, BoolVariable>
     {
         internal override bool TokenToValue(JToken text) {
             return text.ToObject<bool>();
@@ -118,7 +150,7 @@ public class DataManager : MonoBehaviour, ISaveable
     private PersistentVariablesSource variables = LocalizationSettings.StringDatabase.SmartFormatter.GetSourceExtension<PersistentVariablesSource>(); //get access to our static global variable table
 
     //TODO: would prefer a more concrete type than ISaveable this this is just used for saving anyway so no biggie rn
-    private static (string, ISaveable)[] databases;
+    private static (string, IDatabase)[] databases;
     private static (string, ISaveable)[] managers;
 
 
@@ -132,28 +164,47 @@ public class DataManager : MonoBehaviour, ISaveable
             instance = this;
             DontDestroyOnLoad(gameObject);
             //register databases so that saveing and loading can see them
-            databases = new (string, ISaveable)[] { ("ints", intData), ("strings", stringData), ("bools", boolData) };
+            databases = new (string, IDatabase)[] { ("ints", intData), ("strings", stringData), ("bools", boolData) };
             managers = new (string, ISaveable)[] { ("gamescenes", gameObject.GetComponent<GameSceneManager>()), ("parties", gameObject.GetComponent<PartyManager>()), ("windows", gameObject.GetComponent<WindowManager>()), ("battles", gameObject.GetComponent<BattleManager>()) }; //TODO is it even necessary to save some of these? (specifically, looking and window manager and scene manager)
+
+            instance.variables["global"].Clear();
+
+            //TODO need to dump the DBs into the localization source, since they aren't neccesarily cleared...
+
+            foreach ((string, IDatabase) d in databases) {
+                d.Item2.DumpToLocalizationStore();
+            }
+
         } else if (instance != this) {
             Destroy(gameObject);
         }
     }
 
-    public static int GetInt(string key) { return GetVal<int,IntVariable>(key, instance.intData); }
-    public static void SetInt(string key, int newValue) { SetVal(key, newValue, instance.intData); }
+    public static int GetInt(string key) { return GetVal<int>(key, instance.intData); }
+    public static void SetInt(string key, int newValue) { SetVal<int, IntVariable>(key, newValue, instance.intData); }
 
 
-    public static string GetString(string key) { return GetVal<string,StringVariable>(key, instance.stringData); }
-    public static void SetString(string key, string newValue) { SetVal<string>(key, newValue, instance.stringData); }
+    public static string GetString(string key) { return GetVal<string>(key, instance.stringData); }
+    public static void SetString(string key, string newValue) { SetVal<string, StringVariable>(key, newValue, instance.stringData); }
 
 
-    public static bool GetBool(string key) { return GetVal<bool,BoolVariable>(key, instance.boolData); }
-    public static void SetBool(string key, bool newValue) { SetVal<bool>(key, newValue, instance.boolData); }
+    public static bool GetBool(string key) { return GetVal<bool>(key, instance.boolData); }
+    public static void SetBool(string key, bool newValue) { SetVal<bool, BoolVariable>(key, newValue, instance.boolData); }
 
 
-    private static void SetVal<T>(string key, T newValue, IDictionary<string, T> dict) {
+    private static void SetVal<T, VT>(string key, T newValue, Database<T, VT> dict) where VT : Variable<T>, IVariableValueChanged, IVariable, new() {
         if (dict.ContainsKey(key)) {
             dict[key] = newValue;
+
+
+            if (instance.variables["global"].ContainsKey(key)) {
+                (instance.variables["global"][key] as VT).Value = newValue; //place the value in the global variable store in case it is needed for string formatting
+            } else {
+                VT vari = new VT();
+                vari.Value = newValue;
+                instance.variables["global"].Add(key, vari);
+            }
+
             return;
         } else {
             //give a warning, while a lot of the time this may be intentional, it may not always be, i.e typos
@@ -164,17 +215,10 @@ public class DataManager : MonoBehaviour, ISaveable
     }
 
     //TODO: should be initialise the entry if it doesn't exist instead? or give a default value?
-    private static T GetVal<T,VT>(string key, IDictionary<string, T> dict) where VT: Variable<T>, IVariableValueChanged, IVariable, new() {
+    private static T GetVal<T>(string key, IDictionary<string, T> dict) {
         if (dict.ContainsKey(key)) {
             T value = dict[key];
-            if (instance.variables["global"].ContainsKey(key)) {
-                (instance.variables["global"][key] as Variable<T>).Value = value; //place the value in the global variable store in case it is needed for string formatting
-            } else {
-                VT vari = new VT();
-                vari.Value = value;
-                instance.variables["global"].Add(key, vari);
-            }
-                return value;
+            return value;
         } else {
             Debug.LogWarning("Key " + key + " not found in " + typeof(int) + " database!");
             throw new KeyNotFoundException();
@@ -235,7 +279,7 @@ public class DataManager : MonoBehaviour, ISaveable
     /// Flush dialogues in memory to file, as well as dialogues in scene.
     /// </summary>
     private JObject SaveNPCStates() {
-        //save Ink dialogues
+        //save events
 
         JObject root = new JObject();
 
@@ -342,9 +386,10 @@ public class DataManager : MonoBehaviour, ISaveable
 
         yield return new WaitUntil(() => !GameSceneManager.IsLoading());
 
+        //clear the localization store
+        instance.variables["global"].Clear();
 
-
-        //restore DBs
+        //restore DBs (this also restores the localization store)
         JObject dbs = root.Property("dbs").Value.ToObject<JObject>();
         foreach ((string, ISaveable) dbData in databases) {
             JObject dbNode = (JObject)(dbs.Property(dbData.Item1).Value);
@@ -381,11 +426,13 @@ public class DataManager : MonoBehaviour, ISaveable
         //load Ink state
         LoadNPCStates((JObject)(root.Property("dialogues").Value));
         RestoreNPCStates();
+
+
         isLoading = false;
         //throw new NotImplementedException();
         Debug.Log("Finished load body");
 
-        
+
 
     }
 

@@ -332,8 +332,6 @@ MonoBehaviour:
     array:
     - Key: name
       Value: Player
-    - Key: didbar
-      Value: yes
   boolData:
     array: []
   itemDatabase: {fileID: 11400000, guid: e16c9cefa8fbd8d40a4446e75bc1bbc6, type: 2}

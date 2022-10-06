@@ -125,7 +125,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &99951086
+--- !u!1 &345911401
 GameObject:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,8 +133,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 99951088}
-  - component: {fileID: 99951087}
+  - component: {fileID: 345911403}
+  - component: {fileID: 345911402}
   m_Layer: 0
   m_Name: UndoProRecords
   m_TagString: Untagged
@@ -142,30 +142,136 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &99951087
+--- !u!114 &345911402
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99951086}
+  m_GameObject: {fileID: 345911401}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  undoProRecords: []
+  undoProRecords:
+  - label: Node Selection
+    relativeStackPos: 0
+    perform:
+      serializedTarget:
+        Name: 
+        isNullObject: 0
+        objectType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        unityObject: {fileID: 0}
+        serializedSystemObject: 
+        manuallySerializedMembers:
+        - Name: state
+          isNullObject: 0
+          objectType:
+            typeName: NodeEditorFramework.NodeEditorState, Seneral.NodeEditorFramework.Runtime,
+              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: -8483700171118370620, guid: 8f90c3efd67817a4ba4135e98c4ddec0,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: newSelection
+          isNullObject: 1
+          objectType:
+            typeName: 
+            genericTypes: []
+          unityObject: {fileID: 0}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: prevSelection
+          isNullObject: 1
+          objectType:
+            typeName: 
+            genericTypes: []
+          unityObject: {fileID: 0}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        collectionObjects: []
+      serializedMethod:
+        declaringType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        methodName: <HandleSelecting>b__0
+        parameters: []
+        genericTypes: []
+        flags: 20
+    undo:
+      serializedTarget:
+        Name: 
+        isNullObject: 0
+        objectType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        unityObject: {fileID: 0}
+        serializedSystemObject: 
+        manuallySerializedMembers:
+        - Name: state
+          isNullObject: 0
+          objectType:
+            typeName: NodeEditorFramework.NodeEditorState, Seneral.NodeEditorFramework.Runtime,
+              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: -8483700171118370620, guid: 8f90c3efd67817a4ba4135e98c4ddec0,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: newSelection
+          isNullObject: 1
+          objectType:
+            typeName: 
+            genericTypes: []
+          unityObject: {fileID: 0}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: prevSelection
+          isNullObject: 1
+          objectType:
+            typeName: 
+            genericTypes: []
+          unityObject: {fileID: 0}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        collectionObjects: []
+      serializedMethod:
+        declaringType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        methodName: <HandleSelecting>b__1
+        parameters: []
+        genericTypes: []
+        flags: 20
   undoState:
     redoRecords: []
     undoRecords:
-    - Selection Change
---- !u!4 &99951088
+    - Node Selection
+--- !u!4 &345911403
 Transform:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99951086}
+  m_GameObject: {fileID: 345911401}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}

@@ -126,6 +126,22 @@ MonoBehaviour:
     m_Localized: TODO
     m_Metadata:
       m_Items: []
+  - m_Id: 82998361250779136
+    m_Localized: "\u05D7\u05D6\u05E8\u05D4 \u05DC\u05DE\u05E0\u05D9\u05D5\u05D4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82999760684503040
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82999760722251776
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82999760726446080
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
   references:
     version: 1
     00000000:

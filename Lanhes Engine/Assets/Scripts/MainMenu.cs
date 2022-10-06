@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -10,6 +13,32 @@ public class MainMenu : MonoBehaviour
     public int partyID;
     public string firstScene;
     public string firstPawnPoint;
+
+    [SerializeField]
+    private AudioMixerGroup group;
+
+
+    public void Awake() {
+        if (!PlayerPrefs.HasKey("language")) {
+            PlayerPrefs.SetString("language","he");
+        }
+        LocalizationSettings.SelectedLocale =LocalizationSettings.AvailableLocales.GetLocale(PlayerPrefs.GetString("language"));
+
+
+        foreach (string n in new string[] { "VolumeMaster", "VolumeMusic", "VolumeSFX"}) {
+            if (!PlayerPrefs.HasKey(n)) {
+                PlayerPrefs.SetFloat(n, 0.5f);
+            }
+            group.audioMixer.SetFloat(n, PlayerPrefs.GetFloat(n));
+
+        }
+
+
+
+        PlayerPrefs.Save();
+
+
+    }
     public void NewGame()
     {
         PartyManager.SpawnPlayer(partyID);

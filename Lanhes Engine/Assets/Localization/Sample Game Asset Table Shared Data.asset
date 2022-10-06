@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TableCollectionName: Sample Game Asset Table
   m_TableCollectionNameGuidString: b47c9ae74d1a43e4184abf7e1dceea01
-  m_Entries: []
+  m_Entries:
+  - m_Id: 65608407793192960
+    m_Key: Options/Options Menu/Return
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

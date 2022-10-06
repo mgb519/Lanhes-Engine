@@ -7,19 +7,15 @@ using UnityEngine.Localization.Settings;
 public class LanguageSelection : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    //TODO dsiplay the current langauge
+    void Awake() {
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.GetLocale(PlayerPrefs.GetString("language"));
     }
 
 
     public void SelectLanguage(Locale selected) {
         LocalizationSettings.SelectedLocale = selected;
+        PlayerPrefs.SetString("language", selected.Identifier.Code);
     }
 }

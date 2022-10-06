@@ -67,7 +67,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 17406709237207040
-    m_Localized: Exit to Menu
+    m_Localized: End Game
     m_Metadata:
       m_Items: []
   - m_Id: 18140736667701248
@@ -148,6 +148,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 71678344919961600
     m_Localized: Let's shop!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82998361250779136
+    m_Localized: Back to Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82999760684503040
+    m_Localized: OptionsMenuBackToMain, Assembly-CSharp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82999760722251776
+    m_Localized: Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82999760726446080
+    m_Localized: UnityEngine.Object, UnityEngine
     m_Metadata:
       m_Items: []
   references:
